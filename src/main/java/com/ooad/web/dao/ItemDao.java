@@ -5,7 +5,5 @@
 
 package com.ooad.web.dao;
 
-import java.util.ArrayList;
-
 public class ItemDao {
 }

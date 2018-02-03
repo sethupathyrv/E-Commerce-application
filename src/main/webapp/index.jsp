@@ -8,8 +8,8 @@
 <body>
 <h2>Hello World!</h2>
 <% final ItemCategoryDao itemCategoryDao = new ItemCategoryDao();
-    for (ItemCategory itemCategory:itemCategoryDao.getAllCategories()) { %>
+    for (ItemCategory itemCategory : itemCategoryDao.getAllCategories()) { %>
 <%= itemCategory %> <br>
-<%  }%>
+<% }%>
 </body>
 </html>

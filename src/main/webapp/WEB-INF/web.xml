@@ -22,4 +22,12 @@
     <servlet-name>jersey-serlvet</servlet-name>
     <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Header</servlet-name>
+    <servlet-class>com.ooad.web.controller.HeaderController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Header</servlet-name>
+    <url-pattern>/header</url-pattern>
+  </servlet-mapping>
 </web-app>

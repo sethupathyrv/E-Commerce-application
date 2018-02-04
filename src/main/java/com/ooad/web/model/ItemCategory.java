@@ -18,6 +18,18 @@ public class ItemCategory {
         this.isEnabled = isEnabled;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
     @Override
     public String toString() {
         return "ItemCategory{" +

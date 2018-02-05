@@ -64,8 +64,7 @@ html.a-js .navFooterMobileStripe,html.a-no-js .navFooterMobileStripe{
     width:10%;
     padding:0 15px
 }
-
-.nav_a{
+#navFooter .nav_a{
     font-size: 13px;
 }
 .navFooterLinkCol{
@@ -110,10 +109,10 @@ div.navFooterLogoLine{
     height:23px;
     margin:0 auto
 }
-#navFooter.navFooterLinkLine{
+#navFooter .navFooterLinkLine{
     margin:0 8px 0 8px
 }
-#navFooter.navFooterDLicense{
+#navFooter .navFooterDLicense{
     text-align:center;
     margin:8px 8px 0 8px
 }
@@ -334,4 +333,12 @@ div.navFooterLogoLine{
 #navFooter.navAccessibility.navFooterVerticalRow{
     display:table-row
 }
-
+#navFooter .navFooterPadItemLine li a {
+    font-size:12px;
+}
+#navFooter .navFooterLogoLine{
+    height:23px;
+}
+#navFooter .navFooterDescText{
+    font-size:10px;
+}

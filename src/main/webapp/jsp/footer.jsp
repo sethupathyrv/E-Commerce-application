@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="../css/footer.css">
 <div class='navLeftFooter nav-sprite-v1' id='navFooter'>
     <a href="#nav-top" id="navBackToTop">
         <div class="navFooterBackToTop"><span class="navFooterBackToTopText">Back to top</span></div>
@@ -51,7 +51,7 @@
     <div class="nav-footer-line"></div>
     <div class="navFooterLine navFooterLogoLine">
         <a href="#">
-            <img src="images/logo_small.png" alt="Amazon">
+            <img src="../images/logo_small.png" alt="Amazon">
             <div class="nav-logo-base nav-sprite"></div>
         </a>
     </div>

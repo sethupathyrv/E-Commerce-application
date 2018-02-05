@@ -1,6 +1,7 @@
 #navFooter{
-    margin:30px 0 8px 0;
-    padding:0 0 7px 0
+    margin:0px 0 8px 0;
+    padding:0 0 7px 0;
+    width: 100%;
 }
 #navFooter.navFooterWithStripe{
     margin:30px 0 0 0;
@@ -109,10 +110,10 @@ div.navFooterLogoLine{
     height:23px;
     margin:0 auto
 }
-.navFooterLinkLine{
+#navFooter.navFooterLinkLine{
     margin:0 8px 0 8px
 }
-.navFooterDLicense{
+#navFooter.navFooterDLicense{
     text-align:center;
     margin:8px 8px 0 8px
 }
@@ -192,7 +193,7 @@ div.navFooterLogoLine{
     text-align:left;
     line-height:115%
 }
-.navFooterDescText{
+#navFooter.navFooterDescText{
     font-size:10px;
     color:#767676;
     line-height:110%;
@@ -319,18 +320,18 @@ div.navFooterLogoLine{
     border:none;
     margin:0
 }
-#navFooter .navAccessibility.navFooterLinkCol{
+#navFooter.navAccessibility.navFooterLinkCol{
     line-height:120%
 }
-#navFooter .navAccessibility.navFooterVerticalColumn{
+#navFooter.navAccessibility.navFooterVerticalColumn{
     display:table;
     margin:0 auto
 }
-#navFooter .navAccessibility.navFooterColSpacerInner,#navFooter .navAccessibility.navFooterLinkCol{
+#navFooter.navAccessibility.navFooterColSpacerInner,#navFooter .navAccessibility.navFooterLinkCol{
     display:table-cell;
     padding:0 10px
 }
-#navFooter .navAccessibility.navFooterVerticalRow{
+#navFooter.navAccessibility.navFooterVerticalRow{
     display:table-row
 }
 

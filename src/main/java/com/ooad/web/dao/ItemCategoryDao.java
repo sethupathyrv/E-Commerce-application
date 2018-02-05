@@ -29,6 +29,7 @@ public class ItemCategoryDao {
                 final ItemCategory itemCategory = itemCategoryBuilder(rs);
                 itemCategories.add(itemCategory);
             }
+            con.close();
             return ImmutableList.copyOf(itemCategories);
         } catch (Exception e) {
             e.printStackTrace();

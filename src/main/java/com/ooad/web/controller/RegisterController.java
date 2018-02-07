@@ -31,7 +31,7 @@ public class RegisterController extends HttpServlet {
         String email=request.getParameter("email");
 
 
-            User user = new User(2,un,email,pw,true);
+            User user = new User(3,un,email,pw,true);
             dao.createUser(user);
             pwOut.print("Registration Successful! Please Login.");
             response.setContentType("text/html");

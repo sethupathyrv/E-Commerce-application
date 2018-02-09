@@ -32,7 +32,7 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("username", user.getUserName());
             session.setAttribute("email", em);
-            RequestDispatcher view = request.getRequestDispatcher("jsp/welcome.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
             view.forward(request, response);
         }else{
             pwOut.print("<p style=\"color:red\">Incorrect Username or Password!</p>");

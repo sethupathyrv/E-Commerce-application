@@ -56,12 +56,11 @@ public class UserDao {
     public void createUser(User user){
         try {
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO users(id,userName,emailId,password,isEnabled) values (?,?,?,?,?)");//add user to database
-            ps.setInt(1,user.getId());
-            ps.setString(2,user.getUserName());
-            ps.setString(3,user.getEmailId());
-            ps.setString(4,user.getPassword());
-            ps.setBoolean(5,user.isEnbaled());
+                    .prepareStatement("INSERT INTO users(userName,emailId,password,isEnabled) values (?,?,?,?)");//add user to database
+            ps.setString(1,user.getUserName());
+            ps.setString(2,user.getEmailId());
+            ps.setString(3,user.getPassword());
+            ps.setBoolean(4,user.isEnbaled());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

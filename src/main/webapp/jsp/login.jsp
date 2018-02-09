@@ -107,9 +107,15 @@
                                         <input type="email" maxlength="128" id="ap_email" name="email" tabindex="1" class="a-input-text a-span12 auth-autofocus auth-required-field">
                                         <br>
                                         <br>
+                                        <%--<div class="form-group">
+                                            <strong>Password</strong>
+                                            <input id="signinPassword" type="password" maxlength="25" class="form-control">
+                                        </div>--%>
                                         <label for="ap_password" class="a-form-label">
                                             Password
+                                            <span class="right"><a href="#">Forgot your password?</a></span>
                                         </label>
+
                                         <input type="password" maxlength="128" id="ap_password" name="psword" tabindex="1" class="a-input-text a-span12 auth-autofocus auth-required-field">
 
                                     </div>

@@ -23,7 +23,7 @@ public class ItemCategoryDao {
             final List<ItemCategory> itemCategories = new ArrayList<ItemCategory>();
             final Connection con = Database.getConnection();
             final Statement st = con.createStatement();
-            final String getAllQuery = "SELECT * FROM Category WHERE isEnabled = 1";
+            final String getAllQuery = "SELECT * FROM Categories WHERE isEnabled = 1";
             final ResultSet rs = st.executeQuery(getAllQuery);
             while (rs.next()) {
                 final ItemCategory itemCategory = itemCategoryBuilder(rs);

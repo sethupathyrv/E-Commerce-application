@@ -23,9 +23,11 @@ public class LoginController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+/*
         String em=request.getParameter("email");
         String pw =request.getParameter("psword");
-        PrintWriter pwOut = response.getWriter();
+*/
+        /*PrintWriter pwOut = response.getWriter();
 
         if(dao.validateLogin(em,pw)){
             User user = dao.getUser(em);
@@ -40,7 +42,7 @@ public class LoginController extends HttpServlet {
             view.include(request, response);
         }
 
-        pwOut.close();
+        pwOut.close();*/
 
     }
 

@@ -6,37 +6,35 @@ import com.ooad.web.utils.Database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.ws.rs.core.Response.StatusType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class UserDao {
 
-    public JSONObject validateLogin(final String email, String password){
+    public JSONObject validateLogin(final String email, String password) {
 
         try {
             final JSONObject status = new JSONObject();
             final Connection con = Database.getConnection();
-            final PreparedStatement ps = con.prepareStatement("SELECT  * FROM  Users where emailId=?");
-            ps.setString(1,email);
+            final PreparedStatement ps = con.prepareStatement("SELECT  * FROM  Users WHERE emailId=?");
+            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                if(rs.getString("password").equals(password)){
+            if (rs.next()) {
+                if (rs.getString("password").equals(password)) {
                     status.put("status", Constants.STATUS_OK);
-                    status.append("token",null);
-                    status.append("errors",null);
-                } else{
-                    status.put("status",Constants.STATUS_BAD_REQUEST );
+                    status.append("token", null);
+                    status.append("errors", null);
+                } else {
+                    status.put("status", Constants.STATUS_BAD_REQUEST);
                     final JSONArray errors = new JSONArray();
-                    errors.put(new JSONObject().put("psword",Constants.ERROR_WRONG_PASSWD));
-                    status.append("errors",errors);
+                    errors.put(new JSONObject().put("psword", Constants.ERROR_WRONG_PASSWD));
+                    status.append("errors", errors);
                 }
-            } else{
-                status.append("status",Constants.STATUS_BAD_REQUEST);
+            } else {
+                status.append("status", Constants.STATUS_BAD_REQUEST);
                 final JSONArray errors = new JSONArray();
-                errors.put(new JSONObject().put("email",Constants.ERROR_USER_EXIST ));
+                errors.put(new JSONObject().put("email", Constants.ERROR_USER_EXIST));
             }
             con.close();
             return status;
@@ -46,14 +44,14 @@ public class UserDao {
         return new JSONObject();
     }
 
-    public User getUser(String email){
+    public User getUser(String email) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Users WHERE emailId=?");
-            ps.setString(1,email);
+            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return  new User(rs.getInt("id"),
+            if (rs.next()) {
+                return new User(rs.getInt("id"),
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
@@ -66,15 +64,15 @@ public class UserDao {
         return null;
     }
 
-    public void createUser(User user){
+    public void createUser(User user) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Users(userName,emailId,password,isEnabled) values (?,?,?,?)");//add user to database
-            ps.setString(1,user.getUserName());
-            ps.setString(2,user.getEmailId());
-            ps.setString(3,user.getPassword());
-            ps.setBoolean(4,user.isEnbaled());
+                    .prepareStatement("INSERT INTO Users(userName,emailId,password,isEnabled) VALUES (?,?,?,?)");//add user to database
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getEmailId());
+            ps.setString(3, user.getPassword());
+            ps.setBoolean(4, user.isEnbaled());
             ps.executeUpdate();
             con.close();
         } catch (Exception e) {

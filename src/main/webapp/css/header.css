@@ -85,10 +85,10 @@
 
 .header .nav-main .nav-left .cart {
     background: transparent url(../images/cart.png) no-repeat 2px 7px;
-    padding: 2px 20px 62px 42px;
+    padding: 2px 0 62px 42px;
 }
 
-.header .nav-main i .fa-caret-down {
+.fa-caret-down {
     color: #ccc;
     font-size: 11px;
     padding-left: 3px;
@@ -130,3 +130,20 @@
     padding-right: 0px;
 }
 
+#nav-account a {
+    text-decoration: none;
+}
+
+#nav-account{
+    padding-right: 0;
+    padding-left: 15px;
+}
+
+#nav-prime {
+    padding-left: 4px;
+    padding-right: 5px;
+}
+
+#nav-prime a{
+    text-decoration: none;
+}

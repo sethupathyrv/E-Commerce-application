@@ -1,3 +1,5 @@
+<%@ page import="com.ooad.web.model.ItemCategory" %>
+<%@ page import="com.ooad.web.dao.ItemCategoryDao" %>
 <!DOCTYPE html>
 <!--
   ~ Created by Sandeep Tadepalli on 10/02/18 15:05
@@ -25,17 +27,24 @@
         </div>
         <div class="col-lg-6 col-md-6">
             <div class="row  search-box ">
-                <form action="" id="item-search">
+                <form action="" id="item-search" style="height: inherit">
                     <div class="col-lg-2 col-md-2 search-category">
-                        <select name="" id="nav-search-select" disabled>
+                        <select name="" id="nav-search-select">
+                            <option value="all">All Categories</option>
+                            <% final ItemCategoryDao itemCategoryDao = new ItemCategoryDao();
+                                for (ItemCategory itemCategory : itemCategoryDao.getAllCategories()) { %>
+                            <option value="<%= itemCategory.getName()%>"><%= itemCategory.getDisplayName()%>
+                            </option>
+                            <% }%>
                             <option>All Categories</option>
                         </select>
                     </div>
                     <input class="col-lg-9 col-md-9 search-input" type="text">
+                    <div class="col-lg-1 col-md-1 search-icon"  id = "search-icon">
+                        <i class="fa fa-search fa-1g pull-right icn" aria-hidden="true"></i>
+                    </div>
                 </form>
-                <div class="col-lg-1 col-md-1 search-icon"  id = "search-icon">
-                    <i class="fa fa-search fa-1g pull-right icn" aria-hidden="true"></i>
-                </div>
+
             </div>
         </div>
         <div class="col-lg-4 col-md-4">
@@ -119,21 +128,21 @@
         </div>
         <div class="col-lg-4 col-md-3">
             <div class="row nav-left">
-                <div class="col-md-4 nav-border-round">
+                <div class="col-md-4 nav-border-round" id = "nav-account">
                     <a href="#">
                         <span class="nav-line-1">Hello, Sandeep </span><br>
                         <span class="nav-line-2">Your Orders</span>
                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                     </a>
                 </div>
-                <div class="col-md-2 nav-border-round">
+                <div class="col-md-2 nav-border-round" id = "nav-prime">
                     <a href="#">
                         <span class="nav-line-1">Try</span><br>
                         <span class="nav-line-2"> Prime</span>
                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                     </a>
                 </div>
-                <div class="col-md-3 nav-border-round">
+                <div class="col-md-3 nav-border-round" id = "nav-yourlist">
                     <a href="#">
                         <span class="nav-line-1">Your </span><br>
                         <span class="nav-line-2">Lists </span> <i class="fa fa-caret-down" aria-hidden="true"></i>

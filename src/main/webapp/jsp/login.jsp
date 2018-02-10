@@ -59,8 +59,8 @@
     <meta charset="utf-8">
     <title dir="ltr">Amazon Sign IN</title>
     <!-- <link rel="stylesheet" href="https://images-na.ssl-images-amazon.com/images/I/61gbb09bfIL._RC|11Fd9tJOdtL.css,21ULbzscqzL.css,31Q3id-QR0L.css,31QszevPBSL.css_.css#AUIClients/AmazonUI.min" /> -->
-    <link rel="stylesheet" href="css/1.css" />
-    <link rel="stylesheet" href="css/2.css" />
+    <link rel="stylesheet" href="../css/amazon1.css" />
+    <link rel="stylesheet" href="../css/amazon2.css" />
     <!-- <link rel="stylesheet" href="https://images-na.ssl-images-amazon.com/images/G/01/AUIClients/CVFAssets-e91ba5c6e67c58c7f9c4c413fa67697feade389e._V2_.css#AUIClients/CVFAssets.secure.min" /> -->
 </head>
 <body >

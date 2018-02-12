@@ -1,6 +1,9 @@
 package com.ooad.web.model;
 
+import org.json.JSONObject;
+
 public class User {
+
     private int id;
     private String userName;
     private String emailId;
@@ -46,4 +49,13 @@ public class User {
     public boolean isEnbaled() {
         return isEnbaled;
     }
+
+    public JSONObject toJSON() {
+        JSONObject userJsonObject = new JSONObject();
+        userJsonObject.put("email", emailId);
+        userJsonObject.put("username", userName);
+        return userJsonObject;
+    }
+
+
 }

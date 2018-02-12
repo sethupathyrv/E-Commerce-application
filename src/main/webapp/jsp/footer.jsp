@@ -11,7 +11,7 @@
                 <ul>
                     <li class='nav_first'><a href="#" class='nav_a'>About Us</a></li>
                     <li><a href="#" class='nav_a'>Careers</a></li>
-                    <li><a href="#" class='nav_a' >Press Releases</a></li>
+                    <li><a href="#" class='nav_a'>Press Releases</a></li>
                     <li><a href="#" class='nav_a'>Amazon Cares</a></li>
                     <li class='nav_last'><a href="#" class='nav_a'>Gift a Smile</a></li>
                 </ul>
@@ -76,33 +76,43 @@
     <div class="navFooterLine navFooterLinkLine navFooterDescLine">
         <table class="navFooterMoreOnAmazon" cellspacing="0">
             <tr>
-                <td class="navFooterDescItem"><a href="#" class="nav_a">AbeBooks<br/> <span class="navFooterDescText">Books, art<br/> & collectibles</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class="nav_a">AbeBooks<br/> <span class="navFooterDescText">Books, art<br/> & collectibles</span></a>
+                </td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
-                <td class="navFooterDescItem"><a href="#" class='nav_a'>Amazon Web Services<br/> <span class="navFooterDescText">Scalable Cloud<br/> Computing Services</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class='nav_a'>Amazon Web Services<br/> <span
+                        class="navFooterDescText">Scalable Cloud<br/> Computing Services</span></a></td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
-                <td class="navFooterDescItem"><a href="#" class='nav_a'>Audible<br/> <span class="navFooterDescText">Download<br/> Audio Books</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class='nav_a'>Audible<br/> <span class="navFooterDescText">Download<br/> Audio Books</span></a>
+                </td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
-                <td class="navFooterDescItem"><a href="#" class='nav_a'>DPReview<br/> <span class="navFooterDescText">Digital<br/> Photography</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class='nav_a'>DPReview<br/> <span class="navFooterDescText">Digital<br/> Photography</span></a>
+                </td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
-                <td class="navFooterDescItem"><a href="#" class='nav_a'>IMDb<br/> <span class="navFooterDescText">Movies, TV<br/> & Celebrities</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class='nav_a'>IMDb<br/> <span class="navFooterDescText">Movies, TV<br/> & Celebrities</span></a>
+                </td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
-                <td class="navFooterDescItem"><a href="#" class='nav_a'>Junglee.com<br/> <span class="navFooterDescText">Shop Online<br/> in India</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class='nav_a'>Junglee.com<br/> <span
+                        class="navFooterDescText">Shop Online<br/> in India</span></a></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td class="navFooterDescItem"><a href="#" class='nav_a'>Look.com<br/> <span class="navFooterDescText">Kids' Clothing<br/> & Shoes</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class='nav_a'>Look.com<br/> <span class="navFooterDescText">Kids' Clothing<br/> & Shoes</span></a>
+                </td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
-                <td class="navFooterDescItem"><a href="#" class='nav_a'>Shopbop<br/> <span class="navFooterDescText">Designer<br/> Fashion Brands</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class='nav_a'>Shopbop<br/> <span class="navFooterDescText">Designer<br/> Fashion Brands</span></a>
+                </td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
                 <td class="navFooterDescItem"><a href="#" class='nav_a'>
                     Amazon Business<br/> <span class="navFooterDescText">Everything For<br/> Your Business</span></a>
                 </td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
-                <td class="navFooterDescItem"><a href="#" class='nav_a'>Souq.com<br/> <span class="navFooterDescText">Shop Online in the<br/> Middle East</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class='nav_a'>Souq.com<br/> <span class="navFooterDescText">Shop Online in the<br/> Middle East</span></a>
+                </td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
-                <td class="navFooterDescItem"><a href="#" class='nav_a'>Amazon Now<br/> <span class="navFooterDescText"> 2-Hour Delivery<br/> on Everyday Items</span></a></td>
+                <td class="navFooterDescItem"><a href="#" class='nav_a'>Amazon Now<br/> <span class="navFooterDescText"> 2-Hour Delivery<br/> on Everyday Items</span></a>
+                </td>
                 <td class="navFooterDescSpacer" style="width: 4%"></td>
                 <td class="navFooterDescItem">&nbsp;</td>
             </tr>

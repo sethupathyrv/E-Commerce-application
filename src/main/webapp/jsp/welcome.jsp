@@ -13,25 +13,26 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome <%=session.getAttribute("username")%></title>
+    <title>Welcome <%=session.getAttribute("username")%>
+    </title>
 </head>
 <body>
 <%
     //If User is not logged in redirect to home page
-    if (session != null)
-    {
-        if(session.getAttribute("username")==null)
+    if (session != null) {
+        if (session.getAttribute("username") == null)
             response.sendRedirect("index.jsp");
     }
 %>
 <!-- Page Header -->
-<div class= "top-header"><span class= "home-logo"><a href="/JSPLogin"></a></span></div>
+<div class="top-header"><span class="home-logo"><a href="/JSPLogin"></a></span></div>
 
 <div class="container">
     <!-- Use session variables to print username and email -->
     <div class="content welcome-text">
         <p><%=session.getAttribute("username")%> Your login was successful!:)</p>
-        <p> You are registered under this email <%=session.getAttribute("email")%> </p>
+        <p> You are registered under this email <%=session.getAttribute("email")%>
+        </p>
         <br>
 
     </div>
@@ -39,7 +40,7 @@
 </div>
 <!-- Page Footer -->
 <div class="footer">
-    <div class= "footer blk">
+    <div class="footer blk">
         <!-- Logout Form -->
         <form action="Logout" method="post">
             <input class="back-home-btn" type="submit" value="Logout">

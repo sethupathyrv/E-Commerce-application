@@ -66,12 +66,11 @@
         <div class="nav-right">
             <a class="nav-a" href="#">
                 <%
-                    if(session.getAttribute("username")==null) {  %>
+                    if (session.getAttribute("username") == null) { %>
                 <span>Hello. Sign in</span>
                 <%
-                }
-                    else{ %>
-               <span>hello <%=session.getAttribute("username")%></span>
+                } else { %>
+                <span>hello <%=session.getAttribute("username")%></span>
                 <%
                     }
                 %>

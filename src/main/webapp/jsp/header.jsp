@@ -1,10 +1,10 @@
-<%@ page import="com.ooad.web.model.ItemCategory" %>
 <%@ page import="com.ooad.web.dao.ItemCategoryDao" %>
+<%@ page import="com.ooad.web.model.ItemCategory" %>
 <!DOCTYPE html>
 <!--
-  ~ Created by Sandeep Tadepalli on 10/02/18 15:05
-  ~ Copyright (c) 2018. All rights reserved.
-  -->
+~ Created by Sandeep Tadepalli on 10/02/18 15:05
+~ Copyright (c) 2018. All rights reserved.
+-->
 
 <html lang="en">
 <head>
@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/bootstrap-dropdownhover.css">
 <link rel="stylesheet" href="../css/header.css">
@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     <input class="col-lg-9 col-md-9 search-input" type="text">
-                    <div class="col-lg-1 col-md-1 search-icon"  id = "search-icon">
+                    <div class="col-lg-1 col-md-1 search-icon" id="search-icon">
                         <i class="fa fa-search fa-1g pull-right icn" aria-hidden="true"></i>
                     </div>
                 </form>
@@ -56,10 +56,10 @@
             <div class="row nav-left">
                 <div class="col-md-6 nav-border-round">
                     <div class="row">
-                        <div class="col-md-2 " id="map-location-picker" >
+                        <div class="col-md-2 " id="map-location-picker">
                             <img src="../images/location.png" alt="">
                         </div>
-                        <div class="col-md-10" id = "nav-deliver-div">
+                        <div class="col-md-10" id="nav-deliver-div">
                             <a href="#" id="nav-deliver">
                                 <span style="font-size: 12px;font-weight: 400; ">Deliver to Tadepalli </span>
                                 <br>Bangalore 560100
@@ -69,7 +69,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="dropdown nav-border-round">
-                        <a class="dropdown-toggle" type="button" id="nav-shopby" data-toggle="dropdown" data-hover="dropdown">
+                        <a class="dropdown-toggle" type="button" id="nav-shopby" data-toggle="dropdown"
+                           data-hover="dropdown">
                             <span style="font-size: 12px; font-weight: 400">shop by</span>
                             <br>Category <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </a>
@@ -101,9 +102,9 @@
         <div class="col-lg-5 col-md-6">
             <div class="row nav-fill">
                 <br>
-                <a href="#" >Sandeep's Amazon.in</a> &nbsp;&nbsp;&nbsp;
-                <a href="#" >Today's deals</a>&nbsp;&nbsp;&nbsp;
-                <a href="#" >Amazon Pay</a>&nbsp;&nbsp;&nbsp;
+                <a href="#">Sandeep's Amazon.in</a> &nbsp;&nbsp;&nbsp;
+                <a href="#">Today's deals</a>&nbsp;&nbsp;&nbsp;
+                <a href="#">Amazon Pay</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Sell</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Customer Service</a> &nbsp;&nbsp;
 
@@ -128,21 +129,21 @@
         </div>
         <div class="col-lg-4 col-md-3">
             <div class="row nav-left">
-                <div class="col-md-4 nav-border-round" id = "nav-account">
+                <div class="col-md-4 nav-border-round" id="nav-account">
                     <a href="#">
                         <span class="nav-line-1">Hello, Sandeep </span><br>
                         <span class="nav-line-2">Your Orders</span>
                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                     </a>
                 </div>
-                <div class="col-md-2 nav-border-round" id = "nav-prime">
+                <div class="col-md-2 nav-border-round" id="nav-prime">
                     <a href="#">
                         <span class="nav-line-1">Try</span><br>
                         <span class="nav-line-2"> Prime</span>
                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                     </a>
                 </div>
-                <div class="col-md-3 nav-border-round" id = "nav-yourlist">
+                <div class="col-md-3 nav-border-round" id="nav-yourlist">
                     <a href="#">
                         <span class="nav-line-1">Your </span><br>
                         <span class="nav-line-2">Lists </span> <i class="fa fa-caret-down" aria-hidden="true"></i>

@@ -11,13 +11,13 @@
     <title>
         Amazon.com: Online Shopping for Electronics, Apparel, Computers, Books, DVDs &amp; more</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-    <%@include file="jsp/header.jsp"%>
-    <%@include file="jsp/footer.jsp"%>
+<%@include file="jsp/header.jsp" %>
+<%@include file="jsp/footer.jsp" %>
 </body>
 </html>

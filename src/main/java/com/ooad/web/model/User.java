@@ -8,14 +8,14 @@ public class User {
     private String userName;
     private String emailId;
     private String password;
-    private boolean isEnbaled;
+    private boolean isEnabled;
 
     public User(int id, String userName, String emailId, String password, boolean isEnbaled) {
         this.id = id;
         this.userName = userName;
         this.emailId = emailId;
         this.password = password;
-        this.isEnbaled = isEnbaled;
+        this.isEnabled = isEnbaled;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class User {
                 ", userName='" + userName + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", password='" + password + '\'' +
-                ", isEnbaled=" + isEnbaled +
+                ", isEnbaled=" + isEnabled +
                 '}';
     }
 
@@ -46,8 +46,8 @@ public class User {
         return password;
     }
 
-    public boolean isEnbaled() {
-        return isEnbaled;
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
     public JSONObject toJSON() {

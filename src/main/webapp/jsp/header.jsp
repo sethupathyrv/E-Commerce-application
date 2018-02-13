@@ -107,24 +107,6 @@
                 <a href="#">Amazon Pay</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Sell</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Customer Service</a> &nbsp;&nbsp;
-
-                <!--<div class="col-md-3">
-                    <a href="#" >Sandeep's Amazon.in</a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#" >Today's deals</a>
-                </div>
-                <div class="col-md-2">
-                    <a href="#" >Amazon Pay</a>
-                </div>
-                <div class="col-md-1">
-                    <a href="#">Sell</a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#">Customer Service</a>
-                </div>-->
-
-
             </div>
         </div>
         <div class="col-lg-4 col-md-3">

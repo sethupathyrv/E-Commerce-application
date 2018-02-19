@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.ooad.web.model.Item" %><%--
   ~ Created by Harsha Raj on 18/02/18 15:37
   ~ Copyright (c) 2018. All rights reserved.
   --%>
@@ -13,20 +13,24 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <script src="js/jquery.min.js"></script>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <%--<script src="../js/item.js"></script>--%>
     <link rel="stylesheet" href="../css/item.css">
+    <% Item item = (Item) request.getAttribute("item"); %>
 </head>
 <body>
 <%@include file="header.jsp" %>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-4">
-            <img id="prodImage" src="/images/watch.jpg" class="img-responsive" width="346" height="346" alt="Watch">
+            <img id = "prodImage" width="346"  src=<%=item.getUrl()%> height="346" class = "img-responsive" alt="watch"   >
         </div>
         <div class="col-lg-5">
             <h1 id="title">
-                <span id="productTitle">Espoir Mens ESP12457 Analog Blue Dial Watch</span>
+                <span id="productTitle"> <%= item.getName()%></span>
             </h1>
             <hr>
             <div id="price">
@@ -35,7 +39,7 @@
                     <tr class="text-c1">
                         <td class="text-right text-nowrap">M.R.P:</td>
                         <td class="text-left text-nowrap">
-                            <del>&#2352;</del><del><span id="originalPrice"> 2,495.00</span></del>
+                            <del>&#2352;</del><del><span id="originalPrice"><%= item.getPrice()%> </span></del>
                         </td>
                     </tr>
                     <tr>

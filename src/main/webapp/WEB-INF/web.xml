@@ -49,5 +49,14 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <display-name>ItemController</display-name>
+        <servlet-name>item</servlet-name>
+        <servlet-class>com.ooad.web.controller.ItemController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>item</servlet-name>
+        <url-pattern>/item</url-pattern>
+    </servlet-mapping>
 
 </web-app>

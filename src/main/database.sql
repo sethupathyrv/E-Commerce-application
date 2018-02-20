@@ -42,3 +42,18 @@ CREATE TABLE Sellers
     ENGINE =InnoDB
 ;
 
+create table Items
+(
+    id int auto_increment
+        primary key,
+    name varchar(255) not null,
+    price float not null,
+    description varchar(1000) not null,
+    sellerId int not null,
+    offerId int null,
+    subSubSubCategoryId int not null,
+    constraint Items_id_uindex
+    unique (id)
+)
+    engine=InnoDB
+;

@@ -61,10 +61,16 @@ public class Seller {
         return sellerJsonObject;
     }
 
-    public Seller addItem(){
+    public JSONObject addItem(int id,String name, float price, String url) {
 
+        //Pre processing Storing the file into server
+        //Check for errors
+        //Call Add Item from ITem DAO
+        //If true return jsonobject with true
+        //Else Item Addition failed try again.
+        //return the json object
+        return null;
     }
-
 
 
 }

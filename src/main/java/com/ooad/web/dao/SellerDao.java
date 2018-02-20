@@ -137,7 +137,4 @@ public class SellerDao {
         }
         return null;
     }
-    public Seller addItem(){
-
-    }
 }

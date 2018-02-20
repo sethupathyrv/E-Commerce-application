@@ -7,20 +7,18 @@ package com.ooad.web.model;
 
 import org.json.JSONObject;
 
-import java.util.Map;
-
 public class Item {
     private final int id;
     private final String name;
     private final float price;
     private final String url;
-//    private final Offer offer;
-//    private final Seller seller;
+    //    private final Offer offer;
+    private final Seller seller;
 //    private final SubSubCategory subSubCategory;
 //    private final String itemDescription;
 //    private final Map<String,String> itemDetails;
 
-    public Item(int id, String name, float price,String url) {
+    public Item(int id, String name, float price, String url, Seller seller) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -30,6 +28,11 @@ public class Item {
         this.subSubCategory = subSubCategory;
         this.itemDescription = itemDescription;
         this.itemDetails = itemDetails;*/
+        this.seller = seller;
+    }
+
+    public Seller getSeller() {
+        return seller;
     }
 
     public int getId() {

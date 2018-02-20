@@ -30,6 +30,17 @@
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <display-name>SellerLoginController</display-name>
+        <servlet-name>SellerLogin</servlet-name>
+        <servlet-class>com.ooad.web.controller.SellerLoginController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SellerLogin</servlet-name>
+        <url-pattern>/sellerlogin</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <display-name>LogoutController</display-name>
         <servlet-name>Logout</servlet-name>
@@ -45,6 +56,17 @@
         <servlet-name>Register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <display-name>SellerRegisterController</display-name>
+        <servlet-name>SellerRegister</servlet-name>
+        <servlet-class>com.ooad.web.controller.SellerRegisterController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SellerRegister</servlet-name>
+        <url-pattern>/sellerregister</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>

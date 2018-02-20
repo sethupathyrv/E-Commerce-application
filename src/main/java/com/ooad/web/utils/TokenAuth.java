@@ -5,7 +5,9 @@
 
 package com.ooad.web.utils;
 
+import com.ooad.web.dao.SellerDao;
 import com.ooad.web.dao.UserDao;
+import com.ooad.web.model.Seller;
 import com.ooad.web.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -33,6 +35,19 @@ public abstract class TokenAuth {
                 .compact();
     }
 
+    public static String generateSellerToken(Seller seller) {
+        final long nowMills = System.currentTimeMillis();
+        final long expTime = nowMills + ttl;
+        System.out.println();
+        return Jwts.builder().setSubject(String.valueOf(seller.getId()))
+                .signWith(signatureAlgo, key)
+                .setIssuedAt(new Date(nowMills))
+                .setExpiration(new Date(expTime))
+                .compact();
+    }
+
+
+
     public static User getUserFromToken(String jwt) {
         try {
 
@@ -40,6 +55,20 @@ public abstract class TokenAuth {
             final int userId = Integer.parseInt(claims.getSubject());
             UserDao userDao = new UserDao();
             return userDao.getUser(userId);
+        } catch (SignatureException e) {
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static Seller getSellerFromToken(String jwt) {
+        try {
+
+            Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt).getBody();
+            final int sellerId = Integer.parseInt(claims.getSubject());
+            SellerDao sellerDao = new SellerDao();
+            return sellerDao.getSeller(sellerId);
         } catch (SignatureException e) {
             return null;
         } catch (Exception e) {

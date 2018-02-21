@@ -1,5 +1,5 @@
 /*
- * Created by Sandeep Tadepalli on 13/02/18 15:49
+ * Created by Shravan on  14/2/18 11:59 PM.
  * Copyright (c) 2018. All rights reserved.
  */
 function loginResponse(response) {
@@ -37,3 +37,4 @@ $(document).ready(function () {
 
     });
 });
+

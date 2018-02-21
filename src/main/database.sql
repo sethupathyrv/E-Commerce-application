@@ -27,3 +27,33 @@ create table Users
     engine=InnoDB
 ;
 
+CREATE TABLE Sellers
+(
+    id int auto_increment PRIMARY KEY ,
+    userName VARCHAR(255) not null,
+    emailId VARCHAR(255) not null,
+    password VARCHAR(255) not NULL,
+    isEnabled TINYINT(1) DEFAULT '1' null,
+    CONSTRAINT Sellers_id_uindex
+    UNIQUE (id),
+    CONSTRAINT Sellers_emailId_uindex
+    UNIQUE (emailId)
+)
+    ENGINE =InnoDB
+;
+
+create table Items
+(
+    id int auto_increment
+        primary key,
+    name varchar(255) not null,
+    price float not null,
+    description varchar(1000) not null,
+    sellerId int not null,
+    offerId int null,
+    subSubSubCategoryId int not null,
+    constraint Items_id_uindex
+    unique (id)
+)
+    engine=InnoDB
+;

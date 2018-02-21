@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="../css/footer.css">
 <div class='navLeftFooter nav-sprite-v1' id='navFooter'>
-    <a href="#nav-top" id="navBackToTop">
-        <div class>
-            <span class="navFooterBackToTopText">Back to top</span></div>
-    </a>
+    <%--<a href="#nav-top" id="navBackToTop">--%>
+        <%--<div class>--%>
+            <%--<span class="navFooterBackToTopText">Back to top</span></div>--%>
+    <%--</a>--%>
     <table class="navFooterVerticalColumn" cellspacing="0" align="center" role="presentation">
         <tr>
             <td class="navFooterLinkCol">

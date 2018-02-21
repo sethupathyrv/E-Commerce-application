@@ -5,28 +5,69 @@
 
 package com.ooad.web.model;
 
-import java.util.Map;
+import org.json.JSONObject;
 
 public class Item {
     private final int id;
     private final String name;
     private final float price;
-    private final Offer offer;
+    private final String url;
+    //    private final Offer offer;
     private final Seller seller;
-    private final SubSubCategory subSubCategory;
-    private final String itemDescription;
-    private final Map<String,String> itemDetails;
+//    private final SubSubCategory subSubCategory;
+//    private final String itemDescription;
+//    private final Map<String,String> itemDetails;
 
-    public Item(int id, String name, float price, Offer offer,
-                Seller seller, SubSubCategory subSubCategory,
-                String itemDescription, Map<String, String> itemDetails) {
+    public Item(int id, String name, float price, String url, Seller seller) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.offer = offer;
+        this.url = url;
+        /*this.offer = offer;
         this.seller = seller;
         this.subSubCategory = subSubCategory;
         this.itemDescription = itemDescription;
-        this.itemDetails = itemDetails;
+        this.itemDetails = itemDetails;*/
+        this.seller = seller;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+
+                ", url='" + url + '\'' +
+                '}';
+    }
+
+    public JSONObject toJSON() {
+        JSONObject itemJsonObject = new JSONObject();
+        itemJsonObject.put("id", id);
+        itemJsonObject.put("name", name);
+        itemJsonObject.put("price", price);
+        itemJsonObject.put("url", url);
+        return itemJsonObject;
     }
 }

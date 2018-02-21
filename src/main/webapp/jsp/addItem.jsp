@@ -102,10 +102,10 @@
 
                         <label for="sel" class="a-form-label">Sub-Sub Category</label>
 
-                        <select id="sel" name="subSubCategory" onchange="show(this)">
-                            <option value="">-- Select --</option>
-                        </select>
-                        <p id="msg"></p>
+                        <%--<select id="sel" name="subSubCategory" onchange="show(this)">--%>
+                            <%--<option value="">-- Select --</option>--%>
+                        <%--</select>--%>
+                        <%--<p id="msg"></p>--%>
 
                         <label id="itemDescription" class="a-form-label">Item Description</label>
 
@@ -114,7 +114,7 @@
 
                         <label for="url" class="a-form-label">Image url</label>
 
-                        <input class="form-control" type="file" name="url" id="url" />
+                        <input class="form-control" type="file" name="itemImage" id="url" />
 
                     </div>
                 </div>
@@ -137,19 +137,19 @@
 
 <%-- ...........Script to print values of recent item added........... --%>
 <script type="text/javascript">
-    $(function () {
-        $("#btnCookie").bind("click", function () {
-            $.cookie("id", $("#id").val());
-            $.cookie("name", $("#name").val());
-            window.location.href = "homepageSeller.jsp";
-        });
-    });
+    // $(function () {
+    //     $("#btnCookie").bind("click", function () {
+    //         $.cookie("id", $("#id").val());
+    //         $.cookie("name", $("#name").val());
+    //         window.location.href = "homepageSeller.jsp";
+    //     });
+    // });
 </script>
 
 
 <%--..........To populate select dropdown using json file.........--%>
 <script>
-    window.onload = populateSelect();
+/*    window.onload = populateSelect();
 
     //........... THE JSON ARRAY..............
     function populateSelect() {
@@ -172,12 +172,12 @@
         var msg = document.getElementById('msg');
         msg.innerHTML = 'Selected Category: <b>' + ele.options[ele.selectedIndex].text + '</b> </br>' +
             'ID: <b>' + ele.value + '</b>';
-    }
+    }*/
 </script>
 
 <%--............To convert form values into json object........--%>
 <script>
-    (function() {
+/*    (function() {
         function toJSONString( form ) {
             var obj = {};
             var elements = form.querySelectorAll( "input, select, textarea" );
@@ -204,12 +204,38 @@
             }, false);
 
         });
-    })();
+    })();*/
 </script>
 
 <script>
-    $(".reset").click(function() {
-        $(this).closest('form').find("input[type=text], textarea").val("");
+    $(document).ready(function()
+    {
+        $("#uploadBtn").click(function()
+        {
+            $('input[name="file"]').each(function(index, value)
+            {
+                var file = value.files[0];
+                if(file)
+                {
+                    var formData = new FormData();
+                    formData.append('file', file);
+                    //Convert to json and change it to a string add
+                    formData.append('json',"{'test':2}");
+                    $.ajax({
+                        url : '/item/add',
+                        type : 'POST',
+                        data : formData,
+                        cache : false,
+                        contentType : false,
+                        processData : false,
+                        success : function(data, textStatus, jqXHR) {
+                            var message = jqXHR.responseText;
+                            $("#messages").append("<li>" + message + "</li>");
+                        }
+                    });
+                }
+            });
+        });
     });
 </script>
 

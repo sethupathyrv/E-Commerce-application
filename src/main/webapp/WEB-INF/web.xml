@@ -86,13 +86,13 @@
     </servlet-mapping>
 
     <servlet>
-        <display-name>AddItemController</display-name>
-        <servlet-name>AddItem</servlet-name>
-        <servlet-class>com.ooad.web.controller.AddItemController</servlet-class>
+        <display-name>SellerHomePageController</display-name>
+        <servlet-name>SellerHome</servlet-name>
+        <servlet-class>com.ooad.web.controller.SellerHomePageController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>AddItem</servlet-name>
-        <url-pattern>/additem</url-pattern>
+        <servlet-name>SellerHome</servlet-name>
+        <url-pattern>/seller</url-pattern>
     </servlet-mapping>
 
 </web-app>

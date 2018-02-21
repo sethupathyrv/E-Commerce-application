@@ -7,6 +7,11 @@ package com.ooad.web.api;
 
 import com.ooad.web.dao.ItemDao;
 import com.ooad.web.model.Item;
+import com.ooad.web.model.Seller;
+import com.ooad.web.utils.Constants;
+import com.ooad.web.utils.TokenAuth;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,6 +19,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.io.*;
 import java.util.ArrayList;
 
 @Path("/item")
@@ -53,4 +59,20 @@ public class ItemService {
         return Response.status(Status.OK).entity(new JSONObject().put("items",j).toString()).build();
     }
 
+    @Path("add")
+    @POST
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+    public Response addItem(  @FormDataParam("file") InputStream fileInputStream,
+                                    @FormDataParam("file") FormDataContentDisposition fileMetaData,
+                                    @FormDataParam("json")String item,
+                                    @HeaderParam("authToken") String token) throws Exception {
+        Seller seller= TokenAuth.getSellerFromToken(token);
+        if(seller==null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode()).toString()).build();
+        }
+        JSONObject itemObject=new JSONObject(item);
+        JSONObject jsonObject=new JSONObject();
+        jsonObject=seller.addItem(itemObject,fileInputStream);
+        return Response.status(Status.OK).entity(jsonObject.toString()).build();
+    }
 }

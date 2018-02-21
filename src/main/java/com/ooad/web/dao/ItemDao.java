@@ -26,14 +26,15 @@ import java.util.Collection;
 import java.util.List;
 
 public class ItemDao {
-    public boolean createItem (final String name, final float price, final String url){
+    public boolean createItem (final String name, final float price, final String url,final int sellerId){
         try{
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Items(name,price,url) VALUES (?,?,?)");//add user to database
+                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId) VALUES (?,?,?,?)");
             ps.setString(1, name);
             ps.setFloat(2, price);
             ps.setString(3, url);
+            ps.setInt(4,sellerId);
             ps.executeUpdate();
             con.close();
             return true;

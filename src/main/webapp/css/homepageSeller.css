@@ -1,0 +1,16 @@
+.header {
+    background-color: #f3f3f3;
+    height: 50px;
+}
+
+
+.logo.col-lg-2.col-md-2 {
+    padding-top: 13px;
+    margin-left: 20px;
+}
+/*
+.row.bar {
+    margin-top: auto;
+}
+*/
+

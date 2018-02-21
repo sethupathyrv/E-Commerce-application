@@ -18,6 +18,7 @@ public class ItemController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final int itemId = Integer.parseInt(request.getParameter("id"));
+        System.out.println(itemId);
         // getItem() using ItemDao.
         //Creating a Dummy item
         Item item = new Item(itemId,"Watch",200,"/images/watch.jpg", null);

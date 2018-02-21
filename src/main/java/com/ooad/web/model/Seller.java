@@ -56,7 +56,7 @@ public class Seller {
 
     public JSONObject toJSON() {
         JSONObject sellerJsonObject = new JSONObject();
-        sellerJsonObject.put("email", emailId);
+        sellerJsonObject.put("id", id);
         sellerJsonObject.put("username", userName);
         return sellerJsonObject;
     }

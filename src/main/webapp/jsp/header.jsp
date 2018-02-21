@@ -1,24 +1,26 @@
 <%@ page import="com.ooad.web.dao.ItemCategoryDao" %>
 <%@ page import="com.ooad.web.model.ItemCategory" %>
-<!DOCTYPE html>
-<!--
-~ Created by Sandeep Tadepalli on 10/02/18 15:05
-~ Copyright (c) 2018. All rights reserved.
--->
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<%@ page import="com.ooad.web.utils.TokenAuth" %>
+<%@ page import="com.ooad.web.model.User" %>
+<% Cookie[] cookies = request.getCookies();
+   User user = null;
+   if(cookies != null){
+       for(Cookie cookie: cookies){
+           if(cookie.getName().equals("authToken")){
+                user = TokenAuth.getUserFromToken(cookie.getValue());
+           }
+       }
+   }
+%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/bootstrap-dropdownhover.css">
 <link rel="stylesheet" href="../css/header.css">
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script src="../js/bootstrap-dropdownhover.js"></script>
+<script src="js/header.js"></script>
 <header class="container-fluid header">
     <div class="row nav-belt ">
         <div class="logo col-lg-2 col-md-2">
@@ -61,7 +63,8 @@
                         </div>
                         <div class="col-md-10" id="nav-deliver-div">
                             <a href="#" id="nav-deliver">
-                                <span style="font-size: 12px;font-weight: 400; ">Deliver to Tadepalli </span>
+                                <span style="font-size: 12px;font-weight: 400; ">Deliver to
+                                    <%= (user==null)? "" : user.getUserName() %> </span>
                                 <br>Bangalore 560100
                             </a>
                         </div>
@@ -102,21 +105,39 @@
         <div class="col-lg-5 col-md-6">
             <div class="row nav-fill">
                 <br>
-                <a href="#">Sandeep's Amazon.in</a> &nbsp;&nbsp;&nbsp;
+                <a href="#">
+                    <%= (user==null)? "your":user.getUserName()%>
+                    Amazon.in</a> &nbsp;&nbsp;&nbsp;
                 <a href="#">Today's deals</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Amazon Pay</a>&nbsp;&nbsp;&nbsp;
-                <a href="#">Sell</a>&nbsp;&nbsp;&nbsp;
+                <a href="/sellerlogin">Sell</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Customer Service</a> &nbsp;&nbsp;
             </div>
         </div>
         <div class="col-lg-4 col-md-3">
             <div class="row nav-left">
                 <div class="col-md-4 nav-border-round" id="nav-account">
-                    <a href="#">
-                        <span class="nav-line-1">Hello, Sandeep </span><br>
-                        <span class="nav-line-2">Your Orders</span>
-                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                    </a>
+                    <% if(user == null) {%>
+                        <a href="/login">
+                            <span class="nav-line-1">Hello, Sign in </span><br>
+                            <span class="nav-line-2">Your Orders</span>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </a>
+                    <% } else { %>
+                    <div class="dropdown nav-border-round">
+                        <a href="#" class="dropdown-toggle" id = "nav-signIn" data-toggle="dropdown" data-hover="dropdown">
+                            <span class="nav-line-1">Hello <%= user.getUserName()%> </span><br>
+                            <span class="nav-line-2">Your Orders</span>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="nav-logout">Logout</a></li>
+                            <li><a href="#">Your account</a></li>
+                            <li><a href="#">Your List</a></li>
+                            <li><a href="#">Your Orders</a></li>
+                        </ul>
+                    </div>
+                    <%}%>
                 </div>
                 <div class="col-md-2 nav-border-round" id="nav-prime">
                     <a href="#">
@@ -138,11 +159,3 @@
         </div>
     </div>
 </header>
-<script>
-    $("#search-icon").click(function () {
-        $("#item-search").submit();
-    });
-</script>
-
-</body>
-</html>

@@ -85,4 +85,14 @@
         <url-pattern>/item</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <display-name>SellerHomePageController</display-name>
+        <servlet-name>SellerHome</servlet-name>
+        <servlet-class>com.ooad.web.controller.SellerHomePageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SellerHome</servlet-name>
+        <url-pattern>/seller</url-pattern>
+    </servlet-mapping>
+
 </web-app>

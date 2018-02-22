@@ -5,7 +5,13 @@
 
 package com.ooad.web.model;
 
+import com.ooad.web.dao.ItemDao;
+import com.ooad.web.utils.Constants;
 import org.json.JSONObject;
+
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import java.io.*;
 
 public class Seller {
     private int id;
@@ -61,16 +67,46 @@ public class Seller {
         return sellerJsonObject;
     }
 
-    public JSONObject addItem(int id,String name, float price, String url) {
+    public JSONObject addItem(JSONObject item, InputStream fileInputStream) {
+        final String itemName=item.getString("name");
+        final float itemPrice=item.getFloat("price");
+        final JSONObject errors=new JSONObject();
+        String imageUrl="";
+        if(itemName==null){
+            errors.put("name","name should not be null");
+        }
+        else if(itemPrice==0.0f) {
+            errors.put("price", "price should not be null");
+        }
+        try{
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            String filePath = Constants.FILE_UPLOAD_PATH;
+            final String path = String.valueOf(System.currentTimeMillis());
 
-        //Pre processing Storing the file into server
-        //Check for errors
-        //Call Add Item from ITem DAO
-        //If true return jsonobject with true
-        //Else Item Addition failed try again.
-        //return the json object
-        return null;
+            OutputStream out = new FileOutputStream(new File(filePath+path));
+            while ((read = fileInputStream.read(bytes)) != -1)
+            {
+                out.write(bytes, 0, read);
+            }
+            out.flush();
+            out.close();
+
+        } catch (IOException e){
+            errors.put("file","file could not be saved");
+        }
+        imageUrl="/files/path";
+        final ItemDao itemDao=new ItemDao();
+        final boolean valid=itemDao.createItem(itemName,itemPrice,imageUrl,this.id);
+        JSONObject jsonObject=new JSONObject();
+        if(valid){
+            jsonObject.put("status", Response.Status.CREATED.getStatusCode());
+            jsonObject.put("errors","");
+            return jsonObject;
+        }
+        errors.put("item","item addition failed");
+        jsonObject.put("errors",errors);
+        jsonObject.put("status", Response.Status.BAD_REQUEST.getStatusCode());
+        return jsonObject;
     }
-
-
 }

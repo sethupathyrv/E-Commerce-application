@@ -15,10 +15,120 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="js/index.js"></script>
 </head>
 <body>
 <%@include file="jsp/header.jsp" %>
 
+<section id="promo">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="promo-carousel" class="carousel slide" data-ride="carousel">
+
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#promo-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#promo-carousel" data-slide-to="1"></li>
+                        <li data-target="#promo-carousel" data-slide-to="2"></li>
+                        <li data-target="#promo-carousel" data-slide-to="3"></li>
+                        <li data-target="#promo-carousel" data-slide-to="4"></li>
+                        <li data-target="#promo-carousel" data-slide-to="5"></li>
+                    </ol>
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="../images/carousel/Echo alexa.jpg" alt="Echo alexa" style="width:120%;">
+                        </div>
+
+                        <div class="item">
+                            <img src="../images/carousel/Index.png" alt="Index" style="width:100%;">
+                        </div>
+
+                        <div class="item">
+                            <img src="../images/carousel/Redmi 4.png" alt="Redmi 4 " style="width:100%;">
+                        </div>
+
+                        <div class="item">
+                            <img src="../images/carousel/Shave it of.png" alt="Shave it of" style="width:100%;">
+                        </div>
+
+                        <div class="item">
+                            <img src="../images/carousel/Gaming .png" alt="Gaming " style="width:100%;">
+                        </div>
+
+                        <div class="item">
+                            <img src="../images/carousel/bottle .jpg" alt="bottles and flasks " style="width:100%;">
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#promo-carousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#promo-carousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class='row'>
+        <div class='col-md-8'>
+            <div class="carousel slide media-carousel" id="media">
+                <div class="carousel-inner">
+                    <div class="item  active">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
+                            </div>
+                            <div class="col-md-4">
+                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a data-slide="prev" href="#media" class="left carousel-control">‹</a>
+                <a data-slide="next" href="#media" class="right carousel-control">›</a>
+            </div>
+        </div>
+    </div>
+</div>
 <%@include file="jsp/footer.jsp" %>
 </body>
 </html>

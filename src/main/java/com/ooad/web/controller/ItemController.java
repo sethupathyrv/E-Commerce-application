@@ -1,5 +1,6 @@
 package com.ooad.web.controller;
 
+import com.ooad.web.dao.ItemDao;
 import com.ooad.web.model.Item;
 
 import javax.servlet.RequestDispatcher;
@@ -20,8 +21,8 @@ public class ItemController extends HttpServlet {
         final int itemId = Integer.parseInt(request.getParameter("id"));
         System.out.println(itemId);
         // getItem() using ItemDao.
+        final Item item = new ItemDao().getItembyId(itemId);
         //Creating a Dummy item
-        Item item = new Item(itemId,"Watch",200,"/images/watch.jpg", null);
         request.setAttribute("item",item);
         System.out.print("item"+item.toString());
         RequestDispatcher rd = request.getRequestDispatcher("/jsp/item.jsp");

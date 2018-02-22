@@ -91,7 +91,7 @@
             <div class="a-section auth-pagelet-container">
 
 
-                <form id="ap_register_form" name="register" method="post" action='register'
+                <form id="ap_register_form" name="register" method="post" action='sellerregister'
                       class="ap_ango_default auth-validate-form-moa auth-real-time-validation">
 
 

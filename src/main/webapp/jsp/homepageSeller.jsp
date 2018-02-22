@@ -61,7 +61,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="/jsp/homepageSeller.jsp">Dashboard</a></li>
                     <li><a href="/jsp/infoSeller.jsp">Seller Information </a></li>
-                    <li><a href="/jsp/addItem.jsp">Add Item</a></li>
+                    <li><a href="/seller/add">Add Item</a></li>
                 </ul>
             </div>
         </div>

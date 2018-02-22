@@ -4,9 +4,8 @@
  */
 function loginResponse(response) {
     if(response.status === 200){
-        $.cookie("authToken",response.token);
-        $.cookie("email",response.user.email);
-        window.location.replace("/");
+        $.cookie("sellerAuthToken",response.token);
+        window.location.replace("/seller");
     } else if(response.status === 400){
         if ("email" in response.errors){
             $("#emailError").html(response.errors.email);
@@ -28,7 +27,7 @@ $(document).ready(function () {
         };
         $.ajax({
             type:'POST',
-            url:'/api/login',
+            url:'/api/seller/login',
             data: JSON.stringify(formData),
             dataType:"json",
             contentType:"text/plain",

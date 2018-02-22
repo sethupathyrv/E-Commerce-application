@@ -66,7 +66,7 @@ public class ItemDao {
             final List<Item> items = new ArrayList<Item>();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Items ORDER BY id DESC LIMIT 5");
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 final Item item = itemBuilder(rs);
                 items.add(item);
             }

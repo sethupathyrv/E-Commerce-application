@@ -1,4 +1,7 @@
-<%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.ooad.web.model.Item" %>
+<%@ page import="com.ooad.web.dao.ItemDao" %>
+<%@ page import="java.io.IOException" %><%--
   ~ Created by Sandeep Tadepalli on 04/02/18 03:44
   ~ Copyright (c) 2018. All rights reserved.
   --%>
@@ -21,7 +24,7 @@
 </head>
 <body>
 <%@include file="jsp/header.jsp" %>
-
+<% ArrayList<Item> items = (ArrayList<Item>) new ItemDao().getLastFiveItems();%>
 <section id="promo">
     <div class="container-fluid">
         <div class="row">
@@ -83,48 +86,37 @@
         <div class='col-md-8'>
             <div class="carousel slide media-carousel" id="media">
                 <div class="carousel-inner">
-                    <div class="item  active">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="thumbnail" href="#"><img alt="" src="http://placehold.it/150x150"></a>
-                            </div>
-                        </div>
-                    </div>
+                    <%
+                        int i = 0,j=0;
+                        while(i < items.size()){
+                            if(i%3==0){ %>
+                                <div class="item  <%= (i==0) ? "active":""%>">
+                                    <div class="row">
+                                    <%
+                                        while(i<items.size() && j <3) {
+                                            final Item item = items.get(i); %>
+                                            <div class="col-md-4">
+                                                <div class='card'>
+                                                    <img class='card-img-top' src='<%= item.getUrl() %>' alt='card image cap'>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><%=item.getName()%></h5>
+                                                        <p class="card-text">Price <%=item.getPrice()%></p>
+                                                        <a href="/item?id=<%=item.getId()%>">Buy</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <%i++;
+                                            j++;
+                                        }
+                                        j=0;
+                                    %>
+                                    </div>
+                                </div>
+                            <%}
+                        }%>
+                    <a data-slide="prev" href="#media" class="left carousel-control"> < </a>
+                    <a data-slide="next" href="#media" class="right carousel-control"> > </a>
                 </div>
-                <a data-slide="prev" href="#media" class="left carousel-control">‹</a>
-                <a data-slide="next" href="#media" class="right carousel-control">›</a>
             </div>
         </div>
     </div>

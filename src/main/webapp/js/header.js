@@ -13,8 +13,8 @@ $(document).ready(function () {
         $("#item-search").submit();
     });
     $("#nav-logout").click(function () {
-        $.removeCookie("authToken");
-        $.removeCookie("email");
+        $.removeCookie("authToken",{path:'/'});
+        $.removeCookie("email",{path:'/'});
         window.location.replace("/");
     });
 });

@@ -32,8 +32,8 @@
 <script src="../js/bootstrap-dropdownhover.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<script src="../js/addItem.js"></script>
 
 <%-- ..........Logo header...........--%>
 <div class="row nav-belt ">
@@ -42,6 +42,12 @@
         <div class="logo col-lg-2 col-md-2">
             <a href="#" class="nav-logo-link">
                 <img src="https://images-na.ssl-images-amazon.com/images/G/31/rainier/nav/sc-unified._CB360962420_.png">
+            </a>
+        </div>
+
+        <div class="logo col-lg-2 col-md-2 right">
+            <a href="/" class="nav-logo-link">
+                <img src="http://localhost:8081/images/logo.png" alt="Home" style="background-color: black">
             </a>
         </div>
 
@@ -67,6 +73,7 @@
                     <li><a href="/jsp/homepageSeller.jsp">Dashboard</a></li>
                     <li><a href="/jsp/infoSeller.jsp">Seller Information </a></li>
                     <li class="active"><a href="/jsp/addItem.jsp">Add Item</a></li>
+                    <li><a href="#" id="sellerLogout"> Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -75,7 +82,7 @@
 
 <%--............Form and button.............--%>
 <%--<form action="additem" method="post" enctype="multipart/form-data">--%>
-<form id="test" action="#" method="post">
+<form id="addItemForm" action="#" method="post" enctype="multipart/form-data">
     <div class="col-md-5">
         <div class="a-section">
             <div class="a-box">
@@ -84,8 +91,6 @@
 
                     <div class="a-row a-spacing-base">
 
-                        <label for="id" class="a-form-label">Id</label>
-                        <input class="form-control" type="text" name="id" id="id" autocomplete="off"/>
 
                         <label for="name" class="a-form-label">Name</label>
                         <input class="form-control" type="text" name="name" id="name" autocomplete="off"/>
@@ -96,11 +101,7 @@
                         <label for="quantity" class="a-form-label">Quantity</label>
                         <input class="form-control" type="text" name="quantity" id="quantity" autocomplete="off" />
 
-                        <label for="offer" class="a-form-label">Offer</label>
-                        <input class="form-control" type="text" name="offer" id="offer" autocomplete="off" />
-
-
-                        <label for="sel" class="a-form-label">Sub-Sub Category</label>
+                        <%--<label for="sel" class="a-form-label">Sub-Sub Category</label>--%>
 
                         <%--<select id="sel" name="subSubCategory" onchange="show(this)">--%>
                             <%--<option value="">-- Select --</option>--%>
@@ -112,9 +113,9 @@
                         <textarea class="form-control" name="itemDescription" rows="5" cols="30"></textarea>
 
 
-                        <label for="url" class="a-form-label">Image url</label>
+                        <label for="itemImage" class="a-form-label">Image</label>
 
-                        <input class="form-control" type="file" name="itemImage" id="url" />
+                        <input class="form-control" type="file" name="itemImage" id="itemImage" />
 
                     </div>
                 </div>
@@ -175,69 +176,6 @@
     }*/
 </script>
 
-<%--............To convert form values into json object........--%>
-<script>
-/*    (function() {
-        function toJSONString( form ) {
-            var obj = {};
-            var elements = form.querySelectorAll( "input, select, textarea" );
-            for( var i = 0; i < elements.length; ++i ) {
-                var element = elements[i];
-                var name = element.name;
-                var value = element.value;
-
-                if( name ) {
-                    obj[ name ] = value;
-                }
-            }
-            return JSON.stringify( obj );
-        }
-
-        document.addEventListener( "DOMContentLoaded", function() {
-            var form = document.getElementById( "test" );
-
-            form.addEventListener( "submit", function( e ) {
-                e.preventDefault();
-                var json = toJSONString( this );
-//..............Json object containg inputed form values : json..............
-                console.log(json);
-            }, false);
-
-        });
-    })();*/
-</script>
-
-<script>
-    $(document).ready(function()
-    {
-        $("#uploadBtn").click(function()
-        {
-            $('input[name="file"]').each(function(index, value)
-            {
-                var file = value.files[0];
-                if(file)
-                {
-                    var formData = new FormData();
-                    formData.append('file', file);
-                    //Convert to json and change it to a string add
-                    formData.append('json',"{'test':2}");
-                    $.ajax({
-                        url : '/item/add',
-                        type : 'POST',
-                        data : formData,
-                        cache : false,
-                        contentType : false,
-                        processData : false,
-                        success : function(data, textStatus, jqXHR) {
-                            var message = jqXHR.responseText;
-                            $("#messages").append("<li>" + message + "</li>");
-                        }
-                    });
-                }
-            });
-        });
-    });
-</script>
 
 </body>
 </html>

@@ -91,11 +91,10 @@ public class Seller {
             }
             out.flush();
             out.close();
-
+            imageUrl = "/files/"+path;
         } catch (IOException e){
             errors.put("file","file could not be saved");
         }
-        imageUrl="/files/path";
         final ItemDao itemDao=new ItemDao();
         final boolean valid=itemDao.createItem(itemName,itemPrice,imageUrl,this.id);
         JSONObject jsonObject=new JSONObject();

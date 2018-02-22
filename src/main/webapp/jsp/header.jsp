@@ -24,7 +24,7 @@
 <header class="container-fluid header">
     <div class="row nav-belt ">
         <div class="logo col-lg-2 col-md-2">
-            <a href="#" class="nav-logo-link"><img src="../images/logo.png" alt=""></a>
+            <a href="/" class="nav-logo-link"><img src="../images/logo.png" alt=""></a>
             <a href="#" class="nav-logo-tagline">Try Prime</a>
         </div>
         <div class="col-lg-6 col-md-6">

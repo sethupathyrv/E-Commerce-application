@@ -74,6 +74,7 @@ public class CartDao {
             while (rs.next()) {
                 cartItems.add(cartItemBuilder(rs));
             }
+            con.close();
             return cartItems;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

@@ -94,5 +94,14 @@
         <servlet-name>SellerHome</servlet-name>
         <url-pattern>/seller</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <display-name>CartController</display-name>
+        <servlet-name>Cart</servlet-name>
+        <servlet-class>com.ooad.web.controller.CartController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Cart</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
 
 </web-app>

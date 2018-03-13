@@ -17,7 +17,7 @@
     <script src="../js/jquery.min.js"></script>
     <script src="../js/jquery.cookie.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <%--<script src="../js/item.js"></script>--%>
+    <script src="../js/addItemtoCart.js"></script>
     <link rel="stylesheet" href="../css/item.css">
     <% Item item = (Item) request.getAttribute("item"); %>
 </head>
@@ -65,6 +65,9 @@
             </div>
             <div id="cod">Cash on delivery <span id="cod_elgiblity">eligible.</span></div>
             <div id="availability"><span id="avail">In stock.</span></div>
+            <%--<div id="itemId" type="hidden"><%=item.getId()%></div>--%>
+            <input type="hidden" value="<%=item.getId()%>" id='itemId' class='h_v'>
+
             <div id="seller">Sold by <a href="#" id="sellerName"><%=item.getSeller().getUserName()%></a></div>
             <div id="prodFeatures">
                 <ul>
@@ -103,11 +106,11 @@
                         <label>Quantity:</label>
                         <!-- <select id="quantity" class="a-dropdown" name="quantity" autocomplete="off" tabindex="-1"></select>
                          <span id="a-autoid-5" class="a-button-small" tabindex="-1"></span>-->
-                        <select>
-                          <option value="one">1</option>
-                          <option value="two">2</option>
-                          <option value="three">3</option>
-                          <option value="four">4</option>
+                        <select id="quantity">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
                         </select>
 
                     </span>
@@ -115,7 +118,7 @@
                 </div>
 
                 <div>
-                    <input type="button" class="btn1" value="Add to cart">
+                    <input id="addtocart"type="button" class="btn1" value="Add to cart">
                 </div>
                 <div>
                     <input type="button" class="btn1" value="Buy now">

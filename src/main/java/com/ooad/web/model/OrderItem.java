@@ -1,5 +1,7 @@
 package com.ooad.web.model;
 
+import org.json.JSONObject;
+
 public class OrderItem {
     private final int id;
     private final Item item;
@@ -37,6 +39,15 @@ public class OrderItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public JSONObject toJSON(){
+        JSONObject j = new JSONObject();
+        j.put("item",item.toJSON() );
+        j.put("itemPrice",itemPrice);
+        j.put("orderId",order.getId());
+        j.put("quantity",quantity);
+        return j;
     }
 
 }

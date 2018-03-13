@@ -7,11 +7,12 @@ public class CartItem {
     private final int id;
     private final Item item;
     private int quantity;
-
-    public CartItem(int id, Item item, int quantity) {
+    private boolean offerApplied;
+    public CartItem(int id, Item item, int quantity,boolean offerApplied) {
         this.id = id;
         this.item = item;
         this.quantity = quantity;
+        this.offerApplied = offerApplied;
     }
 
     @Override
@@ -47,6 +48,7 @@ public class CartItem {
         cartItem.put("id", this.id);
         cartItem.put("item", this.item.toJSON());
         cartItem.put("quantity", this.quantity);
+        cartItem.put("offerApplied",this.offerApplied);
         return cartItem;
     }
 
@@ -58,9 +60,24 @@ public class CartItem {
         return new CartDao().save(this);
     }
 
+    public boolean isOfferApplied() {
+        return offerApplied;
+    }
+
+    public void setOfferApplied(boolean offerApplied) {
+        this.offerApplied = offerApplied;
+    }
+
     public int applyOffer(Cart cart) {
+        if(this.offerApplied) {
+            return 0;
+        } else {
+            this.getItem().getOffer().applyOffer(this,cart );
+        }
         //TODO applyOffer
         return 0;
 //
     }
+
+
 }

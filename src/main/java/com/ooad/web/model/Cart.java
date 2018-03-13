@@ -3,17 +3,18 @@ package com.ooad.web.model;
 import com.ooad.web.dao.CartDao;
 import org.json.JSONArray;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class Cart {
     private Collection<CartItem> cartItems;
     private final User user;
+    private int promotionApplied;
 
     public Cart(User user) {
         this.user = user;
         CartDao cartDao = new CartDao();
         this.cartItems = cartDao.createCartItems(this.user.getId());
+        this.promotionApplied = applyOffer();
     }
 
     public boolean addCartItem(CartItem cartItem){
@@ -65,11 +66,16 @@ public class Cart {
         return user;
     }
 
-    public void applyOffer(){
-        int promotion=0;
+    private int applyOffer(){
+       int promotion = 0;
         for (CartItem c: cartItems) {
             promotion += c.applyOffer(this);
         }
+        return promotion;
+    }
+
+    public void emptyCart() {
+        new CartDao().emptyCart(this.user.getId());
     }
 }
 

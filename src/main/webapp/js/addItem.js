@@ -32,11 +32,12 @@ $(document).ready(function() {
     function addItemResponse(response) {
         if(response.status ===201){
             alert("Item Created");
-            location.reload();
-        } else{
-            alert("Item creation failed We shall fix this later");
-            location.reload();
+            window.location("/seller");
+        }else if(response.status === 401){
+            alert("Not authorized");
+            window.location("/sellerlogin");
         }
+        console.log(response);
     }
     $('#sellerLogout').click(function () {
         $.removeCookie("sellerAuthToken",{path:'/'});

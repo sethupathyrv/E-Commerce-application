@@ -1,6 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.ooad.web.model.Item" %>
-<%@ page import="com.ooad.web.dao.ItemDao" %>
 <%@ page import="java.io.IOException" %><%--
   ~ Created by Sandeep Tadepalli on 04/02/18 03:44
   ~ Copyright (c) 2018. All rights reserved.
@@ -24,7 +23,7 @@
 </head>
 <body>
 <%@include file="jsp/header.jsp" %>
-<% ArrayList<Item> items = (ArrayList<Item>) new ItemDao().getLastFiveItems();%>
+<% ArrayList<Item> items = Item.getLastFive();%>
 <section id="promo">
     <div class="container-fluid">
         <div class="row">

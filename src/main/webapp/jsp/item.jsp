@@ -33,7 +33,7 @@
                 <span id="productTitle"> <%= item.getName()%></span>
             </h1>
             <hr>
-            <div id="price">
+            <div id="itemPrice">
                 <table>
                     <tbody>
                     <tr class="text-c1">
@@ -65,7 +65,7 @@
             </div>
             <div id="cod">Cash on delivery <span id="cod_elgiblity">eligible.</span></div>
             <div id="availability"><span id="avail">In stock.</span></div>
-            <div id="seller">Sold by <a href="#" id="sellerName">Deal Day</a></div>
+            <div id="seller">Sold by <a href="#" id="sellerName"><%=item.getSeller().getUserName()%></a></div>
             <div id="prodFeatures">
                 <ul>
                     <li><span>Day And Date Display</span></li>

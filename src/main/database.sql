@@ -44,16 +44,22 @@ CREATE TABLE Sellers
 
 create table Items
 (
-    id int auto_increment
-        primary key,
-    name varchar(255) not null,
-    price float not null,
-    description varchar(1000) not null,
-    sellerId int not null,
-    offerId int null,
-    subSubSubCategoryId int not null,
-    constraint Items_id_uindex
-    unique (id)
+  id int auto_increment
+    primary key,
+  name varchar(255) not null,
+  itemPrice float not null,
+  description varchar(1000) null,
+  sellerId int null,
+  offerId int null,
+  subSubSubCategoryId int null,
+  url varchar(255) null,
+  brand varchar(255) null,
+  height float null,
+  width float null,
+  quantity int null,
+  constraint Items_id_uindex
+  unique (id)
 )
-    engine=InnoDB
+  engine=InnoDB
 ;
+

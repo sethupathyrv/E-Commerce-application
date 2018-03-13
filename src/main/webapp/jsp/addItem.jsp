@@ -7,8 +7,6 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.ooad.web.dao.ItemCategoryDao" %>
-<%@ page import="com.ooad.web.model.ItemCategory" %>
 <!DOCTYPE html>
 <!--
 ~ Created by Sandeep Tadepalli on 10/02/18 15:05
@@ -81,7 +79,6 @@
 </div>
 
 <%--............Form and button.............--%>
-<%--<form action="additem" method="post" enctype="multipart/form-data">--%>
 <form id="addItemForm" action="#" method="post" enctype="multipart/form-data">
     <div class="col-md-5">
         <div class="a-section">
@@ -95,8 +92,8 @@
                         <label for="name" class="a-form-label">Name</label>
                         <input class="form-control" type="text" name="name" id="name" autocomplete="off"/>
 
-                        <label for="price" class="a-form-label">Price</label>
-                        <input class="form-control" type="text" name="price" id="price" autocomplete="off"/>
+                        <label for="itemPrice" class="a-form-label">Price</label>
+                        <input class="form-control" type="text" name="itemPrice" id="itemPrice" autocomplete="off"/>
 
                         <label for="quantity" class="a-form-label">Quantity</label>
                         <input class="form-control" type="text" name="quantity" id="quantity" autocomplete="off" />
@@ -108,9 +105,9 @@
                         <%--</select>--%>
                         <%--<p id="msg"></p>--%>
 
-                        <label id="itemDescription" class="a-form-label">Item Description</label>
+                        <label id="description" class="a-form-label">Item Description</label>
 
-                        <textarea class="form-control" name="itemDescription" rows="5" cols="30"></textarea>
+                        <textarea class="form-control" id="itemDescription" name="description" rows="5" cols="30"></textarea>
 
 
                         <label for="itemImage" class="a-form-label">Image</label>
@@ -134,19 +131,6 @@
         </div>
     </div>
 </form>
-
-
-<%-- ...........Script to print values of recent item added........... --%>
-<script type="text/javascript">
-    // $(function () {
-    //     $("#btnCookie").bind("click", function () {
-    //         $.cookie("id", $("#id").val());
-    //         $.cookie("name", $("#name").val());
-    //         window.location.href = "homepageSeller.jsp";
-    //     });
-    // });
-</script>
-
 
 <%--..........To populate select dropdown using json file.........--%>
 <script>

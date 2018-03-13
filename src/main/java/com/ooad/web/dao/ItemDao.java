@@ -6,15 +6,11 @@
 package com.ooad.web.dao;
 
 import com.ooad.web.model.Item;
-import com.ooad.web.utils.Database;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-import com.ooad.web.model.Item;
+import com.ooad.web.model.Offer.DiscountOffer;
+import com.ooad.web.model.Offer.Offer;
 import com.ooad.web.model.Seller;
-import com.ooad.web.model.User;
 import com.ooad.web.utils.Database;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Connection;
@@ -26,15 +22,21 @@ import java.util.Collection;
 import java.util.List;
 
 public class ItemDao {
-    public boolean createItem (final String name, final float price, final String url,final int sellerId){
-        try{
+    public boolean createItem(final String name, final float price, final String url, final int sellerId,
+                              String description, final String brand, float height, float width,int quantity) {
+        try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId) VALUES (?,?,?,?)");
+                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId,description,brand,height,width,quantity) VALUES (?,?,?,?,?,?,?,?,?)");
             ps.setString(1, name);
             ps.setFloat(2, price);
             ps.setString(3, url);
-            ps.setInt(4,sellerId);
+            ps.setInt(4, sellerId);
+            ps.setString(5, description);
+            ps.setString(6, brand);
+            ps.setFloat(7, height);
+            ps.setFloat(8, width);
+            ps.setInt(9,quantity);
             ps.executeUpdate();
             con.close();
             return true;
@@ -60,7 +62,7 @@ public class ItemDao {
         return null;
     }
 
-    public Collection<Item> getLastFiveItems(){
+    public Collection<Item> getLastFiveItems() {
         try {
             Connection con = Database.getConnection();
             final List<Item> items = new ArrayList<Item>();
@@ -78,6 +80,32 @@ public class ItemDao {
         }
     }
 
+    public boolean saveItem(Item item){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con
+                    .prepareStatement("UPDATE Items SET name = ? ,price = ?,url = ?," +
+                            "sellerId = ? ,description = ? ,brand = ?,height = ?,width = ? "+
+                            ",quantity = ? WHERE id = ?");
+            ps.setString(1, item.getName());
+            ps.setFloat(2, item.getPrice());
+            ps.setString(3, item.getUrl());
+            ps.setInt(4, item.getSeller().getId());
+            ps.setString(5, item.getDescription());
+            ps.setString(6, item.getBrand());
+            ps.setFloat(7, item.getHeight());
+            ps.setFloat(8, item.getWidth());
+            ps.setInt(9,item.getQuantity());
+            ps.setInt(10,item.getId());
+            ps.executeUpdate();
+            con.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private Item itemBuilder(ResultSet rs) throws NullPointerException, SQLException {
         if (rs == null) {
             throw new NullPointerException("Result Set");
@@ -86,11 +114,59 @@ public class ItemDao {
         final String name = rs.getString("name");
         final float price = rs.getFloat("price");
         final String url = rs.getString("url");
+        final String itemDescription = rs.getString("description");
+        final String brand = rs.getString("brand");
         final int sellerId = rs.getInt("sellerId");
+        final int quantity = rs.getInt("quantity");
+        final float height = rs.getFloat("height");
+        final float width = rs.getFloat("width");
+        final int offerId = rs.getInt("offerId");
         SellerDao sellerDao = new SellerDao();
         Seller seller = sellerDao.getSeller(sellerId);
-        return new Item(id,name,price,url,seller);
+        return new Item(id, name, price, url, quantity, seller, itemDescription, brand, height,
+                width, getItemDetails(id),getOffer(offerId));
+    }
+    private Offer getOffer(int offerId){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Offers WHERE id = ?");
+            ps.setInt(1,offerId );
+            ResultSet rs = ps.executeQuery();
+            con.close();
+            int offerType = rs.getInt("offerType");
+            if(offerType == 201){
+                float discountPercentage = rs.getFloat("discountPercentage");
+                Offer o= new DiscountOffer(discountPercentage);
+                return o;
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-
+    private JSONArray getItemDetails(final int itemId){
+        JSONArray itemDetailsArray = new JSONArray();
+        if (itemId == 0) throw new NullPointerException("Item Id can't be null");
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ItemDetails WHERE itemId = ?");
+            ps.setInt(1,itemId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                JSONObject itemDetails = new JSONObject();
+                itemDetails.put("id",rs.getInt("id") );
+                itemDetails.put("key",rs.getString("key") );
+                itemDetails.put("value",rs.getString("value") );
+                itemDetailsArray.put(itemDetails);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemDetailsArray;
     }
 }

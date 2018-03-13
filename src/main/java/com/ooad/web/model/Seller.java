@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Seller {
     private int id;
@@ -70,6 +71,11 @@ public class Seller {
     public JSONObject addItem(JSONObject item, InputStream fileInputStream) {
         final String itemName=item.getString("name");
         final float itemPrice=item.getFloat("price");
+        final String itemDescription = item.getString("description");
+        final String itemBrand = "";/*item.getString("brand");*/
+        final float itemHeight =0;/*item.getFloat("height");*/
+        final float itemWidth = 0;/*item.getFloat("width");*/
+        final int itemQuantity = item.getInt("quantity");
         final JSONObject errors=new JSONObject();
         String imageUrl="";
         if(itemName==null){
@@ -85,8 +91,7 @@ public class Seller {
             final String path = String.valueOf(System.currentTimeMillis());
 
             OutputStream out = new FileOutputStream(new File(filePath+path));
-            while ((read = fileInputStream.read(bytes)) != -1)
-            {
+            while ((read = fileInputStream.read(bytes)) != -1) {
                 out.write(bytes, 0, read);
             }
             out.flush();
@@ -96,7 +101,8 @@ public class Seller {
             errors.put("file","file could not be saved");
         }
         final ItemDao itemDao=new ItemDao();
-        final boolean valid=itemDao.createItem(itemName,itemPrice,imageUrl,this.id);
+        final boolean valid=itemDao.createItem(itemName,itemPrice,imageUrl,this.id,itemDescription,
+                itemBrand,itemHeight,itemWidth,itemQuantity);
         JSONObject jsonObject=new JSONObject();
         if(valid){
             jsonObject.put("status", Response.Status.CREATED.getStatusCode());

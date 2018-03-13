@@ -85,7 +85,7 @@
                         <script>
                             function CreateTableFromJSON() {
                                 var myBooks = [
-                                    {"id":"1","name":"pen","price":"20","offer":"10%","subSubCategory":"001","itemDescription":"reynolds","url":"C:\\fakepath\\pen.jpg"}
+                                    {"id":"1","name":"pen","itemPrice":"20","offer":"10%","subSubCategory":"001","description":"reynolds","url":"C:\\fakepath\\pen.jpg"}
                                 ]
 
                                 // EXTRACT VALUE FOR HTML HEADER.

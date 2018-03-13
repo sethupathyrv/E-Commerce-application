@@ -8,7 +8,7 @@ package com.ooad.web.api;
 import com.ooad.web.dao.ItemDao;
 import com.ooad.web.model.Item;
 import com.ooad.web.model.Seller;
-import com.ooad.web.utils.Constants;
+import com.ooad.web.model.User;
 import com.ooad.web.utils.TokenAuth;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -28,8 +28,7 @@ public class ItemService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItemById(@PathParam("id") int id){
-        ItemDao itemDao = new ItemDao();
-        Item item = itemDao.getItembyId(id);
+        Item item = Item.find(id);
         JSONObject returnObject = new JSONObject();
         if(item!=null){
             returnObject.put("item",item.toJSON());
@@ -50,8 +49,7 @@ public class ItemService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLastFive(){
-        ItemDao itemDao = new ItemDao();
-        ArrayList<Item> items = (ArrayList<Item>) itemDao.getLastFiveItems();
+        ArrayList<Item> items = Item.getLastFive();
         final JSONArray j = new JSONArray();
         for (Item item : items){
             j.put(item.toJSON());
@@ -62,6 +60,7 @@ public class ItemService {
     @Path("add")
     @POST
     @Consumes({MediaType.MULTIPART_FORM_DATA})
+    @Produces(MediaType.APPLICATION_JSON)
     public Response addItem(  @FormDataParam("file") InputStream fileInputStream,
                                     @FormDataParam("file") FormDataContentDisposition fileMetaData,
                                     @FormDataParam("json")String item,
@@ -71,8 +70,23 @@ public class ItemService {
             return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode()).toString()).build();
         }
         JSONObject itemObject=new JSONObject(item);
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject;
         jsonObject=seller.addItem(itemObject,fileInputStream);
         return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
+    @Path("addtocart")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addToCart(String req,@HeaderParam("authToken") String token) {
+        JSONObject re = new JSONObject(req);
+        User user = TokenAuth.getUserFromToken(token);
+        if(user == null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        JSONObject j = user.addItemToCart(re);
+        return Response.status(Status.OK).entity(j.toString()).build();
+    }
+
 }

@@ -3,7 +3,10 @@
  * Copyright (c) 2018. All rights reserved.
  */
 
-package com.ooad.web.model;
+package com.ooad.web.model.Offer;
+
+import com.ooad.web.model.Cart;
 
 public abstract class Offer {
+    public abstract void applyOffer(int quantity,Cart cart);
 }

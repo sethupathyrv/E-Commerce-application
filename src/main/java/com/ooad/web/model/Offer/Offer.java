@@ -6,7 +6,19 @@
 package com.ooad.web.model.Offer;
 
 import com.ooad.web.model.Cart;
+import com.ooad.web.model.CartItem;
 
 public abstract class Offer {
-    public abstract void applyOffer(int quantity,Cart cart);
+    public abstract int applyOffer(CartItem c, Cart cart);
+    public abstract int getOfferCode();
+    private int id;
+
+    Offer(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return this.id;
+    }
+
+
 }

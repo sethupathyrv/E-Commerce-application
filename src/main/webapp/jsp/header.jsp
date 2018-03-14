@@ -153,7 +153,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 cart">
-                    <span id="cart-contents">0</span>
+                    <span id="cart-contents"><%=(user==null)? 0:user.getCart().size()%></span>
                 </div>
             </div>
         </div>

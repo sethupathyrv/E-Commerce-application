@@ -2,6 +2,7 @@ package com.ooad.web.model;
 
 import com.ooad.web.dao.CartDao;
 import com.ooad.web.dao.ItemDao;
+import com.ooad.web.dao.OrderDao;
 import org.json.JSONObject;
 
 import javax.ws.rs.core.Response.Status;
@@ -116,13 +117,29 @@ public class User {
                     .put("errors",new JSONObject().put("cart","Cart can't be empty"));
         }else {
             Collection<OrderItem> orderItems = new ArrayList<OrderItem>();
+            OrderDao orderDao = new OrderDao();
+            Order o = orderDao.createEmptyOrder(this);
             for (CartItem c: cart.getCartItems()) {
                 Item item = c.getItem();
-
+                float price = c.getItem().getPrice();
+                int quantity = c.getQuantity();
+                OrderItem oi = orderDao.createOrderItem(item,o,price,quantity);
+                if(oi!=null){
+                    orderItems.add(oi);
+                } else {
+                    return new JSONObject().put("status",Status.BAD_REQUEST.getStatusCode() )
+                            .put("error","Cant create a cart");
+                }
             }
-            //TODO Clear Cart
-        }
-        return null;
+            o.setOrderItems(orderItems);
+            o.setOrderStatus(OrderStatus.PLACED);
+            o.setShippingCharges(0);
+            o.save();
+            this.cart.emptyCart();
+            return new JSONObject().put("status",Status.OK.getStatusCode())
+                    .put("order",o.toJSON())
+                    .put("errors","");
 
+        }
     }
 }

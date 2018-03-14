@@ -74,6 +74,7 @@ public class CartDao {
             while (rs.next()) {
                 cartItems.add(cartItemBuilder(rs));
             }
+            con.close();
             return cartItems;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -90,9 +91,10 @@ public class CartDao {
         final int itemId = rs.getInt("itemId");
         final int quantity = rs.getInt("quantity");
         final int id = rs.getInt("id");
+        final boolean offerApplied = rs.getBoolean("offerApplied");
         ItemDao itemDao = new ItemDao();
         final Item item = itemDao.getItembyId(itemId);
-        return new CartItem(id, item, quantity);
+        return new CartItem(id, item, quantity,offerApplied);
     }
 
     public CartItem getCartItemById(int id) {
@@ -128,4 +130,5 @@ public class CartDao {
         }
         return false;
     }
+
 }

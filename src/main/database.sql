@@ -1,15 +1,15 @@
-create table Cart
+CREATE TABLE cart
 (
-  id int auto_increment
-    primary key,
-  itemId int null,
-  userId int null,
-  quantity int null,
-  constraint Cart_id_uindex
-  unique (id)
+  id           INT AUTO_INCREMENT
+    PRIMARY KEY,
+  itemId       INT                    NULL,
+  userId       INT                    NULL,
+  quantity     INT                    NULL,
+  offerApplied TINYINT(1) DEFAULT '0' NULL,
+  CONSTRAINT Cart_id_uindex
+  UNIQUE (id)
 )
-  engine=InnoDB
-;
+  ENGINE = InnoDB;
 
 create table Categories
 (

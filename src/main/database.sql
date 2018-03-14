@@ -129,3 +129,35 @@ create table Users
   engine=InnoDB
 ;
 
+create table UserAddresses
+(
+    id int auto_increment
+        primary key,
+    fullName varchar(255) not null,
+    mobileNumber varchar(10) not null,
+    pincode varchar(6) not null,
+    streetAddress varchar(255) not null,
+    landmark varchar(255) not null,
+    city varchar(255) not null,
+    state varchar(255) not null,
+    userId int null
+)
+    engine=InnoDB
+;
+
+create table UserAddresses
+(
+    id int auto_increment
+        primary key,
+    fullName varchar(255) not null,
+    mobileNumber varchar(10) not null,
+    pincode varchar(6) not null,
+    streetAddress varchar(255) not null,
+    landmark varchar(255) not null,
+    city varchar(255) not null,
+    state varchar(255) not null,
+    userId int null
+)
+    engine=InnoDB
+;
+

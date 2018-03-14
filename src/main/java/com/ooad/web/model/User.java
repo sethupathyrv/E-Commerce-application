@@ -3,6 +3,7 @@ package com.ooad.web.model;
 import com.ooad.web.dao.CartDao;
 import com.ooad.web.dao.ItemDao;
 import com.ooad.web.dao.OrderDao;
+import com.ooad.web.dao.UserAddressDao;
 import org.json.JSONObject;
 
 import javax.ws.rs.core.Response.Status;
@@ -164,4 +165,61 @@ public class User {
 
         }
     }
+    public JSONObject addAddress(JSONObject req) {
+        final String fullName = req.getString("fullName");
+        final String  mobileNumber = req.getString("mobileNumber");
+        final String  pincode = req.getString("pincode");
+        final String  streetAddress = req.getString("streetAddress");
+        final String  landmark = req.getString("landmark");
+        final String  city = req.getString("city");
+        final String  state = req.getString("state");
+        final JSONObject errors=new JSONObject();
+        final int userId = this.id;
+        boolean isValid = true;
+
+        if(fullName ==  null || fullName == "" ){
+            isValid = false;
+            errors.put("fullName", "full name should not be null");
+        }
+        else if(mobileNumber ==  null || mobileNumber == "" || mobileNumber.length() != 10){
+            isValid = false;
+            errors.put("mobielNumber", "mobileNumber should not be null or ");
+        }
+        else if(pincode ==  null || pincode == "" || pincode.length() != 6 ){
+            isValid = false;
+            errors.put("pincode", "pincode should not be null");
+        }
+        else if(streetAddress ==  null || streetAddress == "" ){
+            isValid = false;
+            errors.put("streetAddress", "streetAddress should not be null");
+        }
+        else if(landmark ==  null || landmark == "" ){
+            isValid = false;
+            errors.put("landmark", "landmark should not be null");
+        }
+        else if(city ==  null || city == "" ){
+            isValid = false;
+            errors.put("city", "city should not be null");
+        }
+        else if(state ==  null || state == "" ){
+            isValid = false;
+            errors.put("state", "state should not be null");
+        }
+        if(isValid){
+            UserAddressDao userAddressDao = new UserAddressDao();
+            userAddressDao.addAddress(fullName,mobileNumber,pincode,streetAddress,landmark,city,state,userId);
+            return new JSONObject().put("status",Status.CREATED.getStatusCode())
+                    .put("errors",errors);
+        }
+        return new JSONObject().put("status", Status.BAD_REQUEST.getStatusCode())
+                .put("errors",errors);
+        //Get each of the address variables
+        //Pincode, and all
+        //Check their validity example pincode 6 chars
+        //Create a UserAddressDao
+        //call useraddressdao.addAddress and give all the parameters
+
+
+    }
+
 }

@@ -14,5 +14,7 @@
 
 <body>
 <p> <%= cart.toJSON().toString(4)%></p>
+<input type="hidden" value="<%=cart%>" id='itemId' class='h_v'>
+<button id="checkout" onclick="/checkout">checkout</button>
 </body>
 </html>

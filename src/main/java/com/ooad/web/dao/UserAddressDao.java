@@ -1,10 +1,16 @@
 package com.ooad.web.dao;
 
+import com.ooad.web.model.Item;
+import com.ooad.web.model.UserAddress;
 import com.ooad.web.utils.Database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class UserAddressDao {
     public boolean addAddress(final String fullName,final String mobileNumber,final String pincode,final String streetAddress,final String landmark,final String city,final String state,final int userId ) {
@@ -31,4 +37,39 @@ public class UserAddressDao {
         }
         return false;
     }
+
+    public Collection<UserAddress> getAddressfromId(int userId) {
+        try {
+            Connection con = Database.getConnection();
+            final List<UserAddress> addresses = new ArrayList<UserAddress>();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM useraddresses WHERE userId=?");
+            ps.setInt(1,userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                final UserAddress userAddress= addressBuilder(rs);
+                addresses.add(userAddress);
+            }
+            con.close();
+            return addresses;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private UserAddress addressBuilder(ResultSet rs) throws NullPointerException, SQLException {
+        if (rs == null) {
+            throw new NullPointerException("Result Set");
+        }
+        final int id = rs.getInt("id");
+        final String name = rs.getString("fullName");
+        final String number = rs.getString("mobileNumber");
+        final String pincode = rs.getString("pincode");
+        final String streetAddress = rs.getString("streetAddress");
+        final String landmark = rs.getString("landmark");
+        final String city = rs.getString("city");
+        final String state = rs.getString("state");
+
+        return new UserAddress(id, name, number,pincode,streetAddress,landmark,city,state);
+    }
+
 }

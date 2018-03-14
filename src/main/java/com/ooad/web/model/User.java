@@ -1,7 +1,6 @@
 package com.ooad.web.model;
 
-import com.ooad.web.dao.CartDao;
-import com.ooad.web.dao.ItemDao;
+import com.ooad.web.dao.*;
 import org.json.JSONObject;
 
 import javax.ws.rs.core.Response.Status;
@@ -16,14 +15,25 @@ public class User {
     private String password;
     private boolean isEnabled;
     private Cart cart;
+    private int defaultAddrId;
 
-    public User(int id, String userName, String emailId, String password, boolean isEnbaled) {
+    public int getDefaultAddrId() {
+        return defaultAddrId;
+    }
+
+    public User(int id, String userName, String emailId, String password, boolean isEnbaled,int defaultAddrId) {
         this.id = id;
         this.userName = userName;
         this.emailId = emailId;
+
         this.password = password;
         this.isEnabled = isEnbaled;
+        this.defaultAddrId = -1;
         this.cart = new Cart(this);
+    }
+
+    public void setDefaultAddrId(int defaultAddrId) {
+        this.defaultAddrId = defaultAddrId;
     }
 
     @Override
@@ -33,6 +43,7 @@ public class User {
                 ", userName='" + userName + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", password='" + password + '\'' +
+
                 ", isEnbaled=" + isEnabled +
                 '}';
     }
@@ -110,19 +121,96 @@ public class User {
                 .put("errors",errors);
     }
 
-    public JSONObject cartCheckout(){
+    public JSONObject createOrder(){
         if(cart.size() <=0) {
             return new JSONObject().put("status",Status.BAD_REQUEST.getStatusCode() )
                     .put("errors",new JSONObject().put("cart","Cart can't be empty"));
         }else {
             Collection<OrderItem> orderItems = new ArrayList<OrderItem>();
+            OrderDao orderDao = new OrderDao();
+            Order o = orderDao.createEmptyOrder(this);
             for (CartItem c: cart.getCartItems()) {
                 Item item = c.getItem();
-
+                float price = c.getItem().getPrice();
+                int quantity = c.getQuantity();
+                OrderItem oi = orderDao.createOrderItem(item,o,price,quantity);
+                if(oi!=null){
+                    orderItems.add(oi);
+                } else {
+                    return new JSONObject().put("status",Status.BAD_REQUEST.getStatusCode() )
+                            .put("error","Cant create a cart");
+                }
             }
-            //TODO Clear Cart
+            o.setOrderItems(orderItems);
+            o.setOrderStatus(OrderStatus.PLACED);
+            o.setShippingCharges(0);
+            o.save();
+            this.cart.emptyCart();
+            return new JSONObject().put("status",Status.OK.getStatusCode())
+                    .put("order",o.toJSON())
+                    .put("errors","");
+
         }
-        return null;
+    }
+    public JSONObject addAddress(JSONObject req) {
+        final String fullName = req.getString("fullName");
+        final String  mobileNumber = req.getString("mobileNumber");
+        final String  pincode = req.getString("pincode");
+        final String  streetAddress = req.getString("streetAddress");
+        final String  landmark = req.getString("landmark");
+        final String  city = req.getString("city");
+        final String  state = req.getString("state");
+        final JSONObject errors=new JSONObject();
+        final int userId = this.id;
+        boolean isValid = true;
+
+        if(fullName ==  null || fullName == "" ){
+            isValid = false;
+            errors.put("fullName", "full name should not be null");
+        }
+        else if(mobileNumber ==  null || mobileNumber == "" || mobileNumber.length() != 10){
+            isValid = false;
+            errors.put("mobielNumber", "mobileNumber should not be null or ");
+        }
+        else if(pincode ==  null || pincode == "" || pincode.length() != 6 ){
+            isValid = false;
+            errors.put("pincode", "pincode should not be null");
+        }
+        else if(streetAddress ==  null || streetAddress == "" ){
+            isValid = false;
+            errors.put("streetAddress", "streetAddress should not be null");
+        }
+        else if(landmark ==  null || landmark == "" ){
+            isValid = false;
+            errors.put("landmark", "landmark should not be null");
+        }
+        else if(city ==  null || city == "" ){
+            isValid = false;
+            errors.put("city", "city should not be null");
+        }
+        else if(state ==  null || state == "" ){
+            isValid = false;
+            errors.put("state", "state should not be null");
+        }
+        if(isValid){
+            UserAddressDao userAddressDao = new UserAddressDao();
+            userAddressDao.addAddress(fullName,mobileNumber,pincode,streetAddress,landmark,city,state,userId);
+            return new JSONObject().put("status",Status.CREATED.getStatusCode())
+                    .put("errors",errors);
+        }
+        return new JSONObject().put("status", Status.BAD_REQUEST.getStatusCode())
+                .put("errors",errors);
+        //Get each of the address variables
+        //Pincode, and all
+        //Check their validity example pincode 6 chars
+        //Create a UserAddressDao
+        //call useraddressdao.addAddress and give all the parameters
 
     }
+    public boolean save() {
+        return new UserDao().save(this);
+    }
+
 }
+
+

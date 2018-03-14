@@ -1,5 +1,6 @@
 package com.ooad.web.dao;
 
+import com.ooad.web.model.CartItem;
 import com.ooad.web.model.User;
 import com.ooad.web.utils.Constants;
 import com.ooad.web.utils.Database;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Response.Status;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDao {
 
@@ -61,7 +63,8 @@ public class UserDao {
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
-                        rs.getBoolean("isEnabled"));
+                        rs.getBoolean("isEnabled"),
+                        rs.getInt("defaultAddressId"));
             }
             con.close();
         } catch (Exception e) {
@@ -81,7 +84,8 @@ public class UserDao {
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
-                        rs.getBoolean("isEnabled"));
+                        rs.getBoolean("isEnabled"),
+                        rs.getInt("defaultAddressId"));
             }
             con.close();
         } catch (Exception e) {
@@ -131,5 +135,21 @@ public class UserDao {
             e.printStackTrace();
         }
         return null;
+    }
+    public boolean save(User user) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE User SET defaultAddrId = ? WHERE id = ?");
+            ps.setInt(1,user.getDefaultAddrId() );
+            ps.setInt(2,user.getId() );
+            ps.executeUpdate();
+            con.close();
+            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

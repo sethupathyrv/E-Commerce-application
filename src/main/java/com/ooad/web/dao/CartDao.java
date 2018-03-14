@@ -94,6 +94,7 @@ public class CartDao {
         final boolean offerApplied = rs.getBoolean("offerApplied");
         ItemDao itemDao = new ItemDao();
         final Item item = itemDao.getItembyId(itemId);
+        System.out.print("item"+item);
         return new CartItem(id, item, quantity,offerApplied);
     }
 

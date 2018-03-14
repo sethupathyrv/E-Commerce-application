@@ -72,7 +72,10 @@ public class CartItem {
         if(this.offerApplied) {
             return 0;
         } else {
-            this.getItem().getOffer().applyOffer(this,cart );
+            if(this.getItem().getOffer()!=null)
+                this.getItem().getOffer().applyOffer(this,cart );
+            else
+                System.out.print("offer is null");
         }
         //TODO applyOffer
         return 0;

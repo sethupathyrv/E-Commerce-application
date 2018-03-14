@@ -77,5 +77,13 @@ public class Cart {
     public void emptyCart() {
         new CartDao().emptyCart(this.user.getId());
     }
+
+    public float getSubTotal() {
+        float subTotal = 0;
+        for (CartItem c: cartItems) {
+            subTotal += c.getQuantity()*c.getItem().getPrice();
+        }
+        return subTotal;
+    }
 }
 

@@ -72,9 +72,9 @@ public class Seller {
         final String itemName=item.getString("name");
         final float itemPrice=item.getFloat("price");
         final String itemDescription = item.getString("description");
-        final String itemBrand = "";/*item.getString("brand");*/
-        final float itemHeight =0;/*item.getFloat("height");*/
-        final float itemWidth = 0;/*item.getFloat("width");*/
+        final String itemBrand = item.getString("brand");
+        final float itemHeight =item.getFloat("height");
+        final float itemWidth = item.getFloat("width");
         final int itemQuantity = item.getInt("quantity");
         final JSONObject errors=new JSONObject();
         String imageUrl="";

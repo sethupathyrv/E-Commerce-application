@@ -8,9 +8,13 @@ $(document).ready(function() {
                 formData.append('file',file);
                 var jsonData ={
                   'name':$('#name').val(),
-                  'price':$("#price").val(),
+                  'price':$("#itemPrice").val(),
                   'description':$("#itemDescription").val(),
-                  'quantity':$("#quantity").val()
+                  'quantity':$("#quantity").val(),
+                    'brand':$("#brand").val(),
+                    'height':$("#itemHeight").val(),
+                    'width':$("#itemWidth").val(),
+                    'itemDetails':$("#itemDetails").val()
                 };
                 formData.append('json',JSON.stringify(jsonData));
                 $.ajax({

@@ -17,7 +17,7 @@ public class OrderDao {
             ps.setInt(1, u.getId());
             ps.setInt(2,0 );
             ps.setInt(3,0 );
-            ps.setInt(4,u.getDefaultAddrId() );
+            ps.setInt(4,u.getDefaultAddressId() );
             ps.setInt(5,0 );
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();

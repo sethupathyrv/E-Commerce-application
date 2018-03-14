@@ -32,7 +32,7 @@ public class CreateOrderController extends HttpServlet {
                 }
             }
         }
-        if(user.getDefaultAddrId()==-1){
+        if(user.getDefaultAddressId()==-1){
             RequestDispatcher rd = request.getRequestDispatcher("jsp/addressDashboard.jsp");//TODO addressDashboardbb page
             UserAddressDao userAddressDao = new UserAddressDao();
             ArrayList<UserAddress> userAddresses = (ArrayList<UserAddress>) userAddressDao.getAddressfromId(user.getId());

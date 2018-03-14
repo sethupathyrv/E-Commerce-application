@@ -1,12 +1,6 @@
 package com.ooad.web.model;
 
-import com.ooad.web.dao.CartDao;
-import com.ooad.web.dao.ItemDao;
-<<<<<<< Temporary merge branch 1
-import com.ooad.web.dao.UserAddressDao;
-=======
-import com.ooad.web.dao.OrderDao;
->>>>>>> Temporary merge branch 2
+import com.ooad.web.dao.*;
 import org.json.JSONObject;
 
 import javax.ws.rs.core.Response.Status;
@@ -21,14 +15,15 @@ public class User {
     private String password;
     private boolean isEnabled;
     private Cart cart;
-
-    public User(int id, String userName, String emailId, String password, boolean isEnbaled) {
+    private int defaultAddressId;
+    public User(int id, String userName, String emailId, String password, boolean isEnbaled,int defaultAddressId) {
         this.id = id;
         this.userName = userName;
         this.emailId = emailId;
         this.password = password;
         this.isEnabled = isEnbaled;
         this.cart = new Cart(this);
+        this.defaultAddressId=defaultAddressId;
     }
 
     @Override
@@ -115,7 +110,7 @@ public class User {
                 .put("errors",errors);
     }
 
-    public JSONObject cartCheckout(){
+    public JSONObject createOrder(){
         if(cart.size() <=0) {
             return new JSONObject().put("status",Status.BAD_REQUEST.getStatusCode() )
                     .put("errors",new JSONObject().put("cart","Cart can't be empty"));
@@ -146,6 +141,15 @@ public class User {
 
         }
     }
+
+    public int getDefaultAddressId() {
+        return defaultAddressId;
+    }
+
+    public void setDefaultAddressId(int defaultAddressId) {
+        this.defaultAddressId = defaultAddressId;
+    }
+
     public JSONObject addAddress(JSONObject req) {
         final String fullName = req.getString("fullName");
         final String  mobileNumber = req.getString("mobileNumber");
@@ -201,5 +205,9 @@ public class User {
         //call useraddressdao.addAddress and give all the parameters
 
     }
+    public boolean save() {
+        return new UserDao().save(this);
+    }
+
 
 }

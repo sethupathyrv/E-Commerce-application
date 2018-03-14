@@ -140,7 +140,7 @@ public class UserDao {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("UPDATE User SET defaultAddrId = ? WHERE id = ?");
-            ps.setInt(1,user.getDefaultAddrId() );
+            ps.setInt(1,user.getDefaultAddressId() );
             ps.setInt(2,user.getId() );
             ps.executeUpdate();
             con.close();

@@ -94,5 +94,14 @@
         <servlet-name>SellerHome</servlet-name>
         <url-pattern>/seller</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <display-name>AddAddressController</display-name>
+        <servlet-name>AddAddress</servlet-name>
+        <servlet-class>com.ooad.web.controller.AddAddressController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddAddress</servlet-name>
+        <url-pattern>/addaddress</url-pattern>
+    </servlet-mapping>
 
 </web-app>

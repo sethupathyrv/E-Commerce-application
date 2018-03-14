@@ -16,15 +16,16 @@
 
     <script src="../js/jquery.min.js"></script>
     <script src="../js/jquery.cookie.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/addAddress.js"></script>
     <%--<script src="../js/item.js"></script>--%>
     <link rel="stylesheet" href="../css/item.css">
     <% Item item = (Item) request.getAttribute("item"); %>
 </head>
-<body>
 <%@include file="header.jsp" %>
+<body>
 <%--............Form and button.............--%>
-<form id="addItemForm" action="#" method="post" enctype="multipart/form-data">
+<form id="addAddressForm" action="#" method="post" enctype="multipart/form-data">
     <div class="col-md-5">
         <div class="a-section">
             <div class="a-box">

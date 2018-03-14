@@ -10,7 +10,11 @@ $(document).ready(function() {
                   'name':$('#name').val(),
                   'price':$("#itemPrice").val(),
                   'description':$("#itemDescription").val(),
-                  'quantity':$("#quantity").val()
+                  'quantity':$("#quantity").val(),
+                    'brand':$("#brand").val(),
+                    'height':$("#itemHeight").val(),
+                    'width':$("#itemWidth").val(),
+                    'itemDetails':$("#itemDetails").val()
                 };
                 formData.append('json',JSON.stringify(jsonData));
                 $.ajax({

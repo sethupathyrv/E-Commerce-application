@@ -109,6 +109,31 @@
 
                         <textarea class="form-control" id="itemDescription" name="description" rows="5" cols="30"></textarea>
 
+                        <label for="brand" class="a-form-label">Brand</label>
+                        <input class="form-control" type="text" name="brand" id="brand" autocomplete="off"/>
+
+                        <label for="height" class="a-form-label">Height</label>
+                        <input class="form-control" type="text" name="itemHeight" id="itemHeight" autocomplete="off"/>
+
+                        <label for="width" class="a-form-label">Width</label>
+                        <input class="form-control" type="text" name="itemWidth" id="itemWidth" autocomplete="off"/>
+
+                        <label id="details" class="a-form-label">Item Details</label>
+
+                        <div class="dropdown" id="offerType">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Discount</a></li>
+                                <li><a href="#">Buy y get x</a></li>
+                                <li><a href="#">1+1</a></li>
+                            </ul>
+                        </div>
+
+                        <textarea class="form-control" id="itemDetails" name="details" rows="5" cols="30"></textarea>
+
+
+
 
                         <label for="itemImage" class="a-form-label">Image</label>
 

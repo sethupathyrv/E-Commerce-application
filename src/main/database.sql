@@ -1,4 +1,4 @@
-CREATE TABLE cart
+CREATE TABLE Cart
 (
   id           INT AUTO_INCREMENT
     PRIMARY KEY,

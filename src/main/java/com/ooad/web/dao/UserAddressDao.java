@@ -38,11 +38,11 @@ public class UserAddressDao {
         return false;
     }
 
-    public Collection<UserAddress> getAddressfromId(int userId) {
+    public Collection<UserAddress> getAddressfromUserId(int userId) {
         try {
             Connection con = Database.getConnection();
             final List<UserAddress> addresses = new ArrayList<UserAddress>();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM useraddresses WHERE userId=?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM UserAddresses WHERE userId=?");
             ps.setInt(1,userId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -53,9 +53,30 @@ public class UserAddressDao {
             return addresses;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<UserAddress>();
         }
     }
+
+    public UserAddress getAddressfromId(int id){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM UserAddresses WHERE id = ?");
+            ps.setInt(1,id );
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                UserAddress u = addressBuilder(rs);
+                con.close();
+                return u;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private UserAddress addressBuilder(ResultSet rs) throws NullPointerException, SQLException {
         if (rs == null) {
             throw new NullPointerException("Result Set");

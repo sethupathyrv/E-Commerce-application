@@ -1,5 +1,6 @@
 package com.ooad.web.model;
 
+import com.ooad.web.dao.UserAddressDao;
 import org.json.JSONObject;
 
 public class UserAddress {
@@ -79,6 +80,11 @@ public class UserAddress {
         userAddressJsonObject.put("city", city);
         userAddressJsonObject.put("state", state);
         return userAddressJsonObject;
+    }
+
+    public static UserAddress find(int addressId) {
+        UserAddressDao userAddressDao = new UserAddressDao();
+        return userAddressDao.getAddressfromId(addressId);
     }
 }
 

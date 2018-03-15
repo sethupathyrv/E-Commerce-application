@@ -32,6 +32,13 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>6.0.6</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
+    <dependency>
+      <groupId>org.javassist</groupId>
+      <artifactId>javassist</artifactId>
+      <version>3.18.1-GA</version>
+    </dependency>
+
     <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 &ndash;&gt;-->
     <!--<dependency>-->
       <!--<groupId>org.glassfish.jersey.inject</groupId>-->

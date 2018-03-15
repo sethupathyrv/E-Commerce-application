@@ -88,5 +88,17 @@ public class ItemService {
         JSONObject j = user.addItemToCart(re);
         return Response.status(Status.OK).entity(j.toString()).build();
     }
-
+    /*@Path("checkout")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkout(@HeaderParam("authToken") String token) {
+        User user = TokenAuth.getUserFromToken(token);
+        if(user == null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        JSONObject j = user.cartCheckout();
+        return Response.status(Status.OK).entity(j.toString()).build();
+    }
+*/
 }

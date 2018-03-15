@@ -94,6 +94,7 @@ public class CartDao {
         final boolean offerApplied = rs.getBoolean("offerApplied");
         ItemDao itemDao = new ItemDao();
         final Item item = itemDao.getItembyId(itemId);
+        System.out.print("item"+item);
         return new CartItem(id, item, quantity,offerApplied);
     }
 
@@ -103,7 +104,9 @@ public class CartDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Cart WHERE  id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            return cartItemBuilder(rs);
+            CartItem cartItem= cartItemBuilder(rs);
+            con.close();
+            return cartItem;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

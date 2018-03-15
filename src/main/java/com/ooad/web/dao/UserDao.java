@@ -1,5 +1,6 @@
 package com.ooad.web.dao;
 
+import com.ooad.web.model.CartItem;
 import com.ooad.web.model.User;
 import com.ooad.web.utils.Constants;
 import com.ooad.web.utils.Database;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Response.Status;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDao {
 
@@ -56,14 +58,17 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Users WHERE emailId=?");
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
+            User u = null;
             if (rs.next()) {
-                return new User(rs.getInt("id"),
+                u = new User(rs.getInt("id"),
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
-                        rs.getBoolean("isEnabled"));
+                        rs.getBoolean("isEnabled"),
+                        rs.getInt("defaultAddressId"));
             }
             con.close();
+            return u;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,14 +81,17 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Users WHERE id=?");
             ps.setString(1, String.valueOf(userId));
             ResultSet rs = ps.executeQuery();
+            User u = null;
             if (rs.next()) {
-                return new User(rs.getInt("id"),
+                u=new User(rs.getInt("id"),
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
-                        rs.getBoolean("isEnabled"));
+                        rs.getBoolean("isEnabled"),
+                        rs.getInt("defaultAddressId"));
             }
             con.close();
+            return u;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,6 +117,7 @@ public class UserDao {
                 status.put("user", userJsonObject);
                 status.put("token", TokenAuth.generateToken(user));
             }
+            con.close();
             return status;
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,5 +140,21 @@ public class UserDao {
             e.printStackTrace();
         }
         return null;
+    }
+    public boolean save(User user) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE User SET defaultAddrId = ? WHERE id = ?");
+            ps.setInt(1,user.getDefaultAddressId() );
+            ps.setInt(2,user.getId() );
+            ps.executeUpdate();
+            con.close();
+            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

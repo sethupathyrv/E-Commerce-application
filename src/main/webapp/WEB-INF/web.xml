@@ -103,5 +103,14 @@
         <servlet-name>Cart</servlet-name>
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <display-name>CreateOrderController</display-name>
+        <servlet-name>CreateOrder</servlet-name>
+        <servlet-class>com.ooad.web.controller.CreateOrderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateOrder</servlet-name>
+        <url-pattern>/checkout</url-pattern>
+    </servlet-mapping>
 
 </web-app>

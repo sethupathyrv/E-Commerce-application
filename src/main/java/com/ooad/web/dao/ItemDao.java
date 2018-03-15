@@ -52,9 +52,10 @@ public class ItemDao {
             ps.setString(1, String.valueOf(id));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return itemBuilder(rs);
+                Item item= itemBuilder(rs);
+                con.close();
+                return item;
             }
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,28 +132,30 @@ public class ItemDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Offers WHERE id = ?");
             ps.setInt(1,offerId );
             ResultSet rs = ps.executeQuery();
-            int offerType = rs.getInt("offerType");
-            if(offerType == 201){
-                float discountPercentage = rs.getFloat("discountPercentage");
-                Offer o= new DiscountOffer(offerId,discountPercentage);
-                con.close();
-                return o;
-            } else if(offerType == 202){
-                int price = rs.getInt("price");
-                Offer o = new PriceOffer(offerId,price);
-                con.close();
-                return o;
-            } else if(offerType == 203){
-                int x = rs.getInt("x");
-                int y = rs.getInt("y");
-                Offer o = new BuyXGetYOffer(offerId,x,y);
-                con.close();
-                return o;
-            } else if(offerType == 204){
-                int x = rs.getInt("x");
-                Offer o = new BuyXGetLowestFreeOffer(offerId,x);
-                con.close();
-                return o;
+            if(rs.next()) {
+                int offerType = rs.getInt("offerType");
+                if (offerType == 201) {
+                    float discountPercentage = rs.getFloat("discountPercentage");
+                    Offer o = new DiscountOffer(offerId, discountPercentage);
+                    con.close();
+                    return o;
+                } else if (offerType == 202) {
+                    int price = rs.getInt("price");
+                    Offer o = new PriceOffer(offerId, price);
+                    con.close();
+                    return o;
+                } else if (offerType == 203) {
+                    int x = rs.getInt("x");
+                    int y = rs.getInt("y");
+                    Offer o = new BuyXGetYOffer(offerId, x, y);
+                    con.close();
+                    return o;
+                } else if (offerType == 204) {
+                    int x = rs.getInt("x");
+                    Offer o = new BuyXGetLowestFreeOffer(offerId, x);
+                    con.close();
+                    return o;
+                }
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -177,6 +180,7 @@ public class ItemDao {
                 itemDetails.put("value",rs.getString("value") );
                 itemDetailsArray.put(itemDetails);
             }
+            con.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

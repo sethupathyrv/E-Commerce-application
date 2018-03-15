@@ -1,9 +1,6 @@
 package com.ooad.web.dao;
 
-import com.ooad.web.model.Item;
-import com.ooad.web.model.Order;
-import com.ooad.web.model.OrderItem;
-import com.ooad.web.model.User;
+import com.ooad.web.model.*;
 import com.ooad.web.utils.Database;
 
 import java.sql.*;
@@ -17,14 +14,13 @@ public class OrderDao {
             ps.setInt(1, u.getId());
             ps.setInt(2,0 );
             ps.setInt(3,0 );
-            //TODO get the addressId
             ps.setInt(4,addressId);
             ps.setInt(5,0 );
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){
                 int oid = rs.getInt(1);
-                return new Order(u,oid,null);
+                return new Order(u,oid, UserAddress.find(addressId));
             }
             con.close();
 
@@ -40,7 +36,7 @@ public class OrderDao {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("INSERT INTO OrderItems(orderId, itemId, itemPrice, quantity)" +
-                    "VALUES (?,?,?,?)");
+                    "VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,o.getId() );
             ps.setInt(2,item.getId() );
             ps.setFloat(3,price );

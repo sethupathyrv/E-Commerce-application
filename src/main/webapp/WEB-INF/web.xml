@@ -112,5 +112,13 @@
         <servlet-name>CreateOrder</servlet-name>
         <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <display-name>AddAddressController</display-name>
+        <servlet-name>AddAddress</servlet-name>
+        <servlet-class>com.ooad.web.controller.AddAddressController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddAddress</servlet-name>
+        <url-pattern>/addaddress</url-pattern>
+    </servlet-mapping>
 </web-app>

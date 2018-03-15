@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 @WebServlet(name = "CreateOrderController")
 public class CreateOrderController extends HttpServlet {
@@ -32,10 +31,11 @@ public class CreateOrderController extends HttpServlet {
                 }
             }
         }
+        //TODO Authentication Required
         if(user.getDefaultAddressId()==-1){
             RequestDispatcher rd = request.getRequestDispatcher("jsp/addressDashboard.jsp");//TODO addressDashboardbb page
             UserAddressDao userAddressDao = new UserAddressDao();
-            ArrayList<UserAddress> userAddresses = (ArrayList<UserAddress>) userAddressDao.getAddressfromId(user.getId());
+            ArrayList<UserAddress> userAddresses = (ArrayList<UserAddress>) userAddressDao.getAddressfromUserId(user.getId());
             request.setAttribute("userAddress",userAddresses);
             rd.forward(request,response);
         }

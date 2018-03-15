@@ -52,9 +52,10 @@ public class ItemDao {
             ps.setString(1, String.valueOf(id));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return itemBuilder(rs);
+                Item item= itemBuilder(rs);
+                con.close();
+                return item;
             }
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -179,6 +180,7 @@ public class ItemDao {
                 itemDetails.put("value",rs.getString("value") );
                 itemDetailsArray.put(itemDetails);
             }
+            con.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

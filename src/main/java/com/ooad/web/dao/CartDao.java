@@ -104,7 +104,9 @@ public class CartDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Cart WHERE  id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            return cartItemBuilder(rs);
+            CartItem cartItem= cartItemBuilder(rs);
+            con.close();
+            return cartItem;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

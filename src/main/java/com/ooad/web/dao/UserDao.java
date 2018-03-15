@@ -58,8 +58,9 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Users WHERE emailId=?");
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
+            User u = null;
             if (rs.next()) {
-                return new User(rs.getInt("id"),
+                u = new User(rs.getInt("id"),
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
@@ -67,6 +68,7 @@ public class UserDao {
                         rs.getInt("defaultAddressId"));
             }
             con.close();
+            return u;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,8 +81,9 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Users WHERE id=?");
             ps.setString(1, String.valueOf(userId));
             ResultSet rs = ps.executeQuery();
+            User u = null;
             if (rs.next()) {
-                return new User(rs.getInt("id"),
+                u=new User(rs.getInt("id"),
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
@@ -88,6 +91,7 @@ public class UserDao {
                         rs.getInt("defaultAddressId"));
             }
             con.close();
+            return u;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,6 +117,7 @@ public class UserDao {
                 status.put("user", userJsonObject);
                 status.put("token", TokenAuth.generateToken(user));
             }
+            con.close();
             return status;
         } catch (Exception e) {
             e.printStackTrace();

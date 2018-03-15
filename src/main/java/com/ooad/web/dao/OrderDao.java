@@ -22,12 +22,13 @@ public class OrderDao {
             ps.setInt(5,0 );
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
+            Order o = null;
             if(rs.next()){
                 int oid = rs.getInt(1);
-                return new Order(u,oid,null);
+                o =new Order(u,oid,null);
             }
             con.close();
-
+            return o;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -47,9 +48,12 @@ public class OrderDao {
             ps.setInt(4, quantity);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
+            OrderItem oi = null;
             if(rs.next()){
-                return new OrderItem(rs.getInt(1),item,o,price,quantity);
+                oi=new OrderItem(rs.getInt(1),item,o,price,quantity);
             }
+            con.close();
+            return oi;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -67,6 +71,7 @@ public class OrderDao {
             ps.setInt(2, o.getItemsSubToatal());
             ps.setInt(3,o.getOrderStatus().getStatusCode());
             ps.executeUpdate();
+            con.close();
             return true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

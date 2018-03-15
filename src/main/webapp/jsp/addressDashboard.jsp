@@ -30,6 +30,10 @@
     <!-- Beginning of prime JS assets which is to log prime related metrics -->
     <link class="aui-page-asset" rel="stylesheet" href="../css/2.css" type="text/css">
     <link rel="stylesheet" href="../css/1.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+
+    <script src="../js/deliverAddress.js"></script>
 
     <!-- <link rel="stylesheet" href="https://images-eu.ssl-images-amazon.com/images/I/41Kog%2BYOZ6L._RC|61+b0EXL5LL.css_.css?AUIClients/CheckoutMultiPagePipeline#desktop.in.117262-T1.104136-T1" /> -->
 
@@ -114,7 +118,7 @@
                 <div class="a-spacing-base address-book">
 
                 <%for(UserAddress u:userAddresses){%>
-                    <div id="address-book-entry-0" class="address-book-entry a-spacing-double-large address-book-new-row">
+                    <div id="address-book-entry-0" class="address-book-entry a-spacing-double-large address-book-new-col">
                         <div class="js-same-height addr-display a-nostyle a-spacing-base" data-testid="">
                             <div class="displayAddressDiv">
                                 <ul class="displayAddressUL">
@@ -130,8 +134,9 @@
                         </div>
 
                         <div class="ship-to-this-address a-button a-button-primary a-button-span12 a-spacing-medium ">
-                                <span class="a-button-inner">
-            <a data-action="page-spinner-show" class="a-declarative a-button-text " href="/gp/buy/addressselect/handlers/continue.html/ref=ox_shipaddress_ship_to_this_1?ie=UTF8&action=select-shipping&addressID=onpptwoplip&enableDeliveryPreferences=1&fromAnywhere=0&numberOfDistinctItems=1&purchaseId=404-1367193-3314737&requestToken=" data-testid="" >
+                            <%--<input type="hidden" value="<%=u.getId()%>" id='addressId' class='h_v'>--%>
+                            <span class="a-button-inner">
+            <a id="deliver<%=u.getId()%>" data-action="page-spinner-show" class="a-declarative a-button-text " href="#" data-testid="" >
               Deliver to this address<span class="screenreader-context-span screenreader-address-span"></span>
                                 </a>
                                 </span>
@@ -140,7 +145,7 @@
                             <div class="a-span6 a-column">
                                 <div class="a-button a-button-small a-button-span12">
                                         <span class="a-button-inner">
-              <a data-action="page-spinner-show" class="a-declarative a-button-text " href="/gp/buy/addressselect/handlers/continue.html/ref=ox_shipaddress_edit_addr_1?ie=UTF8&action=edit&addressID=onpptwoplip&enableDeliveryPreferences=1&fromAnywhere=0&numberOfDistinctItems=1&purchaseId=404-1367193-3314737&requestToken=&skipHeader=0" data-testid="">
+              <a id="edit" data-action="page-spinner-show" class="a-declarative a-button-text " href="/gp/buy/addressselect/handlers/continue.html/ref=ox_shipaddress_edit_addr_1?ie=UTF8&action=edit&addressID=onpptwoplip&enableDeliveryPreferences=1&fromAnywhere=0&numberOfDistinctItems=1&purchaseId=404-1367193-3314737&requestToken=&skipHeader=0" data-testid="">
                 Edit<span class="screenreader-context-span"> address <span class="aok-offscreen screenreader-context-span screenreader-address-span"></span></span>
                                         </a>
                                         </span>
@@ -149,7 +154,7 @@
                             <div class="a-span6 a-column a-span-last">
                                 <div data-action="checkout-delete-address" class="a-declarative a-button a-button-small a-button-span12  deletebutton">
                                         <span class="a-button-inner">
-                <a class="a-button-text" href="/gp/buy/addressselect/handlers/continue.html/ref=ox_shipaddress_delete_addr_1?ie=UTF8&action=delete&addressID=onpptwoplip&enableDeliveryPreferences=1&fromAnywhere=0&numberOfDistinctItems=1&purchaseId=404-1367193-3314737&requestToken=" data-testid="">
+                <a id="delete" class="a-button-text" href="/gp/buy/addressselect/handlers/continue.html/ref=ox_shipaddress_delete_addr_1?ie=UTF8&action=delete&addressID=onpptwoplip&enableDeliveryPreferences=1&fromAnywhere=0&numberOfDistinctItems=1&purchaseId=404-1367193-3314737&requestToken=" data-testid="">
                   Delete<span class="screenreader-context-span"> address <span class="aok-offscreen screenreader-context-span screenreader-address-span"></span></span>
                                         </a>
                                         </span>
@@ -160,11 +165,11 @@
 
                     </div>
 
+                    <%}%>
 
 
                 </div>
 
-              <%}%>
 
 
 

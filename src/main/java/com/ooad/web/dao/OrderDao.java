@@ -9,15 +9,16 @@ import com.ooad.web.utils.Database;
 import java.sql.*;
 
 public class OrderDao {
-    public Order createEmptyOrder(User u){
+    public Order createEmptyOrder(User u,int addressId){
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("INSERT INTO Orders(userId, itemsSubTotal, shippingCharges, deliveryAddressId, orderStatus) VALUES " +
-                    "(?,?,?,?,?)");
+                    "(?,?,?,?,?)",  Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, u.getId());
             ps.setInt(2,0 );
             ps.setInt(3,0 );
-            ps.setInt(4,u.getDefaultAddressId() );
+            //TODO get the addressId
+            ps.setInt(4,addressId);
             ps.setInt(5,0 );
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();

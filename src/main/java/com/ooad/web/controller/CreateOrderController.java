@@ -40,7 +40,7 @@ public class CreateOrderController extends HttpServlet {
             rd.forward(request,response);
         }
         else{
-            user.createOrder();
+            user.createOrder(user.getDefaultAddressId());
             RequestDispatcher rd = request.getRequestDispatcher("jsp/");//TODO order page
             rd.forward(request,response);
         }

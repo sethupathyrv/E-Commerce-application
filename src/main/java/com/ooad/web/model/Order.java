@@ -22,6 +22,8 @@ public class Order {
         this.id = id;
         this.deliveryAddress = deliveryAddress;
         this.itemsSubToatal = 0;
+        this.shippingCharges = 0;
+
     }
 
     public int getId() {
@@ -112,7 +114,11 @@ public class Order {
             ja.put(oi.toJSON());
         }
         j.put("orderItems",ja);
-        j.put("deliveryAddress","" );
+        j.put("deliveryAddress",this.deliveryAddress.toJSON() );
         return j;
+    }
+
+    public static Order find(int orderId) {
+        return new OrderDao().getOrderById(orderId);
     }
 }

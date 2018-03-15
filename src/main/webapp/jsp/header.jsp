@@ -152,9 +152,11 @@
                         <span class="nav-line-2">Lists </span> <i class="fa fa-caret-down" aria-hidden="true"></i>
                     </a>
                 </div>
-                <div class="col-md-3 cart">
-                    <span id="cart-contents"><%=(user==null)? 0:user.getCart().size()%></span>
-                </div>
+                <a href="/cart">
+                    <div class="col-md-3 cart">
+                        <span id="cart-contents"><%=(user==null)? 0:user.getCart().size()%></span>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

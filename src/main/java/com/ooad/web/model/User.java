@@ -99,16 +99,38 @@ public class User {
                 isValid = false;
                 errors.put("quantity", "Out of Stock");
             } else {
-                CartDao cartDao = new CartDao();
-                cartDao.insertItem(this.id, itemId, quantity);
-                this.cart.refreshCart();
-                return new JSONObject().put("status", Status.OK.getStatusCode())
-                        .put("errors", errors)
-                        .put("cart", cart.toJSON());
+                CartItem c = alreadyInCart(item);
+                if(c!=null){
+                    if(item.getQuantity() < quantity + c.getQuantity()){
+                        isValid = false;
+                        errors.put("quantity","Out of stock");
+                    } else{
+                        c.setQuantity(c.getQuantity() + quantity);
+                        c.saveCartItem();
+                        return new JSONObject().put("status", Status.OK.getStatusCode())
+                                .put("errors", errors).put("cart", cart.toJSON());
+                    }
+                } else {
+                    CartDao cartDao = new CartDao();
+                    cartDao.insertItem(this.id, itemId, quantity);
+                    this.cart.refreshCart();
+                    return new JSONObject().put("status", Status.OK.getStatusCode())
+                            .put("errors", errors)
+                            .put("cart", cart.toJSON());
+                }
             }
         }
         return new JSONObject().put("status", Status.BAD_REQUEST.getStatusCode())
                 .put("errors", errors);
+    }
+
+    private CartItem alreadyInCart(Item item) {
+        for(CartItem c : this.cart.getCartItems()){
+            if(c.getItem().getId()  == item.getId()){
+                return c;
+            }
+        }
+        return null;
     }
 
     public JSONObject createOrder(int addressId) {
@@ -212,5 +234,9 @@ public class User {
             return new JSONObject().put("status", Status.BAD_REQUEST.getStatusCode()).put("errors", "addressId is missing");
         }
         return this.createOrder(j.getInt("addressId"));
+    }
+
+    public static User find(int userId) {
+        return new UserDao().getUser(userId);
     }
 }

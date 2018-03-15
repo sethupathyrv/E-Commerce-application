@@ -21,7 +21,7 @@ public class ItemController extends HttpServlet {
         final int itemId = Integer.parseInt(request.getParameter("id"));
         System.out.println(itemId);
         // getItem() using ItemDao.
-        final Item item = new ItemDao().getItembyId(itemId);
+        final Item item = Item.find(itemId);
         //Creating a Dummy item
         request.setAttribute("item",item);
         System.out.print("item"+item.toString());

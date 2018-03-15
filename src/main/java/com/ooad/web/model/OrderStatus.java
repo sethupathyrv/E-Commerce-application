@@ -55,5 +55,17 @@ public enum OrderStatus {
     public abstract String getStatus();
     public abstract int getStatusCode();
     public abstract boolean isDelivered();
+    public static OrderStatus getStatusByCode(int code){
+        switch (code){
+            case 101:
+                return OrderStatus.DELIVERED;
+            case 102:
+                return OrderStatus.PLACED;
+            case 103:
+                return OrderStatus.CANCELLED;
+            default:
+                return null;
+        }
+    }
 
 } 

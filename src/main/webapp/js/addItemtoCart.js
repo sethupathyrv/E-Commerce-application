@@ -28,7 +28,7 @@ function addItemtoCartResponse(response) {
         console.log(response.cart.length);
         $("#cart-contents").text(response.cart.length);
     }else if(response.status === 401){
-        window.location("/login");
+        window.location.replace("/login");
     }
     console.log(response);
 }

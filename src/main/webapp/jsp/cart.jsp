@@ -73,7 +73,7 @@
             <div class="item-box">
                 <div class="item-row">Subtotal (<span id="numberOfItems"><%=cart.size()%></span> items):<span class="Price"> &#2352;<%=cart.getSubTotal()%></span></div>
                 <div>
-                    <input id="proceedToCheckout"type="button" class="btn1" value="Proceed to Checkout">
+                    <a href="/checkout"><input id="proceedToCheckout"type="button"  class="btn1" value="Proceed to Checkout"></a>
                 </div>
             </div>
         </div>

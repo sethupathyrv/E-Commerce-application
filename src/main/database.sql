@@ -121,7 +121,7 @@ create table Users
   emailId varchar(255) not null,
   password varchar(255) not null,
   isEnabled tinyint(1) default '1' not null,
-  defaultAddrId INT DEFAULT '-1'       NULL,
+  defaultAddressId INT DEFAULT '-1'       NULL,
   constraint Users_id_uindex
   unique (id),
   constraint users_emailId_uindex

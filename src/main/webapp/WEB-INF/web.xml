@@ -104,13 +104,13 @@
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
     <servlet>
-        <display-name>AddAddressController</display-name>
-        <servlet-name>AddAddress</servlet-name>
-        <servlet-class>com.ooad.web.controller.AddAddressController</servlet-class>
+        <display-name>CreateOrderController</display-name>
+        <servlet-name>CreateOrder</servlet-name>
+        <servlet-class>com.ooad.web.controller.CreateOrderController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>AddAddress</servlet-name>
-        <url-pattern>/addaddress</url-pattern>
+        <servlet-name>CreateOrder</servlet-name>
+        <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
 
 </web-app>

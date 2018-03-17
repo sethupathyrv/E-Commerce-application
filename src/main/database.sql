@@ -1,15 +1,15 @@
-CREATE TABLE Cart
+create table Cart
 (
-  id           INT AUTO_INCREMENT
-    PRIMARY KEY,
-  itemId       INT                    NULL,
-  userId       INT                    NULL,
-  quantity     INT                    NULL,
-  offerApplied TINYINT(1) DEFAULT '0' NULL,
-  CONSTRAINT Cart_id_uindex
-  UNIQUE (id)
+  id int auto_increment
+    primary key,
+  itemId int null,
+  userId int null,
+  quantity int null,
+  constraint Cart_id_uindex
+  unique (id)
 )
-  ENGINE = InnoDB;
+  engine=InnoDB
+;
 
 create table Categories
 (
@@ -64,6 +64,8 @@ create table Offers
   offerType int null,
   discountPercentage float default '-1' null,
   price int default '-1' null,
+  x int default '-1' null,
+  y int default '-1' null,
   constraint Offers_id_uindex
   unique (id)
 )
@@ -76,7 +78,7 @@ create table OrderItems
     primary key,
   orderId int null,
   itemId int null,
-  itemPrice int null,
+  itemPrice float null,
   quantity int null
 )
   engine=InnoDB
@@ -84,13 +86,14 @@ create table OrderItems
 
 create table Orders
 (
-  userId int not null,
-  itemsSubTotal int null,
-  shippingCharges int null,
-  deliveryAddressId int null,
-  orderStatus int null,
   id int auto_increment
     primary key,
+  userId int not null,
+  itemsSubTotal int default '0' null,
+  shippingCharges int default '0' null,
+  deliveryAddressId int null,
+  orderStatus int null,
+  promotionApplied int default '0' null,
   constraint Orders_id_uindex
   unique (id)
 )
@@ -113,6 +116,22 @@ create table Sellers
   engine=InnoDB
 ;
 
+create table UserAddresses
+(
+  id int auto_increment
+    primary key,
+  fullName varchar(255) not null,
+  mobileNumber varchar(10) not null,
+  pincode varchar(6) not null,
+  streetAddress varchar(255) not null,
+  landmark varchar(255) not null,
+  city varchar(255) not null,
+  state varchar(255) not null,
+  userId int null
+)
+  engine=InnoDB
+;
+
 create table Users
 (
   id int auto_increment
@@ -121,31 +140,12 @@ create table Users
   emailId varchar(255) not null,
   password varchar(255) not null,
   isEnabled tinyint(1) default '1' not null,
-  defaultAddressId INT DEFAULT '-1'       NULL,
+  defaultAddressId int default '-1' null,
   constraint Users_id_uindex
   unique (id),
   constraint users_emailId_uindex
   unique (emailId)
-
 )
   engine=InnoDB
 ;
-
-
-create table UserAddresses
-(
-    id int auto_increment
-        primary key,
-    fullName varchar(255) not null,
-    mobileNumber varchar(10) not null,
-    pincode varchar(6) not null,
-    streetAddress varchar(255) not null,
-    landmark varchar(255) not null,
-    city varchar(255) not null,
-    state varchar(255) not null,
-    userId int null
-)
-    engine=InnoDB
-;
-
 

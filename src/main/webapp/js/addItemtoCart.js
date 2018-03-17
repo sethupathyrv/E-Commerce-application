@@ -22,13 +22,12 @@ $(document).ready(function () {
 });
 
 function addItemtoCartResponse(response) {
-    console.log(response);
     if(response.status ===200){
-        alert("Item added");
-        console.log(response.cart.length);
-        $("#cart-contents").text(response.cart.length);
+        $("#cart-contents").text(response.cart.cartItems.length);
     }else if(response.status === 401){
         window.location.replace("/login");
+    }else if(response.status === 400){
+        alert(response.errors);
     }
     console.log(response);
 }

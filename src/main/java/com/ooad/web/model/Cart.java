@@ -2,6 +2,7 @@ package com.ooad.web.model;
 
 import com.ooad.web.dao.CartDao;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Collection;
 
@@ -44,18 +45,22 @@ public class Cart {
     public void refreshCart(){
         CartDao cartDao = new CartDao();
         cartItems = cartDao.createCartItems(this.user.getId());
+        this.promotionApplied = applyOffer();
     }
 
     public int size(){
         return cartItems.size();
     }
 
-    public JSONArray toJSON(){
+    public JSONObject toJSON(){
+        JSONObject cartObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         for (CartItem c:cartItems) {
             jsonArray.put(c.toJSON());
         }
-        return jsonArray;
+        cartObject.put("cartItems",jsonArray );
+        cartObject.put("promotion",this.promotionApplied);
+        return cartObject;
     }
 
     public Collection<CartItem> getCartItems() {
@@ -74,6 +79,10 @@ public class Cart {
         return promotion;
     }
 
+    public int getPromotionApplied() {
+        return promotionApplied;
+    }
+
     public void emptyCart() {
         new CartDao().emptyCart(this.user.getId());
     }
@@ -84,6 +93,10 @@ public class Cart {
             subTotal += c.getQuantity()*c.getItem().getPrice();
         }
         return subTotal;
+    }
+
+    public float getGrandTotal(){
+        return this.getSubTotal() - this.promotionApplied;
     }
 }
 

@@ -76,7 +76,9 @@ public class Order {
 
     public void setOrderItems(Collection<OrderItem> orderItems) {
         this.orderItems = orderItems;
-        calculateItemsSubToatal();
+        if(this.itemsSubToatal == 0) {
+            calculateItemsSubToatal();
+        }
     }
 
     private void calculateItemsSubToatal() {

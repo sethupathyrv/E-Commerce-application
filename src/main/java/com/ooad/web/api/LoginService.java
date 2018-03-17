@@ -28,7 +28,6 @@ public class LoginService {
         final JSONObject jsonObject;
         final UserDao userDao = new UserDao();
         //TODO Change validate login to user Model
-        System.out.println(email + password);
         jsonObject = userDao.validateLogin(email, password);
         return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
@@ -42,7 +41,6 @@ public class LoginService {
         final String userName = reqJson.getString("username");
         final String email = reqJson.getString("email");
         final String password = reqJson.getString("psword");
-        System.out.println(userName + email + password);
         //TODO Change validateRegister to user model
         final UserDao userDao = new UserDao();
         final JSONObject jsonObject = userDao.validateRegister(userName, email, password);

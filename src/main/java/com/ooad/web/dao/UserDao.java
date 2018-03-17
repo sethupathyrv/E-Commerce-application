@@ -18,7 +18,6 @@ public class UserDao {
 
     public JSONObject validateLogin(final String email, String password) {
         try {
-//            System.out.println(email+password);
             final JSONObject status = new JSONObject();
             final Connection con = Database.getConnection();
             final PreparedStatement ps = con.prepareStatement("SELECT  * FROM  Users WHERE emailId=?");
@@ -39,7 +38,6 @@ public class UserDao {
                 }
             } else {
                 status.put("status", Status.BAD_REQUEST.getStatusCode());
-                System.out.println(status);
                 final JSONObject errors = new JSONObject();
                 errors.put("email", Constants.ERROR_NO_USER);
                 status.put("errors", errors);

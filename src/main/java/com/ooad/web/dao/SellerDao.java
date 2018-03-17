@@ -40,7 +40,6 @@ public class SellerDao {
                 }
             } else {
                 status.put("status", Response.Status.BAD_REQUEST.getStatusCode());
-                System.out.println(status);
                 final JSONObject errors = new JSONObject();
                 errors.put("email", Constants.ERROR_NO_USER);
                 status.put("errors", errors);

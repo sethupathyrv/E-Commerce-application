@@ -18,6 +18,7 @@
     <script src="../js/jquery.cookie.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="../js/addItemtoCart.js"></script>
+    <script src="../js/item.js"></script>
     <link rel="stylesheet" href="../css/item.css">
     <% Item item = (Item) request.getAttribute("item"); %>
 </head>
@@ -45,7 +46,7 @@
                     <tr>
                         <td class="text-right text-c1">Price:</td>
                         <td class="text-left text-c2">
-                            &#2352;<span id="currentPrice"> 2,495.00</span>
+                            &#2352; <span id="currentPrice"><%=item.getPrice()%></span>
                         </td>
                     </tr>
                     <tr class="saving">
@@ -68,14 +69,10 @@
             <%--<div id="itemId" type="hidden"><%=item.getId()%></div>--%>
             <input type="hidden" value="<%=item.getId()%>" id='itemId' class='h_v'>
 
-            <div id="seller">Sold by <a href="#" id="sellerName"><%=item.getSeller().getUserName()%></a></div>
+            <div id="seller">Sold by <a href="#" id="sellerName" data-toggle="tooltip" title="<%=item.getSeller().getId()%>"><%=item.getSeller().getUserName()%></a></div>
             <div id="prodFeatures">
                 <ul>
-                    <li><span>Day And Date Display</span></li>
-                    <li><span>Three hands that move in a smooth and uninterrupted fashion</span></li>
-                    <li><span>2 Year Warranty</span></li>
-                    <li><span>Packed In Espoir Gift Box</span></li>
-                    <li><span>Works on Japanese Quartz format</span></li>
+                    <%=item.getDescription()%>
                 </ul>
             </div>
         </div>

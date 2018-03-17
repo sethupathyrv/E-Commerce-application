@@ -19,12 +19,8 @@ public class ItemController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final int itemId = Integer.parseInt(request.getParameter("id"));
-        System.out.println(itemId);
-        // getItem() using ItemDao.
         final Item item = Item.find(itemId);
-        //Creating a Dummy item
         request.setAttribute("item",item);
-        System.out.print("item"+item.toString());
         RequestDispatcher rd = request.getRequestDispatcher("/jsp/item.jsp");
         rd.forward(request,response);
     }

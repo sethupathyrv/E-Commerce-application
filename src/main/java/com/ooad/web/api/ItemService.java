@@ -37,7 +37,6 @@ public class ItemService {
             return Response.status(Status.OK).entity(returnObject.toString()).build();
         }
         else{
-            System.out.println();
             returnObject.put("item","" );
             returnObject.put("status",Status.BAD_REQUEST.getStatusCode() );
             returnObject.put("errors","No Item Exists" );

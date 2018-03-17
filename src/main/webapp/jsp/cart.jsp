@@ -47,7 +47,7 @@
                         <img id = "prodImage<%=c.getId()%>" width="150"  src="<%=c.getItem().getUrl()%>" height="150" class = "img-responsive" alt="watch">
                     </div>
                     <div class="col-lg-6">
-                        <span id="productTitle" class="btn-link"><%=c.getItem().getName()%></span> by <a href="#" id="sellerName"><%=c.getItem().getSeller().getUserName()%></a>
+                        <a href="/item?id=<%=c.getItem().getId()%>"><span id="productTitle" class="btn-link"><%=c.getItem().getName()%></span></a> by <a href="#" id="sellerName"><%=c.getItem().getSeller().getUserName()%></a>
                         <div id="availability"><span id="avail">In stock</span></div>
                         <span id="removeItem" class="btn-link">Delete</span>
                     </div>
@@ -72,6 +72,8 @@
             <img id="purchase_protection" src="/images/amazon_purchase_protection.JPG" class="img-responsive" width="248" alt="Purchase Protection">
             <div class="item-box">
                 <div class="item-row">Subtotal (<span id="numberOfItems"><%=cart.size()%></span> items):<span class="Price"> &#2352;<%=cart.getSubTotal()%></span></div>
+                <div class="item-row">Promotion <span class="Price"> &#2352;<%=cart.getPromotionApplied()%></span></div>
+                <div class="item-row">Total <span class="Price"> &#2352;<%= cart.getGrandTotal()%></span></div>
                 <div>
                     <a href="/checkout"><input id="proceedToCheckout"type="button"  class="btn1" value="Proceed to Checkout"></a>
                 </div>

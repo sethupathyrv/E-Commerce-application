@@ -126,6 +126,7 @@ public class ItemDao {
         return new Item(id, name, price, url, quantity, seller, itemDescription, brand, height,
                 width, getItemDetails(id),getOffer(offerId));
     }
+
     private Offer getOffer(int offerId){
         try {
             Connection con = Database.getConnection();

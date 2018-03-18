@@ -14,7 +14,8 @@ $(document).ready(function() {
                     'brand':$("#brand").val(),
                     'height':$("#itemHeight").val(),
                     'width':$("#itemWidth").val(),
-                    'itemDetails':$("#itemDetails").val()
+                    'itemDetails':$("#itemDetails").val(),
+                    'subCategoryId':2  //TODO change subcategoryId from 2
                 };
                 formData.append('json',JSON.stringify(jsonData));
                 $.ajax({

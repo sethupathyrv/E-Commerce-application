@@ -44,7 +44,7 @@ create table Items
   description varchar(1000) null,
   sellerId int null,
   offerId int null,
-  subSubSubCategoryId int null,
+  subCategoryId int null,
   url varchar(255) null,
   brand varchar(255) null,
   height float null,
@@ -149,3 +149,14 @@ create table Users
   engine=InnoDB
 ;
 
+CREATE TABLE SubCategories
+(
+  id          INT AUTO_INCREMENT
+    PRIMARY KEY,
+  displayName VARCHAR(255)           NULL,
+  categoryId  INT                    NOT NULL,
+  isEnabled   TINYINT(1) DEFAULT '0' NULL,
+  CONSTRAINT SubCategories_id_uindex
+  UNIQUE (id)
+)
+  ENGINE = InnoDB;

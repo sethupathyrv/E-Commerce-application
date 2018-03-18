@@ -32,3 +32,4 @@ hs_err_pid*
 .project
 .settings/
 /src/main/java/com/ooad/web/utils/Constants.java
+\src\main\java\com\ooad\web\utils\Constants.java

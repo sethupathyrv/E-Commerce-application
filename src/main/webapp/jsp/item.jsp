@@ -20,7 +20,6 @@
     <script src="../js/jquery.min.js"></script>
     <script src="../js/jquery.cookie.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="../js/addItemtoCart.js"></script>
     <script src="../js/item.js"></script>
     <link rel="stylesheet" href="../css/item.css">
     <% Item item = (Item) request.getAttribute("item"); %>

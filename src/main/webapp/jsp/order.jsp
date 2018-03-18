@@ -20,7 +20,6 @@
     <script src="../js/jquery.min.js"></script>
     <script src="../js/jquery.cookie.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="../js/addItemtoCart.js"></script>
     <link rel="stylesheet" href="../css/order.css">
     <% Order order = (Order) request.getAttribute("order"); %>
     <% UserAddress address = order.getDeliveryAddress();%>

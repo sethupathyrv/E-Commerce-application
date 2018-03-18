@@ -130,4 +130,13 @@
         <servlet-name>orderController</servlet-name>
         <url-pattern>/order</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <display-name>ItemsController</display-name>
+        <servlet-name>Items</servlet-name>
+        <servlet-class>com.ooad.web.controller.ItemsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Items</servlet-name>
+        <url-pattern>/items</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -43,6 +43,6 @@ public class CreateOrderController extends HttpServlet {
             user.createOrder(user.getDefaultAddressId());
             RequestDispatcher rd = request.getRequestDispatcher("jsp/");//TODO order page
             rd.forward(request,response);
-        }
+         }
     }
 }

@@ -94,7 +94,6 @@
         <servlet-name>SellerHome</servlet-name>
         <url-pattern>/seller</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <display-name>SellerInfoController</display-name>
         <servlet-name>SellerInfo</servlet-name>

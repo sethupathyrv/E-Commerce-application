@@ -66,7 +66,7 @@
                 <div id="navbarCollapse" class="collapse navbar-collapse">
                     <ul class="nav nav-tabs">
                         <li><a href="/seller">Dashboard</a></li>
-                        <li class="active" id="infoSeller"><a href="/seller/info">Seller Information </a></li>
+                        <li class="active"><a href="/infoseller">Seller Information </a></li>
                         <li><a href="/seller/add">Add Item</a></li>
                         <li><a href="#" id="sellerLogout"> Logout</a></li>
                     </ul>
@@ -88,15 +88,15 @@
                         <div class="a-row a-spacing-base">
 
                             <div>Username : <%=seller.getUserName()%></div>
-                            <div>Email : </div>
-                            <div>Store Name : </div>
-                            <div>Mobile Number : </div>
-                            <div>Street Address : </div>
-                            <div>Landmark : </div>
-                            <div>City : </div>
-                            <div>State : </div>
-                            <div>Pincode : </div>
-                            <div>Country : </div>
+                            <div>Email :  <%=seller.getEmailId()%></div>
+                            <div>Store Name :  <%=seller.getStoreName()%></div>
+                            <div>Mobile Number : <%=seller.getMobileNumber()%></div>
+                            <div>Street Address : <%=seller.getStreetAddress()%></div>
+                            <div>Landmark : <%=seller.getLandmark()%></div>
+                            <div>City : <%=seller.getCity()%></div>
+                            <div>State : <%=seller.getState()%></div>
+                            <div>Pincode : <%=seller.getPincode()%></div>
+                            <div>Country : <%=seller.getCountry()%></div>
 
                         </div>
 

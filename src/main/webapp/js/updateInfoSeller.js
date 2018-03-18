@@ -20,7 +20,7 @@ $(document).ready(function() {
                     data: JSON.stringify(jsonData),
                     cache: false,
                     headers:{
-                        'authToken':$.cookie('sellerAuthToken')
+                        'sellerAuthToken':$.cookie('sellerAuthToken')
                     },
                     contentType: false,
                     processData: false,

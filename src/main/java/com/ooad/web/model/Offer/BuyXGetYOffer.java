@@ -32,12 +32,10 @@ public class BuyXGetYOffer extends Offer {
 
     @Override
     public int applyOffer(CartItem c, Cart cart) {
-        int multAdd = c.getQuantity()/x;
+        int multAdd = c.getQuantity()/(x+y);
         if(multAdd > 0){
-            c.setQuantity(c.getQuantity() + multAdd*y);
             int promotion = (int) (c.getItem().getPrice()*multAdd*y);
             c.setOfferApplied(true);
-            c.saveCartItem();
             return promotion;
         }
         return 0;

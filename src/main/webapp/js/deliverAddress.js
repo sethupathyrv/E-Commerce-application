@@ -1,10 +1,4 @@
 $(document).ready(function () {
-   /* $("#deliver").click(function (event) {
-        event.preventDefault();
-        console.log($("#addressId").val());
-        var formData = {
-            /'addressId':$("#addressId").val(),
-        };*/
     jQuery('a').click(function (event) {
         var id = $(this).attr("id");
         // console.log(id[id.length-1]);
@@ -24,20 +18,39 @@ $(document).ready(function () {
                 headers:{
                     'authToken':$.cookie('authToken')
                 },
-                success: addItemtoCartResponse
+                success: deliverAddressResponse
             });
         }
 
     });
+    $("#addAddressForm").submit(function (event) {
+        event.preventDefault();
+        var jsonData ={
+            'fullName':$('#enterAddressFullName').val(),
+            'mobileNumber':$("#enterAddressPhoneNumber").val(),
+            'pincode':$("#enterAddressPostalCode").val(),
+            'streetAddress':$("#enterAddressAddressLine2").val(),
 
-
-        
-
-
-
+            'landmark':$("#enterAddressLandmark").val(),
+            'city':$("#enterAddressCity").val(),
+            'state':$("#enterAddressStateOrRegion").val()
+        };
+        // formData.append('json',JSON.stringify(jsonData));
+        $.ajax({
+            url:'/api/user/address',
+            type:'POST',
+            data: JSON.stringify(jsonData),
+            cache: false,
+            headers:{
+                'authToken':$.cookie('authToken')
+            },
+            contentType: "text/plain",
+            processData: false,
+            success: addAddressResponse
+        });
 });
 
-function addItemtoCartResponse(response) {
+function deliverAddressResponse(response) {
     console.log(response);
     if(response.status ===200){
         alert("Item added");
@@ -51,4 +64,17 @@ function addItemtoCartResponse(response) {
     console.log(response);
 }
 
+function addAddressResponse(response) {
+    if(response.status ===201){
+        alert("Address Created please choose a delivery address");
+        location.reload();
+    }else if(response.status === 401){
+        alert("Not authorized");
+        window.location("/login");
+    }
+    console.log(response);
+}
+
+
+});
 

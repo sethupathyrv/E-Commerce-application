@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "SellerInfoController")
+@WebServlet(name = "SellerInfoController", urlPatterns = {"/seller/info"})
 public class SellerInfoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -29,10 +29,10 @@ public class SellerInfoController extends HttpServlet {
                 }
             }
         }
-
+/*
         int sellerID = seller.getId();
         Seller s = Seller.find(sellerID);
-        /*if(s==null){
+        if(s==null){
             RequestDispatcher rd = request.getRequestDispatcher("/jsp/sellerlogin.jsp");
             rd.forward(request,response);
         }else{
@@ -41,10 +41,10 @@ public class SellerInfoController extends HttpServlet {
             rd.forward(request,response);
         }
 
-        final int sellerId = Integer.parseInt(request.getParameter("id"));
-        final Seller seller = Seller.find(sellerId);*/
+        final int sellerId = Integer.parseInt(request.getParameter("id"));*/
+        final Seller s = Seller.find(seller.getId());
         request.setAttribute("seller",s);
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/infoSeller.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("jsp/infoSeller.jsp");
         rd.forward(request,response);
     }
 

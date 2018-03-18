@@ -29,21 +29,8 @@ public class SellerInfoController extends HttpServlet {
                 }
             }
         }
-/*
-        int sellerID = seller.getId();
-        Seller s = Seller.find(sellerID);
-        if(s==null){
-            RequestDispatcher rd = request.getRequestDispatcher("/jsp/sellerlogin.jsp");
-            rd.forward(request,response);
-        }else{
-            RequestDispatcher rd = request.getRequestDispatcher("/jsp/infoseller.jsp");
-            request.setAttribute("seller",s);
-            rd.forward(request,response);
-        }
-
-        final int sellerId = Integer.parseInt(request.getParameter("id"));*/
-        final Seller s = Seller.find(seller.getId());
-        request.setAttribute("seller",s);
+        
+        request.setAttribute("seller",seller);
         RequestDispatcher rd = request.getRequestDispatcher("jsp/infoSeller.jsp");
         rd.forward(request,response);
     }

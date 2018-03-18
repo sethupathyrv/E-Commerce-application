@@ -40,8 +40,17 @@ public class SellerRegisterController extends HttpServlet {
         String un = request.getParameter("username");
         String pw = request.getParameter("psword");
         String email = request.getParameter("email");
+        String storename = request.getParameter("storename");
+        String mobilenumber = request.getParameter("mobilenumber");
+        String streetaddress = request.getParameter("streetaddress");
+        String landmark = request.getParameter("landmark");
+        String city = request.getParameter("city");
+        String state = request.getParameter("state");
+        String pincode = request.getParameter("pincode");
+        String country = request.getParameter("country");
 
-        dao.createSeller(un, email, pw);
+        dao.createSeller(un, email, pw, storename, mobilenumber,
+                streetaddress, landmark, city, state, pincode, country);
         pwOut.print("Registration Successful! Please Login.");
         response.setContentType("text/html");
         RequestDispatcher view = request.getRequestDispatcher("jsp/sellerlogin.jsp");

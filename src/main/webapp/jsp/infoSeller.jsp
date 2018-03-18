@@ -103,7 +103,8 @@
                         <div class="a-section">
                             <span id="continue" class="a-button a-button-span12 a-button-primary">
                                 <span class="a-button-inner">
-                                    <a href="/jsp/updateInfoSeller.jsp">
+                                    <%--<a href="/jsp/updateInfoSeller.jsp">--%>
+                                    <a href="/sellerupdate">
                                     <input tabindex="5" class="a-button-input" id="update" type="button" aria-labelledby="continue-announce">
                                         <span id="continue-announce" class="a-button-text" aria-hidden="true">
                                             Update

@@ -94,6 +94,7 @@
         <servlet-name>SellerHome</servlet-name>
         <url-pattern>/seller</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <display-name>SellerInfoController</display-name>
         <servlet-name>SellerInfo</servlet-name>
@@ -102,6 +103,16 @@
     <servlet-mapping>
         <servlet-name>SellerInfo</servlet-name>
         <url-pattern>/infoseller</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>SellerUpdateInfoController</display-name>
+        <servlet-name>SellerUpdateInfo</servlet-name>
+        <servlet-class>com.ooad.web.controller.SellerUpdateInfoController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SellerUpdateInfo</servlet-name>
+        <url-pattern>/sellerupdate</url-pattern>
     </servlet-mapping>
 
     <servlet>

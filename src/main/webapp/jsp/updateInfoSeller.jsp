@@ -28,6 +28,8 @@
     <script src="../js/updateInfoSeller.js"></script>
     <script src="../js/jquery.cookie.js"></script>
 
+    <% Seller seller = (Seller) request.getAttribute("seller"); %>
+
 </head>
 
 <body>
@@ -63,9 +65,9 @@
                 <!-- Collection of nav links and other content for toggling -->
                 <div id="navbarCollapse" class="collapse navbar-collapse">
                     <ul class="nav nav-tabs">
-                        <li><a href="/jsp/homepageSeller.jsp">Dashboard</a></li>
-                        <li class="active"><a href="/jsp/infoSeller.jsp">Seller Information </a></li>
-                        <li><a href="/jsp/addItem.jsp">Add Item</a></li>
+                        <li><a href="/seller">Dashboard</a></li>
+                        <li class="active"><a href="/infoseller">Seller Information </a></li>
+                        <li><a href="/seller/add">Add Item</a></li>
                         <li><a href="#" id="sellerLogout"> Logout</a></li>
                     </ul>
                 </div>
@@ -75,7 +77,7 @@
 
 
     <%--............Form and button.............--%>
-    <form id="infoSeller" action="#" method="put" enctype="multipart/form-data">
+    <form id="updateInfoSeller" action="#" method="post" enctype="multipart/form-data">
         <div class="col-md-6">
             <div class="a-section">
                 <div class="a-box">
@@ -88,7 +90,8 @@
                             <label for="storeName" class="a-form-label">Store Name</label>
 
                             <input type="text" maxlength="128" id="storeName" name="storename" tabindex="1"
-                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getStoreName()%>">
 
 
                             <%--<label for="sel" class="a-form-label">Select Product Category</label>
@@ -101,7 +104,8 @@
                             <label for="mobileNumber" class="a-form-label">Mobile Number</label>
 
                             <input type="text" maxlength="128" id="mobileNumber" name="mobilenumber" tabindex="1"
-                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getMobileNumber()%>">
 
 
 
@@ -112,36 +116,42 @@
                             <label for="streetAddress" class="a-form-label">Street Address</label>
 
                             <input type="text" maxlength="128" id="streetAddress" name="streetaddress" tabindex="1"
-                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getStreetAddress()%>">
 
 
                             <label for="landmark" class="a-form-label">Landmark</label>
 
                             <input type="text" maxlength="128" id="landmark" name="landmark" tabindex="1"
-                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getLandmark()%>">
 
 
                             <label for="city" class="a-form-label">City</label>
 
                             <input type="text" maxlength="128" id="city" name="city" tabindex="1"
-                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getCity()%>">
 
 
                             <label for="state" class="a-form-label">State</label>
 
                             <input type="text" maxlength="128" id="state" name="state" tabindex="1"
-                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getState()%>">
 
                             <label for="pincode" class="a-form-label">Pincode</label>
 
                             <input type="text" maxlength="128" id="pincode" name="pincode" tabindex="1"
-                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getPincode()%>">
 
 
                             <label for="country" class="a-form-label">Country</label>
 
                             <input type="text" maxlength="128" id="country" name="country" tabindex="1"
-                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getCountry()%>">
 
                         </div>
                     </div>
@@ -151,10 +161,12 @@
             <div class="a-section">
                 <span id="continue1" class="a-button a-button-span12 a-button-primary">
                     <span class="a-button-inner">
+
                         <input tabindex="5" class="a-button-input" id="submit" type="submit" aria-labelledby="continue1-announce">
                             <span id="continue1-announce" class="a-button-text" aria-hidden="true">
                                 Submit
                             </span>
+
                     </span>
                 </span>
             </div>
@@ -162,7 +174,7 @@
             <div class="a-section">
                 <span id="continue2" class="a-button a-button-span12 a-button-primary">
                     <span class="a-button-inner">
-                        <a href="/jsp/infoSeller.jsp">
+                        <a href="/infoseller">
                         <input tabindex="5" class="a-button-input" id="back" type="button" aria-labelledby="continue2-announce">
                             <span id="continue2-announce" class="a-button-text" aria-hidden="true">
                                 Back

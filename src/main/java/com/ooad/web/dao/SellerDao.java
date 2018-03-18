@@ -103,7 +103,8 @@ public class SellerDao {
     }
 
 
-    public JSONObject validateSellerRegister(String userName, String email, String password) {
+    public JSONObject validateSellerRegister(String userName, String email, String password, String storeName, String mobileNumber,
+                                             String streetAddress, String landmark, String city, String state, String pincode, String country) {
         JSONObject status = new JSONObject();
         try {
             Connection con = Database.getConnection();
@@ -116,7 +117,8 @@ public class SellerDao {
                 status.put("status", Response.Status.BAD_REQUEST.getStatusCode());
                 status.put("errors", errors);
             } else {
-                final Seller seller = createSeller(userName, email, password);
+                final Seller seller = createSeller(userName, email, password, storeName, mobileNumber, streetAddress, landmark, city,
+                        state, pincode, country);
                 final JSONObject sellerJsonObject = seller.toJSON();
                 status.put("status", Response.Status.CREATED.getStatusCode());
                 status.put("seller", sellerJsonObject);
@@ -130,14 +132,25 @@ public class SellerDao {
         return null;
     }
 
-    public Seller createSeller(final String userName, final String email, final String password) {
+    public Seller createSeller(final String userName, final String email, final String password, final String storeName,
+                               final String mobileNumber, final String streetAddress, final String landmark, final String city,
+                               final String state, final String pincode, final String country) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Sellers(userName,emailId,password) VALUES (?,?,?)");//add seller to database
+                    .prepareStatement("INSERT INTO Sellers(userName,emailId,password,storeName,mobileNumber,streetAddress," +
+                            "landmark,city,state,pincode,country) VALUES (?,?,?,?,?,?,?,?,?,?,?)");//add seller to database
             ps.setString(1, userName);
             ps.setString(2, email);
             ps.setString(3, password);
+            ps.setString(4, storeName);
+            ps.setString(5, mobileNumber);
+            ps.setString(6, streetAddress);
+            ps.setString(7, landmark);
+            ps.setString(8, city);
+            ps.setString(9, state);
+            ps.setString(10, pincode);
+            ps.setString(11, country);
             ps.executeUpdate();
             con.close();
             return getSeller(email);
@@ -149,6 +162,7 @@ public class SellerDao {
 
     public boolean saveSeller(Seller seller){
         try {
+            System.out.println("reached database");
             Connection con = Database.getConnection();
             PreparedStatement ps = con
                     .prepareStatement("UPDATE Sellers SET storeName = ? ,mobileNumber = ?,streetAddress = ?," +

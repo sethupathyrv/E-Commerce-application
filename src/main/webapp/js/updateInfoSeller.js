@@ -1,8 +1,8 @@
 $(document).ready(function() {
-    $("#infoSeller").submit(function (event) {
+    $("#updateInfoSeller").submit(function (event) {
         event.preventDefault();
 
-                var jsonData ={
+                var formData ={
                     'storeName':$('#storeName').val(),
                     'mobileNumber':$("#mobileNumber").val(),
                     'streetAddress':$("#streetAddress").val(),
@@ -13,32 +13,31 @@ $(document).ready(function() {
                     'country':$("#country").val()
                 };
 
-        $("#submit").click(function () {
                 $.ajax({
                     url:'/api/seller/updateinfo',
+                    dataType: "json",
                     type:'PUT',
-                    data: JSON.stringify(jsonData),
+                    data: JSON.stringify(formData),
                     cache: false,
                     headers:{
                         'sellerAuthToken':$.cookie('sellerAuthToken')
                     },
-                    contentType: false,
+                    contentType: "text/plain",
                     processData: false,
                     success: updateInfoResponse
                 });
-            });
         });
 
     function updateInfoResponse(response) {
         if(response.status ===201){
             alert("Info Updated");
-            console.log(jsonData);
             window.location("/infoseller");
         }else if(response.status === 401){
             alert("Not authorized");
             window.location("/sellerlogin");
         }
-        console.log(response);
+        //console.log(response);
+        alert("Not Updated");
     }
 
     $('#sellerLogout').click(function () {

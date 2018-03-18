@@ -184,6 +184,7 @@ public class Seller {
     public static Seller find(int id) { return new SellerDao().getSeller(id);}
 
     public boolean save() {
+        System.out.println("reached model");
         return new SellerDao().saveSeller(this);
     }
 }

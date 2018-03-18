@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class SellerDao {
     public JSONObject validateSellerLogin(String email, String password) {
@@ -64,7 +65,16 @@ public class SellerDao {
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
-                        rs.getBoolean("isEnabled"));
+                        rs.getBoolean("isEnabled"),
+                        rs.getString("storeName"),
+                        rs.getInt("mobileNumber"),
+                        rs.getString("streetAddress"),
+                        rs.getString("landmark"),
+                        rs.getString("city"),
+                        rs.getString("state"),
+                        rs.getInt("pincode"),
+                        rs.getString("country")
+                );
             }
             con.close();
             return s;
@@ -75,22 +85,17 @@ public class SellerDao {
     }
 
 
-    public Seller getSeller(int userId) {
+    public Seller getSeller(int id) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Sellers WHERE id=?");
-            ps.setString(1, String.valueOf(userId));
+            ps.setString(1, String.valueOf(id));
             ResultSet rs = ps.executeQuery();
-            Seller s = null;
             if (rs.next()) {
-                s= new Seller(rs.getInt("id"),
-                        rs.getString("userName"),
-                        rs.getString("emailId"),
-                        rs.getString("password"),
-                        rs.getBoolean("isEnabled"));
+               Seller seller = sellerBuilder(rs);
+               con.close();
+               return seller;
             }
-            con.close();
-            return s;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,5 +145,52 @@ public class SellerDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean saveSeller(Seller seller){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con
+                    .prepareStatement("UPDATE Sellers SET storeName = ? ,mobileNumber = ?,streetAddress = ?," +
+                            "landmark = ? ,city = ? ,state = ?,pincode = ?,country = ? "+
+                            " WHERE id = ?");
+            ps.setString(1, seller.getStoreName());
+            ps.setInt(2, seller.getMobileNumber());
+            ps.setString(3, seller.getStreetAddress());
+            ps.setString(4, seller.getLandmark());
+            ps.setString(5, seller.getCity());
+            ps.setString(6, seller.getState());
+            ps.setInt(7, seller.getPincode());
+            ps.setString(8, seller.getCountry());
+            ps.setInt(9,seller.getId());
+            ps.executeUpdate();
+            con.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private Seller sellerBuilder(ResultSet rs) throws NullPointerException, SQLException {
+        if (rs == null) {
+            throw new NullPointerException("Result Set");
+        }
+        final int id = rs.getInt("id");
+        final String userName = rs.getString("userName");
+        final String emailId = rs.getString("emailId");
+        final String password = rs.getString("password");
+        final Boolean isEnabled = rs.getBoolean("isEnabled");
+        final String storeName = rs.getString("storeName");
+        final int mobileNumber = rs.getInt("mobileNumber");
+        final String streetAddress = rs.getString("streetAddress");
+        final String landmark = rs.getString("landmark");
+        final String city = rs.getString("city");
+        final String state = rs.getString("state");
+        final int pincode = rs.getInt("pincode");
+        final String country = rs.getString("country");
+
+        return new Seller(id, userName, emailId, password, isEnabled, storeName, mobileNumber, streetAddress,
+                landmark, city, state, pincode, country );
     }
 }

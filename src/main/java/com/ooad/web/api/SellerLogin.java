@@ -7,14 +7,18 @@ package com.ooad.web.api;
 
 import com.ooad.web.dao.SellerDao;
 import com.ooad.web.dao.UserDao;
+import com.ooad.web.model.Seller;
 import com.ooad.web.model.User;
 import com.ooad.web.utils.TokenAuth;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import java.io.InputStream;
 
 @Path("/seller")
 public class SellerLogin {
@@ -45,4 +49,20 @@ public class SellerLogin {
         return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
 
+    @Path("updateinfo")
+    @PUT
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addItem(  @FormDataParam("file") InputStream fileInputStream,
+                              @FormDataParam("file") FormDataContentDisposition fileMetaData,
+                              @FormDataParam("json")String item,
+                              @HeaderParam("authToken") String token) throws Exception {
+        Seller seller= TokenAuth.getSellerFromToken(token);
+        if(seller==null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode()).toString()).build();
+        }
+
+        boolean b = seller.save();
+        return Response.status(Status.OK).entity(b).build();
+    }
 }

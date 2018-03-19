@@ -3,6 +3,7 @@ package com.ooad.web.model;
 import com.ooad.web.dao.*;
 import org.json.JSONObject;
 
+import javax.json.JsonObject;
 import javax.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -238,5 +239,24 @@ public class User {
 
     public static User find(int userId) {
         return new UserDao().getUser(userId);
+    }
+
+
+    public JSONObject createTransaction(JSONObject req) {
+        final int orderId = req.getInt("orderId");
+        final JSONObject errors = new JSONObject();
+        OrderDao orderDao = new OrderDao();
+        Order order = orderDao.getOrderById(orderId);
+        TransactionDao transactionDao = new TransactionDao();
+        Transaction transaction = null;
+        UserDao userDao = new UserDao();
+        UserAccount userAccount = userDao.getUserAccountFromId(id);
+        if(order.grandTotal()<= userAccount.getAmount()){
+            transaction = transactionDao.createTransaction(order,userAccount,1);
+        }else{
+            transaction = transactionDao.createTransaction(order,userAccount,0);
+        }
+        return new JSONObject().put("status", Status.OK.getStatusCode())
+                .put("transaction", transaction.toJSON());
     }
 }

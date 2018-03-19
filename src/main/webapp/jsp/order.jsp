@@ -20,6 +20,7 @@
     <script src="../js/jquery.min.js"></script>
     <script src="../js/jquery.cookie.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="../js/order.js"></script>
     <link rel="stylesheet" href="../css/order.css">
     <% Order order = (Order) request.getAttribute("order"); %>
     <% UserAddress address = order.getDeliveryAddress();%>
@@ -29,51 +30,53 @@
 <body>
 <%@include file="header.jsp" %>
 <div class="container-fluid">
-    <h3>Review your order</h3>
+    <h3><b>Review your order</b></h3>
     <p>By clicking on the "Place your Order" button, you agree to Amazon.in's privacy notice and conditions of use</p>
 
-    <div class="row">
+    <div class="shippingDetails">
         <div class="col-lg-9">
             <div class="item-box-big">
-                <h4>Shipping Address</h4>
+                <h4><b>Shipping Address</b><a href="#" id="changeAddress">Change Address</a></h4>
                 <p><%=address.getFullname()%></p>
                 <p>mobile: <%=address.getMobilenumber()%></p>
                 <p><%=address.getStreetAddress()%></p>
+                <p><%=address.getLandmark()%></p>
+
                 <p><%=address.getPincode()%></p>
             </div>
         </div>
 
         <div class="col-lg-3">
-            <div class="item-box">
+            <div class="paymentDetails">
                 <div>
-                    <input type="button" class="btn1" value="Place your Order">
+                    <input type="hidden" value="<%=order.getId()%>" id='orderId' class='h_v'>
+                    <input id="placeorder" type="button" class="btn1" value="Place your Order">
                 </div>
 
                 <div>
-                    <h3>Order Summary</h3>
+                    <h3 id="orderSummary"><b>Order Summary</b></h3>
                     <table>
-                        <tbody>
-                        <tr class="text-c1">
-                            <td class="text-right text-nowrap">Items:</td>
-                            <td><%=order.getItemsSubToatal()%></td>
+                        <tbody class="totalCost">
+                        <tr>
+                            <td id="c1">Items:</td>
+                            <td>&#2352; <%=order.getItemsSubToatal()%></td>
                         </tr>
                         <tr>
-                            <td class="text-right text-c1">Delivery:</td>
-                            <td><%=order.getShippingCharges()%></td>
+                            <td id="c2">Delivery:</td>
+                            <td>&#2352; <%=order.getShippingCharges()%></td>
                         </tr>
-                        <tr class="saving">
-                            <td class="text-right text-c1">Total:</td>
-                            <td><%=order.getItemsSubToatal()+order.getShippingCharges()%></td>
-                        </tr>
+
 
                         </tbody>
                     </table>
                     <hr>
                     <table>
                         <tbody>
-                        <tr>
-                            <td>Order Total:</td>
-                            <td>225.00</td>
+                        <tr class="total">
+                            <td id="c3"><b>Order Total:</b></td>
+                            <td><b>&#2352; <%=order.getItemsSubToatal()+order.getShippingCharges()%></b></td>
+
+                            <br>
                         </tr>
                         </tbody>
                     </table>
@@ -83,58 +86,84 @@
 
         </div>
     </div>
-    <%--<div class="row">--%>
-        <%--<div class="item-box-big">--%>
-            <%--<div class="row">--%>
-                <%--<div class="col-lg-4">--%>
-                    <%--<img id = "prodImage" width="175"  height="200" class = "img-responsive" alt="watch"   >--%>
-                <%--</div>--%>
-                <%--<div class="col-lg-5">--%>
-                    <%--<h1 id="title">--%>
-                        <%--<span id="productTitle">Watch </span>--%>
-                    <%--</h1>--%>
-                    <%--<div id="itemPrice">--%>
-                        <%--<table>--%>
-                            <%--<tbody>--%>
-                            <%--<tr class="text-c1">--%>
-                                <%--<td class="text-right text-nowrap">M.R.P:</td>--%>
-                                <%--<td class="text-left text-nowrap">--%>
-                                    <%--<del>&#2352;</del><del><span id="originalPrice"> </span></del>--%>
-                                <%--</td>--%>
-                            <%--</tr>--%>
-                            <%--<tr>--%>
-                                <%--<td class="text-right text-c1">Price:</td>--%>
-                                <%--<td class="text-left text-c2">--%>
-                                    <%--&#2352;<span id="currentPrice"> 2,495.00</span>--%>
-                                <%--</td>--%>
-                            <%--</tr>--%>
-                            <%--<tr class="saving">--%>
-                                <%--<td class="text-right text-c1">You Save:</td>--%>
-                                <%--<td class="text-left text-c2">--%>
-                                    <%--&#2352;<span id="savingPrice"> 0.00 (<span id="savingPercentage">0</span>%)</span>--%>
-                                <%--</td>--%>
-                            <%--</tr>--%>
-                            <%--<tr>--%>
-                                <%--<td></td>--%>
-                                <%--<td>--%>
-                                    <%--<span>Inclusive of all taxes</span>--%>
-                                <%--</td>--%>
-                            <%--</tr>--%>
-                            <%--</tbody>--%>
-                        <%--</table>--%>
-                    <%--</div>--%>
-                    <%--<div id="cod">Cash on delivery <span id="cod_elgiblity">eligible.</span></div>--%>
-                    <%--<div id="availability"><span id="avail">In stock.</span></div>--%>
-                    <%--&lt;%&ndash;<div id="itemId" type="hidden"><%=item.getId()%></div>&ndash;%&gt;--%>
-                    <%--<input type="hidden" id='itemId' class='h_v'>--%>
-                <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
+
+    <% for (OrderItem oi: orderItems) {%>
+    <div class="orderItemsrow">
+        <div class="col-lg-9">
+
+            <div class=item-box-big">
+
+                <h3 id="deliveryDate">
+                    Estimated delivery:  19 Mar 2018 - 21 Mar 2018
+                </h3>
+                <div class="col-lg-2">
+                    <img id = "prodImage<%=oi.getId()%>" width="130"  src="<%=oi.getItem().getUrl()%>" height="130" class = "img-responsive" alt="watch">
+                </div>
+                <div class="col-lg-10">
+                    <p id="productTitle" class="btn-link"><%=oi.getItem().getName()%></p> Sold by <a href="#" id="sellerName"><%=oi.getItem().getSeller().getUserName()%></a>
+                    <p id="Price"><span id="currentPrice<%=oi.getId()%>">&#2352; <%=oi.getItem().getPrice()%></span></p>
+                    <p id="Quantity">Quantity: <%=oi.getQuantity()%></p>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+
+    <% } %>
+</div>
+
+
+<%--<div class="row">--%>
+<%--<div class="item-box-big">--%>
+<%--<div class="row">--%>
+<%--<div class="col-lg-4">--%>
+<%--<img id = "prodImage" width="175"  height="200" class = "img-responsive" alt="watch"   >--%>
+<%--</div>--%>
+<%--<div class="col-lg-5">--%>
+<%--<h1 id="title">--%>
+<%--<span id="productTitle">Watch </span>--%>
+<%--</h1>--%>
+<%--<div id="itemPrice">--%>
+<%--<table>--%>
+<%--<tbody>--%>
+<%--<tr class="text-c1">--%>
+<%--<td class="text-right text-nowrap">M.R.P:</td>--%>
+<%--<td class="text-left text-nowrap">--%>
+<%--<del>&#2352;</del><del><span id="originalPrice"> </span></del>--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--<tr>--%>
+<%--<td class="text-right text-c1">Price:</td>--%>
+<%--<td class="text-left text-c2">--%>
+<%--&#2352;<span id="currentPrice"> 2,495.00</span>--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--<tr class="saving">--%>
+<%--<td class="text-right text-c1">You Save:</td>--%>
+<%--<td class="text-left text-c2">--%>
+<%--&#2352;<span id="savingPrice"> 0.00 (<span id="savingPercentage">0</span>%)</span>--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--<tr>--%>
+<%--<td></td>--%>
+<%--<td>--%>
+<%--<span>Inclusive of all taxes</span>--%>
+<%--</td>--%>
+<%--</tr>--%>
+<%--</tbody>--%>
+<%--</table>--%>
+<%--</div>--%>
+<%--<div id="cod">Cash on delivery <span id="cod_elgiblity">eligible.</span></div>--%>
+<%--<div id="availability"><span id="avail">In stock.</span></div>--%>
+<%--&lt;%&ndash;<div id="itemId" type="hidden"><%=item.getId()%></div>&ndash;%&gt;--%>
+<%--<input type="hidden" id='itemId' class='h_v'>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
 <%--</div>--%>
 
-    <%for (OrderItem oi : orderItems){%>
-        <%=oi.getItem()%>
-    <%}%>
+
 <%@include file="footer.jsp" %>
 </body>
 </html>

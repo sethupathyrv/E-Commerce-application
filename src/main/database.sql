@@ -160,3 +160,37 @@ CREATE TABLE SubCategories
   UNIQUE (id)
 )
   ENGINE = InnoDB;
+
+CREATE TABLE Transactions
+(
+  id        INT AUTO_INCREMENT
+    PRIMARY KEY,
+  orderId   INT      NOT NULL,
+  amount    INT      NULL,
+  date      DATETIME NULL,
+  accountId INT      NOT NULL,
+  status    INT      NOT NULL,
+  CONSTRAINT Transactions_id_uindex
+  UNIQUE (id)
+)
+  ENGINE = InnoDB;
+
+CREATE TABLE Accounts
+(
+  id     INT AUTO_INCREMENT
+    PRIMARY KEY,
+  userId INT         NOT NULL,
+  name   VARCHAR(50) NULL,
+  number INT         NOT NULL,
+  amount INT         NULL,
+  CONSTRAINT Accounts_id_uindex
+  UNIQUE (id),
+  CONSTRAINT Accounts_number_uindex
+  UNIQUE (number)
+)
+  ENGINE = InnoDB;
+
+
+
+
+

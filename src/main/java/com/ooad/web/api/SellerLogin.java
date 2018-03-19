@@ -5,6 +5,7 @@
 
 package com.ooad.web.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ooad.web.dao.SellerDao;
 import com.ooad.web.dao.UserDao;
 import com.ooad.web.model.Seller;
@@ -65,15 +66,19 @@ public class SellerLogin {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateSeller(String req, @HeaderParam("sellerAuthToken") String token) throws Exception {
         Seller seller = TokenAuth.getSellerFromToken(token);
-
-        System.out.println("hi");
+        JSONObject re = new JSONObject(req);
+        System.out.println(re);
+        String str = re.toString();
 
         if(seller==null){
-            System.out.println("hello1");
             return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode()).toString()).build();
         } else {
-            System.out.println("hello2");
+            /*System.out.println("hello2");
+            ObjectMapper objectMapper = new ObjectMapper();
+            Seller s = objectMapper.readValue(str, Seller.class);
+            System.out.println(s);*/
             boolean b = seller.save();
+            System.out.println(b);
             JSONObject jsonObject = seller.toJSON();
             if (b) {
                 System.out.println("hello3");

@@ -163,6 +163,7 @@ public class SellerDao {
     public boolean saveSeller(Seller seller){
         try {
             System.out.println("reached database");
+            System.out.println(seller);
             Connection con = Database.getConnection();
             PreparedStatement ps = con
                     .prepareStatement("UPDATE Sellers SET storeName = ? ,mobileNumber = ?,streetAddress = ?," +
@@ -178,7 +179,9 @@ public class SellerDao {
             ps.setString(8, seller.getCountry());
             ps.setInt(9,seller.getId());
             ps.executeUpdate();
+            System.out.println("database updated");
             con.close();
+            System.out.println("reached database end");
             return true;
         } catch (Exception e) {
             e.printStackTrace();

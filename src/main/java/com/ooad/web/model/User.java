@@ -241,6 +241,26 @@ public class User {
         return new UserDao().getUser(userId);
     }
 
+    public JSONObject deleteAddress(int id) {
+        UserAddressDao userAddressDao = new UserAddressDao();
+        userAddressDao.deleteAddress(id);
+        return new JSONObject().put("status", Status.OK.getStatusCode());
+    }
+
+    public JSONObject updateAddress(JSONObject req,int id) {
+          UserAddress u = UserAddress.find(id);
+          u.setFullname(req.getString("fullName"));
+          u.setMobilenumber(req.getString("mobileNumber"));
+          u.setPincode(req.getString("pincode"));
+          u.setStreetAddress(req.getString("streetAddress"));
+          u.setLandmark(req.getString("landmark"));
+          u.setCity(req.getString("city"));
+          u.setState(req.getString("state"));
+          UserAddressDao userAddressDao = new UserAddressDao();
+          userAddressDao.updateAddress(u);
+          return new JSONObject().put("status", Status.OK.getStatusCode());
+    }
+
 
     public JSONObject createTransaction(JSONObject req) {
         final int orderId = req.getInt("orderId");

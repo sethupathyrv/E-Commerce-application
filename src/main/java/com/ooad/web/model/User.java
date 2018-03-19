@@ -273,6 +273,8 @@ public class User {
         UserAccount userAccount = userDao.getUserAccountFromId(id);
         if(order.grandTotal()<= userAccount.getAmount()){
             transaction = transactionDao.createTransaction(order,userAccount,1);
+            userAccount.setAmount(userAccount.getAmount()-order.grandTotal());
+            userAccount.save();
         }else{
             transaction = transactionDao.createTransaction(order,userAccount,0);
         }

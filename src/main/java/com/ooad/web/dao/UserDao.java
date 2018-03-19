@@ -174,4 +174,21 @@ public class UserDao {
         }
         return null;
     }
+
+    public boolean save(UserAccount userAccount) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE Accounts SET amount = ? WHERE id = ?");
+            ps.setInt(1,userAccount.getAmount() );
+            ps.setInt(2,userAccount.getId());
+            ps.executeUpdate();
+            con.close();
+            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

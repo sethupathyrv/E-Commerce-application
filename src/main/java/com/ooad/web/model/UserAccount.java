@@ -1,12 +1,13 @@
 package com.ooad.web.model;
 
+import com.ooad.web.dao.UserDao;
 import org.json.JSONObject;
 
 public class UserAccount {
     private final int id;
     private final String AccountName;
     private final int AccountNumber;
-    private final int amount;
+    private int amount;
 
     public UserAccount(int id, String accountName, int accountNumber, int amount) {
         this.id = id;
@@ -31,6 +32,10 @@ public class UserAccount {
         return amount;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     @Override
     public String toString() {
         return "UserAccount{" +
@@ -48,5 +53,9 @@ public class UserAccount {
         JsonObject.put("number",AccountNumber);
         JsonObject.put("amount",amount);
         return JsonObject;
+    }
+
+    public boolean save() {
+        return new UserDao().save(this);
     }
 }

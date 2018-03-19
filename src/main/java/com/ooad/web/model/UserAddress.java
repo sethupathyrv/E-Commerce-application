@@ -5,10 +5,10 @@ import org.json.JSONObject;
 
 public class UserAddress {
     private final int id;
-    private  String fullname;
-    private  String mobilenumber;
-    private  String pincode;
-    private  String streetAddress;
+    private String fullname;
+    private String mobilenumber;
+    private String pincode;
+    private String streetAddress;
     private  String landmark;
     private  String city;
     private  String state;
@@ -54,6 +54,34 @@ public class UserAddress {
 
     public String getState() {
         return state;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public void setMobilenumber(String mobilenumber) {
+        this.mobilenumber = mobilenumber;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     @Override

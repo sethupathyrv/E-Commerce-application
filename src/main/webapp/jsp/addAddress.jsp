@@ -33,25 +33,25 @@
 
 
                         <label for="fullName" class="a-form-label">Full Name</label>
-                        <input class="form-control" type="text" name="fullname" id="fullName" autocomplete="off"/>
+                        <input class="form-control" type="text" name="fullname" id="fullName"/>
 
                         <label for="mobileNumber" class="a-form-label">mobile number</label>
-                        <input class="form-control" type="text" name="mobileNumber" id="mobileNumber" autocomplete="off"/>
+                        <input class="form-control" type="number" min="1000000000" max="9999999999" name="mobileNumber" id="mobileNumber" />
 
                         <label for="pincode" class="a-form-label">pincode</label>
-                        <input class="form-control" type="text" name="pincode" id="pincode" autocomplete="off" />
+                        <input class="form-control" type="text" name="pincode" id="pincode" min="100000" max="999999"/>
 
                         <label for="streetAddress" class="a-form-label">Street Address</label>
                         <textarea class="form-control" id="streetAddress" name="streetAddress" rows="5" cols="30"></textarea>
 
                         <label for="landmark" class="a-form-label">landmark</label>
-                        <input class="form-control" type="text" name="landmark" id="landmark" autocomplete="off" />
+                        <input class="form-control" type="text" name="landmark" id="landmark"/>
 
                         <label for="pincode" class="a-form-label">city</label>
-                        <input class="form-control" type="text" name="city" id="city" autocomplete="off" />
+                        <input class="form-control" type="text" name="city" id="city" />
 
                         <label for="state" class="a-form-label">state</label>
-                        <input class="form-control" type="text" name="state" id="state" autocomplete="off" />
+                        <input class="form-control" type="text" name="state" id="state" />
 
                     </div>
                 </div>

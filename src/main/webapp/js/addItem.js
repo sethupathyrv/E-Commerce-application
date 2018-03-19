@@ -31,6 +31,19 @@ $(document).ready(function() {
 
             }
         });
+        
+        $('#offer').on('change',function () {
+            var offerSelect = $(this).val();
+            if(offerSelect == 201) {
+                $("#discountOfferDiv").show();
+                $("#priceOfferDiv").hide();
+            } else if(offerSelect == 202){
+                $("#priceOfferDiv").show();
+                $("#discountOfferDiv").hide();
+            } else if(offerSelect == 203){
+
+            }
+        })
 
     }
     $('#sellerLogout').click(function () {
@@ -54,7 +67,9 @@ $(document).ready(function() {
                     'brand':$("#brand").val(),
                     'height':$("#itemHeight").val(),
                     'width':$("#itemWidth").val(),
-                    'itemDetails':$("#itemDetails").val(),
+                    'offerType':$("#offer").val(),
+                    'discountPercentage':$('#discountOffer').val(),
+                    'priceOffer':$("#priceOffer").val(),
                     'subCategoryId':$("#subCategory").val()
                 };
                 formData.append('json',JSON.stringify(jsonData));
@@ -77,10 +92,10 @@ $(document).ready(function() {
     function addItemResponse(response) {
         if(response.status ===201){
             alert("Item Created");
-            window.location("/seller");
+            window.location.replace("/seller");
         }else if(response.status === 401){
             alert("Not authorized");
-            window.location("/sellerlogin");
+            window.location.replace("/sellerlogin");
         }
         console.log(response);
     }

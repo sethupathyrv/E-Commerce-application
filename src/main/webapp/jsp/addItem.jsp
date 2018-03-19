@@ -45,7 +45,7 @@
 
         <div class="logo col-lg-2 col-md-2 right">
             <a href="/" class="nav-logo-link">
-                <img src="http://localhost:8081/images/logo.png" alt="Home" style="background-color: black">
+                <img src="/images/logo.png" alt="Home" style="background-color: black">
             </a>
         </div>
 
@@ -93,17 +93,11 @@
                         <input class="form-control" type="text" name="name" id="name" autocomplete="off"/>
 
                         <label for="itemPrice" class="a-form-label">Price</label>
-                        <input class="form-control" type="text" name="itemPrice" id="itemPrice" autocomplete="off"/>
+                        <input class="form-control" type="number" name="itemPrice" id="itemPrice" autocomplete="off"/>
 
                         <label for="quantity" class="a-form-label">Quantity</label>
-                        <input class="form-control" type="text" name="quantity" id="quantity" autocomplete="off" />
+                        <input class="form-control" type="number" name="quantity" id="quantity" autocomplete="off" />
 
-                        <%--<label for="sel" class="a-form-label">Sub-Sub Category</label>--%>
-
-                        <%--<select id="sel" name="subSubCategory" onchange="show(this)">--%>
-                            <%--<option value="">-- Select --</option>--%>
-                        <%--</select>--%>
-                        <%--<p id="msg"></p>--%>
 
                         <label id="description" class="a-form-label">Item Description</label>
 
@@ -112,14 +106,13 @@
                         <label for="brand" class="a-form-label">Brand</label>
                         <input class="form-control" type="text" name="brand" id="brand" autocomplete="off"/>
 
-                        <label for="height" class="a-form-label">Height</label>
-                        <input class="form-control" type="text" name="itemHeight" id="itemHeight" autocomplete="off"/>
+                        <label for="itemHeight" class="a-form-label">Height</label>
+                        <input class="form-control" type="number" name="itemHeight" id="itemHeight" autocomplete="off"/>
 
-                        <label for="width" class="a-form-label">Width</label>
-                        <input class="form-control" type="text" name="itemWidth" id="itemWidth" autocomplete="off"/>
+                        <label for="itemWidth" class="a-form-label">Width</label>
+                        <input class="form-control" type="number" name="itemWidth" id="itemWidth" autocomplete="off"/>
 
-                        <%--<select id="category"></select>--%>
-                        <%--<select id="subcategory" name="subcategory" placeholder="anysubcategory"></select>--%>
+
                         <label>Category:</label>
                         <select id="category" name="category">
                             <option value="000">-Select Category-</option>
@@ -131,14 +124,22 @@
                             <option value="000">-Select subCategory-</option>
                         </select>
 
-                        <label id="details" class="a-form-label">Item Details</label>
+                        <label>Offer</label>
+                        <select name="offer" id="offer">
+                            <option value="-1">No Offer</option>
+                            <option value="201">Discount Offer</option>
+                            <option value="202">Price Offer</option>
+                            <option value="203">Buy 1 Get 1 free</option>
+                        </select>
 
-
-
-                        <textarea class="form-control" id="itemDetails" name="details" rows="5" cols="30"></textarea>
-
-
-
+                        <div id="discountOfferDiv" hidden>
+                            <label for="discountOffer" class="a-form-label">Discount Percentage</label>
+                            <input type="number" id="discountOffer" value="0" class="form-control">
+                        </div>
+                        <div id="priceOfferDiv" hidden>
+                            <label for="priceOffer" class="a-form-label">Price Offer</label>
+                            <input type="number" id="priceOffer" value="0" class="form-control">
+                        </div>
 
                         <label for="itemImage" class="a-form-label">Image</label>
 
@@ -161,34 +162,6 @@
         </div>
     </div>
 </form>
-
-<%--..........To populate select dropdown using json file.........--%>
-<script>
-/*    window.onload = populateSelect();
-
-    //........... THE JSON ARRAY..............
-    function populateSelect() {
-        $.getJSON("/json/test.json", function(json) {
-            //..............Json object containg category: json ..............
-            console.log(json);
-
-            var ele = document.getElementById('sel');
-            for (var i = 0; i < json.length; i++) {
-//...................... POPULATE SELECT ELEMENT WITH JSON....................
-                ele.innerHTML = ele.innerHTML +
-                    '<option value="' + json[i]['ID'] + '">' + json[i]['Category_Name'] + '</option>';
-            }
-        });
-    }
-
-    //............GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT............
-    function show(ele) {
-        // GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT.
-        var msg = document.getElementById('msg');
-        msg.innerHTML = 'Selected Category: <b>' + ele.options[ele.selectedIndex].text + '</b> </br>' +
-            'ID: <b>' + ele.value + '</b>';
-    }*/
-</script>
 
 
 </body>

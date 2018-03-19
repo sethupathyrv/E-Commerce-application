@@ -84,6 +84,7 @@
                             <%for (ItemCategory itemCategory : itemCategories) { %>
                             <li class="dropdown">
                                 <a href="#"><%=itemCategory.getDisplayName()%></a>
+                                <% if(itemCategory.getDisplayName().equals("Others")) continue;%>
                                 <ul class="dropdown-menu">
                                     <% ArrayList<ItemSubCategory> itemsubCategories = (ArrayList<ItemSubCategory>) itemCategoryDao.getAllsubCategories(itemCategory.getId());
                                         for (ItemSubCategory itemsubCategory : itemsubCategories) { %>

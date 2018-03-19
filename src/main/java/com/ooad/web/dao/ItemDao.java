@@ -14,21 +14,18 @@ import com.ooad.web.utils.Database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class ItemDao {
     public boolean createItem(final String name, final float price, final String url, final int sellerId,
-                              String description, final String brand, float height, float width,int quantity,int subCategoryId) {
+                              String description, final String brand, float height, float width,int quantity,int subCategoryId,int offerId) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId,description,brand,height,width,quantity,subCategoryId) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId,description,brand,height,width,quantity,subCategoryId,offerId) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             ps.setString(1, name);
             ps.setFloat(2, price);
             ps.setString(3, url);
@@ -39,6 +36,7 @@ public class ItemDao {
             ps.setFloat(8, width);
             ps.setInt(9,quantity);
             ps.setInt(10,subCategoryId);
+            ps.setInt(11,offerId);
             ps.executeUpdate();
             con.close();
             return true;
@@ -160,6 +158,7 @@ public class ItemDao {
         return null;
     }
     private Offer getOffer(int offerId){
+        if(offerId == -1) return new EmptyOffer();
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Offers WHERE id = ?");
@@ -245,5 +244,28 @@ public class ItemDao {
         }
         return null;
     }
+    public int createOffer(int offerType,int discountPercentage,int priceOffer){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps= con.prepareStatement("INSERT INTO Offers (offerType, discountPercentage, price) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1,offerType );
+            ps.setInt(2,discountPercentage );
+            ps.setInt(3,priceOffer );
+            int r = ps.executeUpdate();
+            if(r>0){
+                ResultSet rs = ps.getGeneratedKeys();
+                if(rs.next()) {
+                    int id = rs.getInt(1);
+                    con.close();
+                    return id;
+                }
 
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

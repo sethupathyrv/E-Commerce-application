@@ -25,8 +25,6 @@
     <title>Select a delivery address</title>
 
 
-    <!-- <link class="aui-page-asset" href="https://images-eu.ssl-images-amazon.com/images/G/31/orderApplication/aui/aui-css-min-20150311._CB309495309_.css" rel="stylesheet" type="text/css"> -->
-
     <!-- Beginning of prime JS assets which is to log prime related metrics -->
     <link class="aui-page-asset" rel="stylesheet" href="../css/2.css" type="text/css">
     <link rel="stylesheet" href="../css/1.css">
@@ -34,21 +32,6 @@
     <script src="../js/jquery.cookie.js"></script>
 
     <script src="../js/deliverAddress.js"></script>
-
-    <!-- <link rel="stylesheet" href="https://images-eu.ssl-images-amazon.com/images/I/41Kog%2BYOZ6L._RC|61+b0EXL5LL.css_.css?AUIClients/CheckoutMultiPagePipeline#desktop.in.117262-T1.104136-T1" /> -->
-
-
-
-
-    <!-- End of prime assets -->
-
-    <!-- Beginning of UPI JS assets -->
-
-
-
-
-
-    <!-- End of UPI assets -->
 
 
     <% ArrayList<UserAddress> userAddresses=
@@ -73,7 +56,7 @@
 
     <div id="a-navbar" class="a-row a-container">
         <div id="nav-inner" class="a-span12">
-            <img src="https://images-eu.ssl-images-amazon.com/images/G/31/x-locale/checkout/checkout-spc-address-banner._CB138348967_.gif" alt="Select a Shipping Address - Amazon.in Checkout" data-testid="">
+            <img src="/images/checkout-spc-address-banner.gif" alt="Select a Shipping Address - Amazon.in Checkout" data-testid="">
 
 
 
@@ -98,7 +81,7 @@
                     <div class="a-fixed-left-grid aui-showgrid">
                         <div class="a-fixed-left-grid-inner" id="ppp-logo-inner">
                             <div class="a-fixed-left-grid-col a-col-left aok-float-left" id="ppp-left-grid">
-                                <div class="a-row" id="ppp-left-row"><a href="#new-store"><img src="https://images-eu.ssl-images-amazon.com/images/G/31/x-site/cvs/logo/pickup_flag_icon._CB354278111_.png" width="115" height="33" border="0" /></a></div>
+                                <div class="a-row" id="ppp-left-row"><a href="#new-store"><img src="/images/pickup.png" width="115" height="33" border="0" /></a></div>
                             </div>
                             <div class="a-fixed-left-grid-col a-col-right aok-float-left" id="ppp-right-grid">
                                 <div class="a-row">Orders for select areas in <a href="#"> select cities </a> can now be delivered to Amazon pickup locations.&nbsp;<a href="#new-store">Search for a Pickup location near you</a></div>
@@ -229,11 +212,11 @@
 
 
 
-                                            <input type="text" name="mobileNumber" id="enterAddressPhoneNumber" class="enterAddressFormField" size="15" maxlength=20 />
+                                            <input type="number" min="1000000000" max="9999999999" name="mobileNumber" id="enterAddressPhoneNumber" class="enterAddressFormField" size="15" maxlength=20 />
 
                                         </div>
                                     </div>
-                                    <div id="enterAddressPostalCodeContainer" class="a-row a-spacing-base one-new-address-form-field  identity-protect-from-errant ">
+                                    <div id="enterAddressPostalCodeContainer" class="a-row a-spacing-base one-new-address-form-field + identity-protect-from-errant ">
                                         <div class="a-span12" data-testid="">
 
 
@@ -247,7 +230,7 @@
 
 
 
-                                            <input type="text" name="pincode" id="enterAddressPostalCode" class="enterAddressFormField" size="6" maxlength=6 />
+                                            <input type="number" name="pincode" id="enterAddressPostalCode" min="100000" max="999999" class="enterAddressFormField" size="6" maxlength=6 />
 
                                         </div>
                                     </div>

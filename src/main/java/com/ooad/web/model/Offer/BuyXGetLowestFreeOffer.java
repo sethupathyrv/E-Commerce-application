@@ -13,13 +13,14 @@ public class BuyXGetLowestFreeOffer extends Offer {
             if(ci.isOfferApplied()) continue;
 
             if(ci.getItem().getOffer().getOfferCode() == 204){
+                ci.setOfferApplied(true);
                 if(ci.getItem().getPrice() < leastPrice)
                     leastPrice = (int) ci.getItem().getPrice();
-                count ++;
+                count = count+ci.getQuantity();
             }
-            if(count >= x) {
-                return leastPrice;
-            }
+        }
+        if(count >= x) {
+            return leastPrice;
         }
         return 0;
     }

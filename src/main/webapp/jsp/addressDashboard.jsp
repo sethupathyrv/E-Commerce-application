@@ -101,7 +101,7 @@
                                 <div class="a-row" id="ppp-left-row"><a href="#new-store"><img src="https://images-eu.ssl-images-amazon.com/images/G/31/x-site/cvs/logo/pickup_flag_icon._CB354278111_.png" width="115" height="33" border="0" /></a></div>
                             </div>
                             <div class="a-fixed-left-grid-col a-col-right aok-float-left" id="ppp-right-grid">
-                                <div class="a-row">Orders for select areas in <a href="https://www.amazon.in/gp/help/customer/display.html/ref=ox_shipaddress_adp_more_info?ie=UTF8&nodeId=201282050&pop-up=1" onClick="window.open(this.href,'AmazonHelp','width=340,height=340,resizable=1,scrollbars=1,toolbar=1,status=1').focus();false;" target="AmazonHelp" data-testid="HelpLink_adp_upsell_detail"> select cities </a> can now be delivered to Amazon pickup locations.&nbsp;<a href="#new-store">Search for a Pickup location near you</a></div>
+                                <div class="a-row">Orders for select areas in <a href="#"> select cities </a> can now be delivered to Amazon pickup locations.&nbsp;<a href="#new-store">Search for a Pickup location near you</a></div>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
                             </h2>
                             Be sure to click &quot;Deliver to this address&quot; when you've finished.
 
-                            <form action="/gp/buy/shipaddressselect/handlers/continue.html/ref=ox_shipaddress_add_new_addr?ie=UTF8&hasWorkingJavascript=" method="post" data-action="page-spinner-show-on-submit" class="a-nostyle a-declarative  ">
+                            <form action="#" id ="addAddressForm" method="post" class="a-nostyle a-declarative  ">
 
                                 <noscript>
                                     <input type="hidden" name="javascriptEnabled" value="0" />
@@ -215,7 +215,7 @@
 
 
 
-                                            <input type="text" name="enterAddressFullName" id="enterAddressFullName" class="enterAddressFormField" size="50" maxlength=50 />
+                                            <input type="text" name="fullname" id="enterAddressFullName" class="enterAddressFormField" size="50" maxlength=50 />
 
                                         </div>
                                     </div>
@@ -229,7 +229,7 @@
 
 
 
-                                            <input type="text" name="enterAddressPhoneNumber" id="enterAddressPhoneNumber" class="enterAddressFormField" size="15" maxlength=20 />
+                                            <input type="text" name="mobileNumber" id="enterAddressPhoneNumber" class="enterAddressFormField" size="15" maxlength=20 />
 
                                         </div>
                                     </div>
@@ -247,20 +247,7 @@
 
 
 
-                                            <input type="text" name="enterAddressPostalCode" id="enterAddressPostalCode" class="enterAddressFormField" size="6" maxlength=6 />
-
-                                        </div>
-                                    </div>
-                                    <div id="enterAddressAddressLine1Container" class="a-row a-spacing-base one-new-address-form-field  identity-protect-from-errant ">
-                                        <div class="a-span12" data-testid="">
-
-                                            <label for="enterAddressAddressLine1" class="">
-                                                <b>Flat, House no., Building, Company, Apartment:&nbsp;</b>
-                                            </label>
-
-
-
-                                            <input type="text" name="enterAddressAddressLine1" id="enterAddressAddressLine1" class="enterAddressFormField" size="50" maxlength=60 />
+                                            <input type="text" name="pincode" id="enterAddressPostalCode" class="enterAddressFormField" size="6" maxlength=6 />
 
                                         </div>
                                     </div>
@@ -268,12 +255,12 @@
                                         <div class="a-span12" data-testid="">
 
                                             <label for="enterAddressAddressLine2" class="">
-                                                <b>Area, Colony, Street, Sector, Village:&nbsp;</b>
+                                                <b>Street Address:&nbsp;</b>
                                             </label>
 
 
 
-                                            <input type="text" name="enterAddressAddressLine2" id="enterAddressAddressLine2" class="enterAddressFormField" size="50" maxlength=60 />
+                                            <input type="text" name="streetAddressLine2" id="enterAddressAddressLine2" class="enterAddressFormField" size="50" maxlength=60 />
 
                                         </div>
                                     </div>
@@ -288,7 +275,7 @@
 
 
 
-                                            <input type="text" name="enterAddressLandmark" id="enterAddressLandmark" class="enterAddressFormField" size="26" maxlength=60 />
+                                            <input type="text" name="landmark" id="enterAddressLandmark" class="enterAddressFormField" size="26" maxlength=60 />
                                             <span id="enterAddressLandmarkDescription" class="a-color-secondary a-size-small a-text-italic field-description"><br /><span class="tiny">E.g. Near AIIMS Flyover, Behind Regal Cinema, etc.</span> </span>
                                         </div>
                                     </div>
@@ -301,7 +288,7 @@
 
 
 
-                                            <input type="text" name="enterAddressCity" id="enterAddressCity" class="enterAddressFormField" size="25" maxlength=50 />
+                                            <input type="text" name="city" id="enterAddressCity" class="enterAddressFormField" size="25" maxlength=50 />
 
                                         </div>
                                     </div>
@@ -311,55 +298,15 @@
                                             <label for="enterAddressStateOrRegion" class="">
                                                 <b>State:&nbsp;</b>
                                             </label>
-
-
-
-                                            <input type="text" name="enterAddressStateOrRegion" id="enterAddressStateOrRegion" class="enterAddressFormField" size="15" maxlength=50 />
+                                            <input type="text" name="state" id="enterAddressStateOrRegion" class="enterAddressFormField" size="15" maxlength=50 />
 
                                         </div>
                                     </div>
-
-
-
-                                    <input type="hidden" id="enterAddressCountryCode" name="enterAddressCountryCode" value="IN" />
-
-
-
-
-                                    <input type="hidden" id="enterAddressIsDomestic" name="enterAddressIsDomestic" value="1" />
-
-
-                                </div>
-                                <!-- end new address html-->
-
-
-                                <div id="" class="a-row a-spacing-base one-new-address-form-field   ">
-                                    <div class="a-span12" data-testid="">
-
-                                        <label for="AddressType" class="">
-                                            Address Type:
-                                        </label>
-
-
-
-
-                                        <select name="AddressType" class="enterDeliveryPrefsField" id="AddressType">
-                                            <option value="OTH" SELECTED > Select an Address Type </option>
-                                            <option value="RES"> Home (7 am – 9 pm delivery) </option>
-                                            <option value="COM"> Office/Commercial (10 AM - 5 PM delivery) </option>
-                                        </select>
-                                        <input type="hidden" name="weekendDeliveryDisplayType" value="dropdown">
-                                    </div>
-                                </div>
-
-
-
-
-
+                               </div>
                                 <div class="a-form-actions">
                                         <span class="a-button a-button-primary a-padding-none ">
         <span class="a-button-inner">
-          <input type="submit" class="a-button-text submit-button-with-name" name="shipToThisAddress" value="Deliver to this address" data-testid="">
+          <input type="submit" class="a-button-text submit-button-with-name" name="shipToThisAddress" value="Add a new Address" data-testid="">
         </span>
                                         </span>
                                 </div>
@@ -369,51 +316,13 @@
                             </form>
 
                         </div>
-
-
-
-                        <div class="enter-address-form  hidden" data-taxid-opt="0">
-                            <h2 data-testid="">
-                                <a name="new-address"></a> Add a new address
-                            </h2>
-                            Be sure to click &quot;Deliver to this address&quot; when you've finished.
-
-                            <form action="/gp/buy/shipaddressselect/handlers/continue.html/ref=ox_shipaddress_add_new_addr?ie=UTF8&hasWorkingJavascript=" method="post" data-action="page-spinner-show-on-submit" class="a-nostyle a-declarative  ">
-
-
-
-
-
-                                <div class="a-divider a-divider-section">
-                                    <div class="a-divider-inner">
-                                    </div>
-                                </div>
-
-                                <p class="a-hidden-phone a-size-small a-text-center a-color-secondary"> </p>
-                                <p class="a-size-small a-text-center a-color-secondary" data-testid=""><a href="/gp/help/customer/display.html/ref=ox_shipaddress_condition_of_use?ie=UTF8&amp;nodeId=200545940&amp;pop-up=1" onClick="window.open(this.href,'AmazonHelp','width=340,height=340,resizable=1,scrollbars=1,toolbar=1,status=1').focus();false;" target="AmazonHelp">Conditions of Use</a> | <a href="/gp/help/customer/display.html/ref=ox_shipaddress_page_privacy?ie=UTF8&amp;nodeId=200522700&amp;pop-up=1" onClick="window.open(this.href,'AmazonHelp','width=340,height=340,resizable=1,scrollbars=1,toolbar=1,status=1').focus();false;" target="AmazonHelp">Privacy Notice</a> &copy; 2012-2018, Amazon.com, Inc. and its affiliates</p>
-
-                        </div>
-                        <!--end of container-->
-
-
-
-
-
                         <img src="/gp/checkoutonebyone/pagetype-checkout.html" style="display:none" />
-
-
-
-
-
                     </div>
-
                     <style>
                         body {
                             margin: 0 !important;
                         }
                     </style>
-
-
 </body>
 
 </html>

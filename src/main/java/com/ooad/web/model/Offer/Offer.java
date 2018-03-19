@@ -11,7 +11,7 @@ import com.ooad.web.model.CartItem;
 public abstract class Offer {
     public abstract int applyOffer(CartItem c, Cart cart);
     public abstract int getOfferCode();
-    private int id;
+    protected int id;
 
     Offer(int id){
         this.id = id;

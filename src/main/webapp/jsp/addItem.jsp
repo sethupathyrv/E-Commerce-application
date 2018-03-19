@@ -118,17 +118,22 @@
                         <label for="width" class="a-form-label">Width</label>
                         <input class="form-control" type="text" name="itemWidth" id="itemWidth" autocomplete="off"/>
 
+                        <%--<select id="category"></select>--%>
+                        <%--<select id="subcategory" name="subcategory" placeholder="anysubcategory"></select>--%>
+                        <label>Category:</label>
+                        <select id="category" name="category">
+                            <option value="000">-Select Category-</option>
+                        </select>
+
+
+                        <label>subCategory:</label>
+                        <select id="subCategory" name="subCategory">
+                            <option value="000">-Select subCategory-</option>
+                        </select>
+
                         <label id="details" class="a-form-label">Item Details</label>
 
-                        <div class="dropdown" id="offerType">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Discount</a></li>
-                                <li><a href="#">Buy y get x</a></li>
-                                <li><a href="#">1+1</a></li>
-                            </ul>
-                        </div>
+
 
                         <textarea class="form-control" id="itemDetails" name="details" rows="5" cols="30"></textarea>
 

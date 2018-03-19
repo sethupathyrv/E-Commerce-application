@@ -5,16 +5,17 @@
 
 package com.ooad.web.api;
 
+import com.ooad.web.dao.ItemCategoryDao;
 import com.ooad.web.dao.ItemDao;
-import com.ooad.web.model.Item;
-import com.ooad.web.model.Seller;
-import com.ooad.web.model.User;
+import com.ooad.web.model.*;
 import com.ooad.web.utils.TokenAuth;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -102,4 +103,32 @@ public class ItemService {
         }
         return Response.status(Status.OK).entity(new JSONObject().put("items", j).toString()).build();
     }
+
+    @Path("/getcategories")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCategories() {
+        ItemCategoryDao itemCategoryDao = new ItemCategoryDao();
+        final JSONArray j = new JSONArray();
+        ArrayList<ItemCategory> itemCategories = (ArrayList<ItemCategory>) itemCategoryDao.getAllCategories();
+        for(ItemCategory itemCategory: itemCategories){
+            ArrayList<ItemSubCategory> itemsubCategories = (ArrayList<ItemSubCategory>) itemCategoryDao.getAllsubCategories(itemCategory.getId());
+            JSONArray subCategories = new JSONArray();
+            for(ItemSubCategory itemSubCategory:itemsubCategories){
+                JSONObject temp = new JSONObject();
+                temp.put("name",itemSubCategory.getDisplayName());
+                temp.put("id",itemSubCategory.getId());
+                subCategories.put(temp);
+            }
+            String name = itemCategory.getDisplayName();
+            JSONObject jo = new JSONObject();
+            jo.put("name",name);
+            jo.put("id",itemCategory.getId());
+            jo.put("subcategories",subCategories);
+            j.put(jo);
+        }
+
+        return Response.status(Status.OK).entity(new JSONObject().put("categories", j).toString()).build();
+    }
+
 }

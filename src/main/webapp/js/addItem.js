@@ -1,4 +1,44 @@
 $(document).ready(function() {
+    $.ajax({
+        url:'/api/item/getcategories',
+        type:'GET',
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: getCategoriesResponse
+    });
+
+    function getCategoriesResponse(response) {
+        $.each(response.categories, function (index, value) {
+            $("#category").append('<option value="'+value.id+'">'+value.name+'</option>');
+        });
+
+        $('#category').on('change', function(){
+            console.log($(this).val());
+            $('#subCategory').html('<option value="000">-Select subCategory-</option>');
+            for(var i = 0; i < response.categories.length; i++)
+            {
+                if(response.categories[i].id == $(this).val())
+                {
+                    // console.log("came before");
+                    $.each(response.categories[i].subcategories, function (index, value) {
+                        $("#subCategory").append('<option value="'+value.id+'">'+value.name+'</option>');
+                    });
+                } else if($(this).val()=="000") {
+                    // console.log("came");
+                    $('#subCategory').html('<option value="000">-Select subCategory-</option>');
+                }
+
+            }
+        });
+
+    }
+    $('#sellerLogout').click(function () {
+            $.removeCookie("sellerAuthToken", {path: '/'});
+            window.location.replace("/");
+        });
+
+
     $("#addItemForm").submit(function (event) {
         event.preventDefault();
         $("#itemImage").each(function (index,value) {
@@ -15,7 +55,7 @@ $(document).ready(function() {
                     'height':$("#itemHeight").val(),
                     'width':$("#itemWidth").val(),
                     'itemDetails':$("#itemDetails").val(),
-                    'subCategoryId':2  //TODO change subcategoryId from 2
+                    'subCategoryId':$("#subCategory").val()
                 };
                 formData.append('json',JSON.stringify(jsonData));
                 $.ajax({

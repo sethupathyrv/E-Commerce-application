@@ -1,4 +1,7 @@
-<%@ page import="com.ooad.web.model.Item" %><%--
+<%@ page import="com.ooad.web.model.Item" %>
+<%@ page import="com.ooad.web.model.Offer.DiscountOffer" %>
+<%@ page import="com.ooad.web.model.Offer.PriceOffer" %>
+<%@ page import="com.ooad.web.model.Offer.BuyXGetYOffer" %><%--
   ~ Created by Harsha Raj on 18/02/18 15:37
   ~ Copyright (c) 2018. All rights reserved.
   --%>
@@ -17,7 +20,7 @@
     <script src="../js/jquery.min.js"></script>
     <script src="../js/jquery.cookie.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="../js/addItemtoCart.js"></script>
+    <script src="../js/item.js"></script>
     <link rel="stylesheet" href="../css/item.css">
     <% Item item = (Item) request.getAttribute("item"); %>
 </head>
@@ -45,15 +48,39 @@
                     <tr>
                         <td class="text-right text-c1">Price:</td>
                         <td class="text-left text-c2">
-                            &#2352;<span id="currentPrice"> 2,495.00</span>
+                            &#2352; <span id="currentPrice"><%=item.getPrice()%></span>
                         </td>
                     </tr>
+                    <% if(item.getOffer().getOfferCode()==201){
+                        DiscountOffer o = (DiscountOffer) item.getOffer();%>
                     <tr class="saving">
-                        <td class="text-right text-c1">You Save:</td>
+                        <td class="text-right text-c1">Offer:</td>
                         <td class="text-left text-c2">
-                            &#2352;<span id="savingPrice"> 0.00 (<span id="savingPercentage">0</span>%)</span>
+                            &#2352;<span id="savingPrice"> <%=o.getPercentage()*item.getPrice()/100%>   (<span id="savingPercentage"><%=o.getPercentage()%></span>%)</span>
                         </td>
                     </tr>
+                    <%} else if (item.getOffer().getOfferCode() == 202){
+                        PriceOffer o = (PriceOffer )item.getOffer();
+                    %>
+                    <tr class="saving">
+                        <td class="text-right text-c1">Offer:</td>
+                        <td class="text-left text-c2">
+                           &#2352;<span id="savingPrice"> <%=o.getPriceCut()%></span>
+                    </td>
+                    </tr>
+
+                    <%} else if(item.getOffer().getOfferCode() == 203){
+                        BuyXGetYOffer o = (BuyXGetYOffer) item.getOffer();
+                        int x = o.getX();
+                        int y = o.getY();%>
+                    <tr class="saving">
+                        <td class="text-right text-c1">Offer:</td>
+                        <td class="text-left text-c2">
+                            <span id="savingPrice" data-toggle="tooltip" title="add <%=x+y%> items with same offer to the cart to get the offer"> Buy <%=x%> and get <%=y%> free</span>
+                        </td>
+                    </tr>
+                    <%}%>
+
                     <tr>
                         <td></td>
                         <td>
@@ -68,14 +95,10 @@
             <%--<div id="itemId" type="hidden"><%=item.getId()%></div>--%>
             <input type="hidden" value="<%=item.getId()%>" id='itemId' class='h_v'>
 
-            <div id="seller">Sold by <a href="#" id="sellerName"><%=item.getSeller().getUserName()%></a></div>
+            <div id="seller">Sold by <a href="#" id="sellerName" data-toggle="tooltip" title="<%=item.getSeller().getId()%>"><%=item.getSeller().getUserName()%></a></div>
             <div id="prodFeatures">
                 <ul>
-                    <li><span>Day And Date Display</span></li>
-                    <li><span>Three hands that move in a smooth and uninterrupted fashion</span></li>
-                    <li><span>2 Year Warranty</span></li>
-                    <li><span>Packed In Espoir Gift Box</span></li>
-                    <li><span>Works on Japanese Quartz format</span></li>
+                    <%=item.getDescription()%>
                 </ul>
             </div>
         </div>

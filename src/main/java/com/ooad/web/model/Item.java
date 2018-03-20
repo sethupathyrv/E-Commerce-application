@@ -25,16 +25,20 @@ public class Item {
     private float height;
     private float width;
     private boolean isEnabled;
+    private final ItemSubCategory subCategory;
     private JSONArray itemDetails;
+
+
 
     public Item(int id, String name, float price, String url, int quantity, Seller seller,
                 String description, String brand, float height, float width, JSONArray itemDetails,
-                Offer offer) {
+                Offer offer, ItemSubCategory subCategory) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.url = url;
         this.quantity = quantity;
+
         this.seller = seller;
         this.description = description;
         this.brand = brand;
@@ -42,10 +46,14 @@ public class Item {
         this.width = width;
         this.itemDetails = itemDetails;
         this.offer = offer;
+        this.subCategory=subCategory;
     }
 
     public static ArrayList<Item> getLastFive() {
         return (ArrayList<Item>) new ItemDao().getLastFiveItems();
+    }
+    public static ArrayList<Item> getItemsfromCategory(String CategoryName,String SubCategoryName) {
+        return (ArrayList<Item>) new ItemDao().getItemsFromSubCategory(CategoryName,SubCategoryName);
     }
 
     public static Item find(int id) {
@@ -136,6 +144,10 @@ public class Item {
         this.offer = offer;
     }
 
+    public ItemSubCategory getSubCategory() {
+        return subCategory;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -175,6 +187,7 @@ public class Item {
         itemJsonObject.put("width", this.width);
         itemJsonObject.put("isEnabled",this.isEnabled );
         itemJsonObject.put("itemDetails",this.itemDetails);
+        itemJsonObject.put("SubCategory",subCategory.toJSON());
         return itemJsonObject;
     }
 

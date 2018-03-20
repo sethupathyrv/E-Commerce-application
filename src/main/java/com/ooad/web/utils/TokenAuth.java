@@ -27,7 +27,6 @@ public abstract class TokenAuth {
     public static String generateToken(User user) {
         final long nowMills = System.currentTimeMillis();
         final long expTime = nowMills + ttl;
-        System.out.println();
         return Jwts.builder().setSubject(String.valueOf(user.getId()))
                 .signWith(signatureAlgo, key)
                 .setIssuedAt(new Date(nowMills))
@@ -38,7 +37,6 @@ public abstract class TokenAuth {
     public static String generateSellerToken(Seller seller) {
         final long nowMills = System.currentTimeMillis();
         final long expTime = nowMills + ttl;
-        System.out.println();
         return Jwts.builder().setSubject(String.valueOf(seller.getId()))
                 .signWith(signatureAlgo, key)
                 .setIssuedAt(new Date(nowMills))

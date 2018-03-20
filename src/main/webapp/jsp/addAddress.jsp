@@ -1,7 +1,4 @@
-<%@ page import="com.ooad.web.model.Item" %><%--
-  ~ Created by Harsha Raj on 18/02/18 15:37
-  ~ Copyright (c) 2018. All rights reserved.
-  --%>
+<%@ page import="com.ooad.web.model.Item" %>
 
 <html>
 <head>
@@ -72,6 +69,6 @@
             </span>
         </div>
     </div>
-
+</form>
 </body>
 </html>

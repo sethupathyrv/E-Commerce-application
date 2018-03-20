@@ -50,4 +50,14 @@ public class OrderItem {
         return j;
     }
 
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", item=" + item +
+                ", order=" + order +
+                ", itemPrice=" + itemPrice +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

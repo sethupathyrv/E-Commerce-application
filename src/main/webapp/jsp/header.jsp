@@ -2,6 +2,8 @@
 <%@ page import="com.ooad.web.model.ItemCategory" %>
 <%@ page import="com.ooad.web.utils.TokenAuth" %>
 <%@ page import="com.ooad.web.model.User" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.ooad.web.model.ItemSubCategory" %>
 <% Cookie[] cookies = request.getCookies();
    User user = null;
    if(cookies != null){
@@ -34,7 +36,8 @@
                         <select name="" id="nav-search-select">
                             <option value="all">All Categories</option>
                             <% final ItemCategoryDao itemCategoryDao = new ItemCategoryDao();
-                                for (ItemCategory itemCategory : itemCategoryDao.getAllCategories()) { %>
+                                ArrayList<ItemCategory> itemCategories = (ArrayList<ItemCategory>) itemCategoryDao.getAllCategories();
+                                for (ItemCategory itemCategory : itemCategories) { %>
                             <option value="<%= itemCategory.getName()%>"><%= itemCategory.getDisplayName()%>
                             </option>
                             <% }%>
@@ -78,25 +81,17 @@
                             <br>Category <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
+                            <%for (ItemCategory itemCategory : itemCategories) { %>
                             <li class="dropdown">
-                                <a href="#">One more dropdown</a>
+                                <a href="#"><%=itemCategory.getDisplayName()%></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li class="dropdown">
-                                        <a href="#">One more dropdown</a>
-                                        <ul class="dropdown-menu">
-                                            ...
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <% ArrayList<ItemSubCategory> itemsubCategories = (ArrayList<ItemSubCategory>) itemCategoryDao.getAllsubCategories(itemCategory.getId());
+                                        for (ItemSubCategory itemsubCategory : itemsubCategories) { %>
+                                        <li><a href="/items?category=<%=itemCategory.getName()%>&subcategory=<%=itemsubCategory.getDisplayName()%>"><%=itemsubCategory.getDisplayName()%></a></li>
+                                    <%}%>
                                 </ul>
                             </li>
-                            <li><a href="#">Something else here</a></li>
-                            <li><a href="#">Separated link</a></li>
+                            <%}%>
                         </ul>
                     </div>
                 </div>
@@ -152,9 +147,11 @@
                         <span class="nav-line-2">Lists </span> <i class="fa fa-caret-down" aria-hidden="true"></i>
                     </a>
                 </div>
-                <div class="col-md-3 cart">
-                    <span id="cart-contents"><%=(user==null)? 0:user.getCart().size()%></span>
-                </div>
+                <a href="/cart">
+                    <div class="col-md-3 cart">
+                        <span id="cart-contents"><%=(user==null)? 0:user.getCart().size()%></span>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

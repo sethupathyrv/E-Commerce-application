@@ -40,4 +40,20 @@ public class OrderService {
         return Response.status(Status.OK).entity(j.toString()).build();
     }
 
+    @Path("transaction")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createTransaction(String req,@HeaderParam("authToken") String token) {
+        JSONObject re = new JSONObject(req);
+        User user = TokenAuth.getUserFromToken(token);
+        if(user == null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        JSONObject j = user.createTransaction(re);
+        return Response.status(Status.OK).entity(j.toString()).build();
+    }
+
+
 }

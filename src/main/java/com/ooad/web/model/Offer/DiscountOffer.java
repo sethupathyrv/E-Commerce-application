@@ -17,7 +17,11 @@ public class DiscountOffer extends Offer {
         Float discountPrice = (price*percentage)/100;
         c.setOfferApplied(true);
         c.saveCartItem();
-        return ((int) (price - discountPrice))*c.getQuantity();
+        return (int) (( discountPrice)*c.getQuantity());
+    }
+
+    public int applyOffer(CartItem c) {
+        return 0;
     }
 
     @Override

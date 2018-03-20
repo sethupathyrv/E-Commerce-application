@@ -3,6 +3,7 @@ package com.ooad.web.model;
 import com.ooad.web.dao.*;
 import org.json.JSONObject;
 
+import javax.json.JsonObject;
 import javax.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -99,16 +100,38 @@ public class User {
                 isValid = false;
                 errors.put("quantity", "Out of Stock");
             } else {
-                CartDao cartDao = new CartDao();
-                cartDao.insertItem(this.id, itemId, quantity);
-                this.cart.refreshCart();
-                return new JSONObject().put("status", Status.OK.getStatusCode())
-                        .put("errors", errors)
-                        .put("cart", cart.toJSON());
+                CartItem c = alreadyInCart(item);
+                if(c!=null){
+                    if(item.getQuantity() < quantity + c.getQuantity()){
+                        isValid = false;
+                        errors.put("quantity","Out of stock");
+                    } else{
+                        c.setQuantity(c.getQuantity() + quantity);
+                        c.saveCartItem();
+                        return new JSONObject().put("status", Status.OK.getStatusCode())
+                                .put("errors", errors).put("cart", cart.toJSON());
+                    }
+                } else {
+                    CartDao cartDao = new CartDao();
+                    cartDao.insertItem(this.id, itemId, quantity);
+                    this.cart.refreshCart();
+                    return new JSONObject().put("status", Status.OK.getStatusCode())
+                            .put("errors", errors)
+                            .put("cart", cart.toJSON());
+                }
             }
         }
         return new JSONObject().put("status", Status.BAD_REQUEST.getStatusCode())
                 .put("errors", errors);
+    }
+
+    private CartItem alreadyInCart(Item item) {
+        for(CartItem c : this.cart.getCartItems()){
+            if(c.getItem().getId()  == item.getId()){
+                return c;
+            }
+        }
+        return null;
     }
 
     public JSONObject createOrder(int addressId) {
@@ -212,5 +235,50 @@ public class User {
             return new JSONObject().put("status", Status.BAD_REQUEST.getStatusCode()).put("errors", "addressId is missing");
         }
         return this.createOrder(j.getInt("addressId"));
+    }
+
+    public static User find(int userId) {
+        return new UserDao().getUser(userId);
+    }
+
+    public JSONObject deleteAddress(int id) {
+        UserAddressDao userAddressDao = new UserAddressDao();
+        userAddressDao.deleteAddress(id);
+        return new JSONObject().put("status", Status.OK.getStatusCode());
+    }
+
+    public JSONObject updateAddress(JSONObject req,int id) {
+          UserAddress u = UserAddress.find(id);
+          u.setFullname(req.getString("fullName"));
+          u.setMobilenumber(req.getString("mobileNumber"));
+          u.setPincode(req.getString("pincode"));
+          u.setStreetAddress(req.getString("streetAddress"));
+          u.setLandmark(req.getString("landmark"));
+          u.setCity(req.getString("city"));
+          u.setState(req.getString("state"));
+          UserAddressDao userAddressDao = new UserAddressDao();
+          userAddressDao.updateAddress(u);
+          return new JSONObject().put("status", Status.OK.getStatusCode());
+    }
+
+
+    public JSONObject createTransaction(JSONObject req) {
+        final int orderId = req.getInt("orderId");
+        final JSONObject errors = new JSONObject();
+        OrderDao orderDao = new OrderDao();
+        Order order = orderDao.getOrderById(orderId);
+        TransactionDao transactionDao = new TransactionDao();
+        Transaction transaction = null;
+        UserDao userDao = new UserDao();
+        UserAccount userAccount = userDao.getUserAccountFromId(id);
+        if(order.grandTotal()<= userAccount.getAmount()){
+            transaction = transactionDao.createTransaction(order,userAccount,1);
+            userAccount.setAmount(userAccount.getAmount()-order.grandTotal());
+            userAccount.save();
+        }else{
+            transaction = transactionDao.createTransaction(order,userAccount,0);
+        }
+        return new JSONObject().put("status", Status.OK.getStatusCode())
+                .put("transaction", transaction.toJSON());
     }
 }

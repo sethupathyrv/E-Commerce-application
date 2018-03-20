@@ -1,13 +1,14 @@
 package com.ooad.web.model;
 
+import com.ooad.web.dao.UserAddressDao;
 import org.json.JSONObject;
 
 public class UserAddress {
     private final int id;
-    private  String fullname;
-    private  String mobilenumber;
-    private  String pincode;
-    private  String streetAddress;
+    private String fullname;
+    private String mobilenumber;
+    private String pincode;
+    private String streetAddress;
     private  String landmark;
     private  String city;
     private  String state;
@@ -55,6 +56,34 @@ public class UserAddress {
         return state;
     }
 
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public void setMobilenumber(String mobilenumber) {
+        this.mobilenumber = mobilenumber;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "UserAddress{" +
@@ -79,6 +108,11 @@ public class UserAddress {
         userAddressJsonObject.put("city", city);
         userAddressJsonObject.put("state", state);
         return userAddressJsonObject;
+    }
+
+    public static UserAddress find(int addressId) {
+        UserAddressDao userAddressDao = new UserAddressDao();
+        return userAddressDao.getAddressfromId(addressId);
     }
 }
 

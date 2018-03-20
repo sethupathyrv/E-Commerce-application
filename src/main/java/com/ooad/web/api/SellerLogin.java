@@ -28,7 +28,6 @@ public class SellerLogin {
         final String password = reqJson.getString("psword");
         final JSONObject jsonObject;
         final SellerDao sellerDao = new SellerDao();
-        System.out.println(email + password);
         jsonObject = sellerDao.validateSellerLogin(email, password);
         return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
@@ -41,7 +40,6 @@ public class SellerLogin {
         final String userName = reqJson.getString("username");
         final String email = reqJson.getString("email");
         final String password = reqJson.getString("psword");
-        System.out.println(userName + email + password);
         final SellerDao sellerDao = new SellerDao();
         final JSONObject jsonObject = sellerDao.validateSellerRegister(userName, email, password);
         return Response.status(Status.OK).entity(jsonObject.toString()).build();

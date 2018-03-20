@@ -76,6 +76,7 @@ public class Seller {
         final float itemHeight =item.getFloat("height");
         final float itemWidth = item.getFloat("width");
         final int itemQuantity = item.getInt("quantity");
+        final int SubCategoryId = item.getInt("subCategoryId");
         final JSONObject errors=new JSONObject();
         String imageUrl="";
         if(itemName==null){
@@ -102,7 +103,7 @@ public class Seller {
         }
         final ItemDao itemDao=new ItemDao();
         final boolean valid=itemDao.createItem(itemName,itemPrice,imageUrl,this.id,itemDescription,
-                itemBrand,itemHeight,itemWidth,itemQuantity);
+                itemBrand,itemHeight,itemWidth,itemQuantity,SubCategoryId);
         JSONObject jsonObject=new JSONObject();
         if(valid){
             jsonObject.put("status", Response.Status.CREATED.getStatusCode());

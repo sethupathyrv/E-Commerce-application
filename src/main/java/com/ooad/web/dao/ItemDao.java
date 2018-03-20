@@ -6,6 +6,8 @@
 package com.ooad.web.dao;
 
 import com.ooad.web.model.Item;
+import com.ooad.web.model.ItemCategory;
+import com.ooad.web.model.ItemSubCategory;
 import com.ooad.web.model.Offer.*;
 import com.ooad.web.model.Seller;
 import com.ooad.web.utils.Database;
@@ -22,11 +24,11 @@ import java.util.List;
 
 public class ItemDao {
     public boolean createItem(final String name, final float price, final String url, final int sellerId,
-                              String description, final String brand, float height, float width,int quantity) {
+                              String description, final String brand, float height, float width,int quantity,int subCategoryId) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId,description,brand,height,width,quantity) VALUES (?,?,?,?,?,?,?,?,?)");
+                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId,description,brand,height,width,quantity,subCategoryId) VALUES (?,?,?,?,?,?,?,?,?,?)");
             ps.setString(1, name);
             ps.setFloat(2, price);
             ps.setString(3, url);
@@ -36,6 +38,7 @@ public class ItemDao {
             ps.setFloat(7, height);
             ps.setFloat(8, width);
             ps.setInt(9,quantity);
+            ps.setInt(10,subCategoryId);
             ps.executeUpdate();
             con.close();
             return true;
@@ -52,9 +55,10 @@ public class ItemDao {
             ps.setString(1, String.valueOf(id));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return itemBuilder(rs);
+                Item item= itemBuilder(rs);
+                con.close();
+                return item;
             }
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,10 +124,40 @@ public class ItemDao {
         final float height = rs.getFloat("height");
         final float width = rs.getFloat("width");
         final int offerId = rs.getInt("offerId");
+        final int subCategoryId = rs.getInt("SubCategoryId");
         SellerDao sellerDao = new SellerDao();
         Seller seller = sellerDao.getSeller(sellerId);
         return new Item(id, name, price, url, quantity, seller, itemDescription, brand, height,
-                width, getItemDetails(id),getOffer(offerId));
+                width, getItemDetails(id),getOffer(offerId),getItemSubCategory(subCategoryId));
+    }
+    private ItemSubCategory getItemSubCategory(int subCategoryId){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("select SubCategories.id as sid,SubCategories.displayName as sdn,Categories.* " +
+                    "from SubCategories,Categories where SubCategories.id=? and SubCategories.categoryId=Categories.id;");
+            ps.setInt(1,subCategoryId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                final int id = rs.getInt("id");
+                final String name = rs.getString("name");
+                final String displayName = rs.getString("displayName");
+                final boolean isEnabled = rs.getBoolean("isEnabled");
+                ItemCategory itemCategory = new ItemCategory(id,name,displayName,isEnabled);
+                final int sid = rs.getInt("sid");
+                final String sdn = rs.getString("sdn");
+                ItemSubCategory itemSubCategory = new ItemSubCategory(sid,sdn,true,itemCategory);
+                con.close();
+                return itemSubCategory;
+            }
+            con.close();
+            return null;
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     private Offer getOffer(int offerId){
         try {
@@ -179,6 +213,7 @@ public class ItemDao {
                 itemDetails.put("value",rs.getString("value") );
                 itemDetailsArray.put(itemDetails);
             }
+            con.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -186,4 +221,29 @@ public class ItemDao {
         }
         return itemDetailsArray;
     }
+    public Collection<Item> getItemsFromSubCategory(String CategoryName,String SubCategoryName){
+        try {
+            Connection con = Database.getConnection();
+            final List<Item> items = new ArrayList<Item>();
+            PreparedStatement ps = con.prepareStatement("SELECT Items.* FROM Categories,SubCategories,Items WHERE Categories.name=? " +
+                    "AND Categories.Id = SubCategories.categoryId and SubCategories.displayName=?" +
+                    "AND  Items.SubCategoryId=SubCategories.Id;");
+            ps.setString(1,CategoryName);
+            ps.setString(2,SubCategoryName);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                Item item = itemBuilder(rs);
+                items.add(item);
+            }
+            con.close();
+            return items;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

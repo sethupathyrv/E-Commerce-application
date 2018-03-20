@@ -40,7 +40,6 @@ public class SellerDao {
                 }
             } else {
                 status.put("status", Response.Status.BAD_REQUEST.getStatusCode());
-                System.out.println(status);
                 final JSONObject errors = new JSONObject();
                 errors.put("email", Constants.ERROR_NO_USER);
                 status.put("errors", errors);
@@ -59,14 +58,16 @@ public class SellerDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Sellers WHERE emailId=?");
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
+            Seller s = null;
             if (rs.next()) {
-                return new Seller(rs.getInt("id"),
+                s=new Seller(rs.getInt("id"),
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
                         rs.getBoolean("isEnabled"));
             }
             con.close();
+            return s;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,14 +81,16 @@ public class SellerDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Sellers WHERE id=?");
             ps.setString(1, String.valueOf(userId));
             ResultSet rs = ps.executeQuery();
+            Seller s = null;
             if (rs.next()) {
-                return new Seller(rs.getInt("id"),
+                s= new Seller(rs.getInt("id"),
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
                         rs.getBoolean("isEnabled"));
             }
             con.close();
+            return s;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,6 +117,7 @@ public class SellerDao {
                 status.put("seller", sellerJsonObject);
                 status.put("token", TokenAuth.generateSellerToken(seller));
             }
+            con.close();
             return status;
         } catch (Exception e) {
             e.printStackTrace();

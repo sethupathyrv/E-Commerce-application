@@ -8,11 +8,26 @@ public class CartItem {
     private final Item item;
     private int quantity;
     private boolean offerApplied;
-    public CartItem(int id, Item item, int quantity,boolean offerApplied) {
+
+    public CartItem(int id, Item item, int quantity, boolean offerApplied) {
         this.id = id;
         this.item = item;
         this.quantity = quantity;
         this.offerApplied = offerApplied;
+    }
+
+    public CartItem(int id, Item item, int quantity) {
+        this.id = id;
+        this.item = item;
+        this.quantity = quantity;
+        this.offerApplied = false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof CartItem)) return false;
+        CartItem c = (CartItem) o;
+        return this.getItem().getId() == c.getItem().getId();
     }
 
     @Override
@@ -24,23 +39,20 @@ public class CartItem {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o){
-        if(!(o instanceof CartItem)) return false;
-        CartItem c = (CartItem) o;
-        return this.getItem().getId() == c.getItem().getId();
+    public Item getItem() {
+        return item;
     }
 
     public int getId() {
         return id;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public JSONObject toJSON() {
@@ -48,15 +60,11 @@ public class CartItem {
         cartItem.put("id", this.id);
         cartItem.put("item", this.item.toJSON());
         cartItem.put("quantity", this.quantity);
-        cartItem.put("offerApplied",this.offerApplied);
+        cartItem.put("offerApplied", this.offerApplied);
         return cartItem;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public boolean saveCartItem(){
+    public boolean saveCartItem() {
         return new CartDao().save(this);
     }
 
@@ -69,17 +77,16 @@ public class CartItem {
     }
 
     public int applyOffer(Cart cart) {
-        if(this.offerApplied) {
+        if (this.offerApplied) {
             return 0;
         } else {
-            if(this.getItem().getOffer()!=null)
-                this.getItem().getOffer().applyOffer(this,cart );
+            if (this.getItem().getOffer() != null)
+                return this.getItem().getOffer().applyOffer(this, cart);
             else
                 System.out.print("offer is null");
         }
         //TODO applyOffer
         return 0;
-//
     }
 
 

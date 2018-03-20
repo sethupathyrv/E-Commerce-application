@@ -16,7 +16,11 @@ public class PriceOffer extends Offer {
         Float price = c.getItem().getPrice();
         c.setOfferApplied(true);
         c.saveCartItem();
-        return ((int) (price-priceCut))*c.getQuantity();
+        return ((int) (priceCut))*c.getQuantity();
+    }
+
+    public int applyOffer(CartItem c){
+        return 0;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.ooad.web.dao;
 
 import com.ooad.web.model.CartItem;
 import com.ooad.web.model.User;
+import com.ooad.web.model.UserAccount;
 import com.ooad.web.utils.Constants;
 import com.ooad.web.utils.Database;
 import com.ooad.web.utils.TokenAuth;
@@ -9,16 +10,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.core.Response.Status;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.xml.crypto.Data;
+import java.sql.*;
 
 public class UserDao {
 
     public JSONObject validateLogin(final String email, String password) {
         try {
-//            System.out.println(email+password);
             final JSONObject status = new JSONObject();
             final Connection con = Database.getConnection();
             final PreparedStatement ps = con.prepareStatement("SELECT  * FROM  Users WHERE emailId=?");
@@ -39,7 +37,6 @@ public class UserDao {
                 }
             } else {
                 status.put("status", Status.BAD_REQUEST.getStatusCode());
-                System.out.println(status);
                 final JSONObject errors = new JSONObject();
                 errors.put("email", Constants.ERROR_NO_USER);
                 status.put("errors", errors);
@@ -58,8 +55,9 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Users WHERE emailId=?");
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
+            User u = null;
             if (rs.next()) {
-                return new User(rs.getInt("id"),
+                u = new User(rs.getInt("id"),
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
@@ -67,6 +65,7 @@ public class UserDao {
                         rs.getInt("defaultAddressId"));
             }
             con.close();
+            return u;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,8 +78,9 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Users WHERE id=?");
             ps.setString(1, String.valueOf(userId));
             ResultSet rs = ps.executeQuery();
+            User u = null;
             if (rs.next()) {
-                return new User(rs.getInt("id"),
+                u=new User(rs.getInt("id"),
                         rs.getString("userName"),
                         rs.getString("emailId"),
                         rs.getString("password"),
@@ -88,6 +88,7 @@ public class UserDao {
                         rs.getInt("defaultAddressId"));
             }
             con.close();
+            return u;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,6 +114,7 @@ public class UserDao {
                 status.put("user", userJsonObject);
                 status.put("token", TokenAuth.generateToken(user));
             }
+            con.close();
             return status;
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,6 +144,43 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("UPDATE User SET defaultAddrId = ? WHERE id = ?");
             ps.setInt(1,user.getDefaultAddressId() );
             ps.setInt(2,user.getId() );
+            ps.executeUpdate();
+            con.close();
+            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public UserAccount getUserAccountFromId(int userId){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Accounts WHERE userId=?");
+            ps.setInt(1,userId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                UserAccount ua = new UserAccount(rs.getInt("id"),rs.getString("name"),rs.getInt("number"),rs.getInt("amount"));
+                con.close();
+                return ua;
+            }
+            con.close();
+            return null;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean save(UserAccount userAccount) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE Accounts SET amount = ? WHERE id = ?");
+            ps.setInt(1,userAccount.getAmount() );
+            ps.setInt(2,userAccount.getId());
             ps.executeUpdate();
             con.close();
             return true;

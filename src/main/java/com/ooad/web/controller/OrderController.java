@@ -1,7 +1,6 @@
 package com.ooad.web.controller;
 
-import com.ooad.web.dao.ItemDao;
-import com.ooad.web.model.Item;
+import com.ooad.web.model.Order;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,17 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ItemController")
-public class ItemController extends HttpServlet {
+@WebServlet(name = "OrderController")
+public class OrderController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final int itemId = Integer.parseInt(request.getParameter("id"));
-        final Item item = Item.find(itemId);
-        request.setAttribute("item",item);
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/item.jsp");
-        rd.forward(request,response);
+        final int orderId = Integer.parseInt(request.getParameter("id"));
+        Order o = Order.find(orderId);
+        if( o == null){
+            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+            rd.forward(request,response );
+        } else {
+            request.setAttribute("order", o);
+            RequestDispatcher rd = request.getRequestDispatcher("jsp/order.jsp");
+            rd.forward(request, response);
+        }
     }
 }

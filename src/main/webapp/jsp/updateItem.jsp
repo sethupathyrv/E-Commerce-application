@@ -1,18 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
   User: minal
-  Date: 17/2/18
-  Time: 1:20 AM
+  Date: 17/3/18
+  Time: 10:22 PM
   To change this template use File | Settings | File Templates.
 --%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<!--
-~ Created by Sandeep Tadepalli on 10/02/18 15:05
-~ Copyright (c) 2018. All rights reserved.
--->
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,10 +27,11 @@
 <script src="../js/jquery.cookie.js"></script>
 <script src="../js/addItem.js"></script>
 
+
 <div class="container-fluid">
     <%-- ..........Logo header...........--%>
     <div class="row nav-belt ">
-    <header class="container-fluid header">
+        <header class="container-fluid header">
 
             <div class="logo col-lg-2 col-md-2">
                 <a href="#" class="nav-logo-link">
@@ -44,18 +39,13 @@
                 </a>
             </div>
 
-        <div class="logo col-lg-2 col-md-2 right">
-            <a href="/" class="nav-logo-link">
-                <img src="/images/logo.png" alt="Home" style="background-color: black">
-            </a>
-        </div>
             <div class="logo col-lg-2 col-md-2 right">
                 <a href="/" class="nav-logo-link">
-                    <img src="/images/logo.png" alt="Home" style="background-color: black">
+                    <img src="http://localhost:8081/images/logo.png" alt="Home" style="background-color: black">
                 </a>
             </div>
 
-    </header>
+        </header>
     </div>
 
     <%--.........Navbar................--%>
@@ -74,9 +64,9 @@
                 <!-- Collection of nav links and other content for toggling -->
                 <div id="navbarCollapse" class="collapse navbar-collapse">
                     <ul class="nav nav-tabs">
-                        <li><a href="/seller">Dashboard</a></li>
+                        <li class="active"><a href="/seller">Dashboard</a></li>
                         <li><a href="/infoseller">Seller Information </a></li>
-                        <li class="active"><a href="/seller/add">Add Item</a></li>
+                        <li><a href="/seller/add">Add Item</a></li>
                         <li><a href="#" id="sellerLogout"> Logout</a></li>
                     </ul>
                 </div>
@@ -90,7 +80,7 @@
             <div class="a-section">
                 <div class="a-box">
                     <div class="a-box-inner a-padding-extra-large">
-                        <h1 class="a-spacing-small">Create your Amazon listings</h1>
+                        <h1 class="a-spacing-small">Update Item details</h1>
 
                         <div class="a-row a-spacing-base">
 
@@ -98,20 +88,16 @@
                             <label for="name" class="a-form-label">Name</label>
                             <input class="form-control" type="text" name="name" id="name" autocomplete="off"/>
 
-                        <label for="itemPrice" class="a-form-label">Price</label>
-                        <input class="form-control" type="number" name="itemPrice" id="itemPrice" autocomplete="off"/>
                             <label for="itemPrice" class="a-form-label">Price</label>
                             <input class="form-control" type="text" name="itemPrice" id="itemPrice" autocomplete="off"/>
 
-                        <label for="quantity" class="a-form-label">Quantity</label>
-                        <input class="form-control" type="number" name="quantity" id="quantity" autocomplete="off" />
                             <label for="quantity" class="a-form-label">Quantity</label>
                             <input class="form-control" type="text" name="quantity" id="quantity" autocomplete="off" />
 
                             <%--<label for="sel" class="a-form-label">Sub-Sub Category</label>--%>
 
                             <%--<select id="sel" name="subSubCategory" onchange="show(this)">--%>
-                                <%--<option value="">-- Select --</option>--%>
+                            <%--<option value="">-- Select --</option>--%>
                             <%--</select>--%>
                             <%--<p id="msg"></p>--%>
 
@@ -122,20 +108,6 @@
                             <label for="brand" class="a-form-label">Brand</label>
                             <input class="form-control" type="text" name="brand" id="brand" autocomplete="off"/>
 
-                        <label for="itemHeight" class="a-form-label">Height</label>
-                        <input class="form-control" type="number" name="itemHeight" id="itemHeight" autocomplete="off"/>
-
-                        <label for="itemWidth" class="a-form-label">Width</label>
-                        <input class="form-control" type="number" name="itemWidth" id="itemWidth" autocomplete="off"/>
-
-                        <label for="itemBarcode" class="a-form-label">Item Barcode</label>
-                        <input class="form-control" type="number" name="itemBarcode" id="itemBarcode" autocomplete="off"/>
-
-
-                        <label>Category:</label>
-                        <select id="category" name="category">
-                            <option value="000">-Select Category-</option>
-                        </select>
                             <label for="itemHeight" class="a-form-label">Height</label>
                             <input class="form-control" type="text" name="itemHeight" id="itemHeight" autocomplete="off"/>
 
@@ -143,10 +115,6 @@
                             <input class="form-control" type="text" name="itemWidth" id="itemWidth" autocomplete="off"/>
 
                             <label id="details" class="a-form-label">Item Details</label>
-                        <label>subCategory:</label>
-                        <select id="subCategory" name="subCategory">
-                            <option value="000">-Select subCategory-</option>
-                        </select>
 
                             <div class="dropdown" id="offerType">
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
@@ -157,27 +125,6 @@
                                     <li><a href="#">1+1</a></li>
                                 </ul>
                             </div>
-                        <label>Offer</label>
-                        <select name="offer" id="offer">
-                            <option value="-1">No Offer</option>
-                            <option value="201">Discount Offer</option>
-                            <option value="202">Price Offer</option>
-                            <option value="203">Buy 1 Get 1 free</option>
-                        </select>
-
-                        <div id="discountOfferDiv" hidden>
-                            <label for="discountOffer" class="a-form-label">Discount Percentage</label>
-                            <input type="number" id="discountOffer" value="0" class="form-control">
-                        </div>
-                        <div id="priceOfferDiv" hidden>
-                            <label for="priceOffer" class="a-form-label">Price Offer</label>
-                            <input type="number" id="priceOffer" value="0" class="form-control">
-                        </div>
-
-                        <div id="bundleOfferDiv" hidden>
-                            <label for="bundleOfferBarcode" class="a-form-label">Bundled with</label>
-                            <input type="number" id="bundleOfferBarcode" class="form-control" value="0">
-                        </div>
 
                             <textarea class="form-control" id="itemDetails" name="details" rows="5" cols="30"></textarea>
 
@@ -185,7 +132,6 @@
 
 
                             <label for="itemImage" class="a-form-label">Image</label>
-                        <label for="itemImage" class="a-form-label">Image</label>
 
                             <input class="form-control" type="file" name="itemImage" id="itemImage" />
 
@@ -193,19 +139,6 @@
                     </div>
                 </div>
             </div>
-
-        <div class="a-section">
-            <span id="continue" class="a-button a-button-span12 a-button-primary">
-                <span class="a-button-inner">
-                    <input tabindex="5" id="btnCookie" class="a-button-input" type="submit" aria-labelledby="continue-announce">
-                        <span id="continue-announce" class="a-button-text" aria-hidden="true">
-                            Submit
-                        </span>
-                </span>
-            </span>
-        </div>
-    </div>
-</form>
 
             <div class="a-section">
                 <span id="continue" class="a-button a-button-span12 a-button-primary">
@@ -222,30 +155,30 @@
 </div>
 <%--..........To populate select dropdown using json file.........--%>
 <script>
-/*    window.onload = populateSelect();
+    /*    window.onload = populateSelect();
 
-    //........... THE JSON ARRAY..............
-    function populateSelect() {
-        $.getJSON("/json/test.json", function(json) {
-            //..............Json object containg category: json ..............
-            console.log(json);
+        //........... THE JSON ARRAY..............
+        function populateSelect() {
+            $.getJSON("/json/test.json", function(json) {
+                //..............Json object containg category: json ..............
+                console.log(json);
 
-            var ele = document.getElementById('sel');
-            for (var i = 0; i < json.length; i++) {
-//...................... POPULATE SELECT ELEMENT WITH JSON....................
-                ele.innerHTML = ele.innerHTML +
-                    '<option value="' + json[i]['ID'] + '">' + json[i]['Category_Name'] + '</option>';
-            }
-        });
-    }
+                var ele = document.getElementById('sel');
+                for (var i = 0; i < json.length; i++) {
+    //...................... POPULATE SELECT ELEMENT WITH JSON....................
+                    ele.innerHTML = ele.innerHTML +
+                        '<option value="' + json[i]['ID'] + '">' + json[i]['Category_Name'] + '</option>';
+                }
+            });
+        }
 
-    //............GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT............
-    function show(ele) {
-        // GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT.
-        var msg = document.getElementById('msg');
-        msg.innerHTML = 'Selected Category: <b>' + ele.options[ele.selectedIndex].text + '</b> </br>' +
-            'ID: <b>' + ele.value + '</b>';
-    }*/
+        //............GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT............
+        function show(ele) {
+            // GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT.
+            var msg = document.getElementById('msg');
+            msg.innerHTML = 'Selected Category: <b>' + ele.options[ele.selectedIndex].text + '</b> </br>' +
+                'ID: <b>' + ele.value + '</b>';
+        }*/
 </script>
 
 

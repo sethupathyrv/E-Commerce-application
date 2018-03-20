@@ -27,18 +27,18 @@ public class Item {
     private boolean isEnabled;
     private final ItemSubCategory subCategory;
     private JSONArray itemDetails;
-
+    private int itemBarcode;
 
 
     public Item(int id, String name, float price, String url, int quantity, Seller seller,
                 String description, String brand, float height, float width, JSONArray itemDetails,
-                Offer offer, ItemSubCategory subCategory) {
+                Offer offer, ItemSubCategory subCategory,int itemBarcode) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.url = url;
         this.quantity = quantity;
-
+        this.itemBarcode = itemBarcode;
         this.seller = seller;
         this.description = description;
         this.brand = brand;
@@ -140,6 +140,10 @@ public class Item {
         return offer;
     }
 
+    public int getItemBarcode() {
+        return itemBarcode;
+    }
+
     public void setOffer(Offer offer) {
         this.offer = offer;
     }
@@ -152,15 +156,20 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "id=" + id +
+                ", seller=" + seller +
+                ", offer=" + offer +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", url='" + url + '\'' +
                 ", quantity=" + quantity +
-                ", seller=" + seller +
                 ", description='" + description + '\'' +
                 ", brand='" + brand + '\'' +
                 ", height=" + height +
                 ", width=" + width +
+                ", isEnabled=" + isEnabled +
+                ", subCategory=" + subCategory +
+                ", itemDetails=" + itemDetails +
+                ", itemBarcode=" + itemBarcode +
                 '}';
     }
 
@@ -171,6 +180,10 @@ public class Item {
         } else {
             return this.id == ((Item) o).getId();
         }
+    }
+
+    public JSONArray getItemDetails() {
+        return itemDetails;
     }
 
     public JSONObject toJSON() {
@@ -188,6 +201,7 @@ public class Item {
         itemJsonObject.put("isEnabled",this.isEnabled );
         itemJsonObject.put("itemDetails",this.itemDetails);
         itemJsonObject.put("SubCategory",subCategory.toJSON());
+        itemJsonObject.put("itemBarcode",this.itemBarcode);
         return itemJsonObject;
     }
 

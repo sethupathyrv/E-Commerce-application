@@ -77,6 +77,25 @@ public class Seller {
         final float itemWidth = item.getFloat("width");
         final int itemQuantity = item.getInt("quantity");
         final int SubCategoryId = item.getInt("subCategoryId");
+        final int offerType = item.getInt("offerType");
+        final int itemBarcode = item.getInt("itemBarcode");
+        int discountPercentage = 0;
+        int priceOffer = 0;
+        final ItemDao itemDao=new ItemDao();
+        int offerId =0;
+        if(offerType == 202){
+            priceOffer = item.getInt("priceOffer");
+            offerId = itemDao.createOffer(202,0 ,priceOffer );
+        } else if(offerType == 201){
+            discountPercentage = item.getInt("discountPercentage");
+            offerId = itemDao.createOffer(201, discountPercentage,0 );
+        }else if(offerType == -1){
+            offerId = -1;
+        } else if(offerType== 203) {
+            ;
+            //TODO add BundleOffer
+
+        }
         final JSONObject errors=new JSONObject();
         String imageUrl="";
         if(itemName==null){
@@ -101,9 +120,9 @@ public class Seller {
         } catch (IOException e){
             errors.put("file","file could not be saved");
         }
-        final ItemDao itemDao=new ItemDao();
+
         final boolean valid=itemDao.createItem(itemName,itemPrice,imageUrl,this.id,itemDescription,
-                itemBrand,itemHeight,itemWidth,itemQuantity,SubCategoryId);
+                itemBrand,itemHeight,itemWidth,itemQuantity,SubCategoryId,offerId,itemBarcode);
         JSONObject jsonObject=new JSONObject();
         if(valid){
             jsonObject.put("status", Response.Status.CREATED.getStatusCode());

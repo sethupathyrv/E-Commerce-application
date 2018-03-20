@@ -31,13 +31,30 @@ $(document).ready(function() {
 
             }
         });
+        
+
 
     }
     $('#sellerLogout').click(function () {
             $.removeCookie("sellerAuthToken", {path: '/'});
             window.location.replace("/");
         });
-
+    $('#offer').on('change',function () {
+        var offerSelect = $(this).val();
+        if(offerSelect == 201) {
+            $("#discountOfferDiv").show();
+            $("#priceOfferDiv").hide();
+            $("#bundleOfferDiv").hide();
+        } else if(offerSelect == 202){
+            $("#priceOfferDiv").show();
+            $("#discountOfferDiv").hide();
+            $("#bundleOfferDiv").hide();
+        } else if(offerSelect == 203){
+            $("#bundleOfferDiv").show();
+            $("#priceOfferDiv").hide();
+            $("#discountOfferDiv").hide();
+        }
+    });
 
     $("#addItemForm").submit(function (event) {
         event.preventDefault();
@@ -54,8 +71,13 @@ $(document).ready(function() {
                     'brand':$("#brand").val(),
                     'height':$("#itemHeight").val(),
                     'width':$("#itemWidth").val(),
-                    'itemDetails':$("#itemDetails").val(),
-                    'subCategoryId':$("#subCategory").val()
+                    'offerType':$("#offer").val(),
+                    'discountPercentage':$('#discountOffer').val(),
+                    'priceOffer':$("#priceOffer").val(),
+                    'subCategoryId':$("#subCategory").val(),
+                    'itemBarcode':$('#itemBarcode').val(),
+                    'bundleOfferBarcode':$('#bundleOfferBarcode').val()
+
                 };
                 formData.append('json',JSON.stringify(jsonData));
                 $.ajax({
@@ -70,6 +92,8 @@ $(document).ready(function() {
                     processData: false,
                     success: addItemResponse
                 });
+            } else {
+                alert("Please select an image");
             }
         });
     });
@@ -77,10 +101,10 @@ $(document).ready(function() {
     function addItemResponse(response) {
         if(response.status ===201){
             alert("Item Created");
-            window.location("/seller");
+            window.location.replace("/seller");
         }else if(response.status === 401){
             alert("Not authorized");
-            window.location("/sellerlogin");
+            window.location.replace("/sellerlogin");
         }
         console.log(response);
     }

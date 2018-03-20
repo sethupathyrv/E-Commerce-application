@@ -32,7 +32,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../js/jquery.cookie.js"></script>
 <script src="../js/addItem.js"></script>
-<script src="../js/dashboard.js"></script>
 
 <div class="container-fluid">
     <%-- ..........Logo header...........--%>

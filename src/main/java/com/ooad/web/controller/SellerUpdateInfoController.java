@@ -1,42 +1,32 @@
-/*
- * Created by Shravan on  15/2/18 3:02 PM.
- * Copyright (c) 2018. All rights reserved.
- */
-
 package com.ooad.web.controller;
 
 import com.ooad.web.dao.SellerDao;
-import com.ooad.web.dao.UserDao;
+import com.ooad.web.model.Seller;
+import com.ooad.web.utils.TokenAuth;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "SellerRegisterController")
-public class SellerRegisterController extends HttpServlet {
+@WebServlet(name = "SellerUpdateInfoController")
+public class SellerUpdateInfoController extends HttpServlet {
 
-    private SellerDao dao;
+    /*private SellerDao dao;
 
-    public SellerRegisterController() {
+    public SellerUpdateInfoController() {
         super();
         dao = new SellerDao(); //create new data object
 
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("jsp/sellerregister.jsp");
-        rd.forward(request, response);
-
-    }
+    }*/
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        PrintWriter pwOut = response.getWriter();
+        /*PrintWriter pwOut = response.getWriter();
         String un = request.getParameter("username");
         String pw = request.getParameter("psword");
         String email = request.getParameter("email");
@@ -48,14 +38,28 @@ public class SellerRegisterController extends HttpServlet {
         String state = request.getParameter("state");
         String pincode = request.getParameter("pincode");
         String country = request.getParameter("country");
-
-        dao.createSeller(un, email, pw, storename, mobilenumber,
-                streetaddress, landmark, city, state, pincode, country);
-        pwOut.print("Registration Successful! Please Login.");
-        response.setContentType("text/html");
-        RequestDispatcher view = request.getRequestDispatcher("jsp/sellerlogin.jsp");
-        view.include(request, response); //index page is reloaded with text for new user to login
-
+        */
     }
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Cookie[] cookies = request.getCookies();
+        Seller seller = null;
+        if(cookies != null){
+            for(Cookie cookie: cookies){
+                if(cookie.getName().equals("sellerAuthToken")){
+                    seller = TokenAuth.getSellerFromToken(cookie.getValue());
+                }
+            }
+        }
+        if( seller == null){
+            RequestDispatcher rd = request.getRequestDispatcher("jsp/sellerlogin.jsp");
+            rd.forward(request,response );
+        }
+        else {
+            request.setAttribute("seller", seller);
+            RequestDispatcher rd = request.getRequestDispatcher("jsp/updateInfoSeller.jsp");
+            rd.forward(request,response);
+        }
+    }
 }
+

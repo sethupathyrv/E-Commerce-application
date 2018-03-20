@@ -35,7 +35,7 @@
 
 <%-- ..........Logo header...........--%>
 <div class="row nav-belt ">
-<header class="container-fluid header">
+    <header class="container-fluid header">
 
         <div class="logo col-lg-2 col-md-2">
             <a href="#" class="nav-logo-link">
@@ -49,7 +49,7 @@
             </a>
         </div>
 
-</header>
+    </header>
 </div>
 
 <%--.........Navbar................--%>
@@ -89,45 +89,45 @@
                     <div class="a-row a-spacing-base">
 
 
-                        <label for="name" class="a-form-label">Name</label>
-                        <input class="form-control" type="text" name="name" id="name" autocomplete="off"/>
+                        <label for="name" class="a-form-label">Name*</label>
+                        <input class="form-control" type="text" name="name" id="name" autocomplete="off" required="true"/>
 
-                        <label for="itemPrice" class="a-form-label">Price</label>
-                        <input class="form-control" type="number" name="itemPrice" id="itemPrice" autocomplete="off"/>
+                        <label for="itemPrice" class="a-form-label">Price*</label>
+                        <input class="form-control" type="number" name="itemPrice" id="itemPrice" autocomplete="off" required="true"/>
 
-                        <label for="quantity" class="a-form-label">Quantity</label>
-                        <input class="form-control" type="number" name="quantity" id="quantity" autocomplete="off" />
+                        <label for="quantity" class="a-form-label">Quantity*</label>
+                        <input class="form-control" type="number" name="quantity" id="quantity" autocomplete="off" required="true"/>
 
 
                         <label id="description" class="a-form-label">Item Description</label>
 
                         <textarea class="form-control" id="itemDescription" name="description" rows="5" cols="30"></textarea>
 
-                        <label for="brand" class="a-form-label">Brand</label>
-                        <input class="form-control" type="text" name="brand" id="brand" autocomplete="off"/>
+                        <label for="brand" class="a-form-label">Brand*</label>
+                        <input class="form-control" type="text" name="brand" id="brand" autocomplete="off" required="true"/>
 
-                        <label for="itemHeight" class="a-form-label">Height</label>
-                        <input class="form-control" type="number" name="itemHeight" id="itemHeight" autocomplete="off"/>
+                        <label for="itemHeight" class="a-form-label">Height*</label>
+                        <input class="form-control" type="number" name="itemHeight" id="itemHeight" autocomplete="off" required="true"/>
 
-                        <label for="itemWidth" class="a-form-label">Width</label>
-                        <input class="form-control" type="number" name="itemWidth" id="itemWidth" autocomplete="off"/>
+                        <label for="itemWidth" class="a-form-label">Width*</label>
+                        <input class="form-control" type="number" name="itemWidth" id="itemWidth" autocomplete="off" required="true"/>
 
-                        <label for="itemBarcode" class="a-form-label">Item Barcode</label>
-                        <input class="form-control" type="number" name="itemBarcode" id="itemBarcode" autocomplete="off"/>
+                        <label for="itemBarcode" class="a-form-label">Item Barcode*</label>
+                        <input class="form-control" type="number" name="itemBarcode" id="itemBarcode" autocomplete="off" required="true"/>
 
 
-                        <label>Category:</label>
+                        <label>Category*:</label>
                         <select id="category" name="category">
                             <option value="000">-Select Category-</option>
                         </select>
 
 
-                        <label>subCategory:</label>
+                        <label>subCategory*:</label>
                         <select id="subCategory" name="subCategory">
                             <option value="000">-Select subCategory-</option>
                         </select>
 
-                        <label>Offer</label>
+                        <label>Offer*</label>
                         <select name="offer" id="offer">
                             <option value="-1">No Offer</option>
                             <option value="201">Discount Offer</option>
@@ -136,22 +136,22 @@
                         </select>
 
                         <div id="discountOfferDiv" hidden>
-                            <label for="discountOffer" class="a-form-label">Discount Percentage</label>
-                            <input type="number" id="discountOffer" value="0" class="form-control">
+                            <label for="discountOffer" class="a-form-label">Discount Percentage*</label>
+                            <input type="number" id="discountOffer" value="0" class="form-control" required="true">
                         </div>
                         <div id="priceOfferDiv" hidden>
-                            <label for="priceOffer" class="a-form-label">Price Offer</label>
-                            <input type="number" id="priceOffer" value="0" class="form-control">
+                            <label for="priceOffer" class="a-form-label">Price Offer*</label>
+                            <input type="number" id="priceOffer" value="0" class="form-control" required="true">
                         </div>
 
                         <div id="bundleOfferDiv" hidden>
-                            <label for="bundleOfferBarcode" class="a-form-label">Bundled with</label>
-                            <input type="number" id="bundleOfferBarcode" class="form-control" value="0">
+                            <label for="bundleOfferBarcode" class="a-form-label">Bundled with*</label>
+                            <input type="number" id="bundleOfferBarcode" class="form-control" value="0" required="true">
                         </div>
 
-                        <label for="itemImage" class="a-form-label">Image</label>
+                        <label for="itemImage" class="a-form-label">Image*</label>
 
-                        <input class="form-control" type="file" name="itemImage" id="itemImage" />
+                        <input class="form-control" type="file" name="itemImage" id="itemImage" required="true" />
 
                     </div>
                 </div>

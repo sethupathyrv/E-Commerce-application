@@ -21,11 +21,12 @@ import java.util.List;
 
 public class ItemDao {
     public boolean createItem(final String name, final float price, final String url, final int sellerId,
-                              String description, final String brand, float height, float width,int quantity,int subCategoryId,int offerId) {
+                              String description, final String brand, float height, float width,int quantity,
+                              int subCategoryId,int offerId,int itemBarcode) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId,description,brand,height,width,quantity,subCategoryId,offerId) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId,description,brand,height,width,quantity,subCategoryId,offerId,itemBarcode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
             ps.setString(1, name);
             ps.setFloat(2, price);
             ps.setString(3, url);
@@ -37,6 +38,7 @@ public class ItemDao {
             ps.setInt(9,quantity);
             ps.setInt(10,subCategoryId);
             ps.setInt(11,offerId);
+            ps.setInt(12,itemBarcode);
             ps.executeUpdate();
             con.close();
             return true;
@@ -58,6 +60,27 @@ public class ItemDao {
                 return item;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Item getItembyBarcode(int barcode){
+        Connection con = null;
+        try {
+            con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Items WHERE itemBarcode= ?");
+            ps.setInt(1,barcode );
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Item item = itemBuilder(rs);
+                con.close();
+                return item;
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
@@ -123,10 +146,11 @@ public class ItemDao {
         final float width = rs.getFloat("width");
         final int offerId = rs.getInt("offerId");
         final int subCategoryId = rs.getInt("SubCategoryId");
+        final int itemBarcode = rs.getInt("itemBarcode");
         SellerDao sellerDao = new SellerDao();
         Seller seller = sellerDao.getSeller(sellerId);
         return new Item(id, name, price, url, quantity, seller, itemDescription, brand, height,
-                width, getItemDetails(id),getOffer(offerId),getItemSubCategory(subCategoryId));
+                width, getItemDetails(id),getOffer(offerId),getItemSubCategory(subCategoryId),itemBarcode);
     }
     private ItemSubCategory getItemSubCategory(int subCategoryId){
         try {
@@ -187,6 +211,8 @@ public class ItemDao {
                     Offer o = new BuyXGetLowestFreeOffer(offerId, x);
                     con.close();
                     return o;
+                } else if(offerType == 205) {
+
                 }
             }
         } catch (ClassNotFoundException e) {

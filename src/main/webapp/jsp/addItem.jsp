@@ -112,6 +112,9 @@
                         <label for="itemWidth" class="a-form-label">Width</label>
                         <input class="form-control" type="number" name="itemWidth" id="itemWidth" autocomplete="off"/>
 
+                        <label for="itemBarcode" class="a-form-label">Item Barcode</label>
+                        <input class="form-control" type="number" name="itemBarcode" id="itemBarcode" autocomplete="off"/>
+
 
                         <label>Category:</label>
                         <select id="category" name="category">
@@ -139,6 +142,11 @@
                         <div id="priceOfferDiv" hidden>
                             <label for="priceOffer" class="a-form-label">Price Offer</label>
                             <input type="number" id="priceOffer" value="0" class="form-control">
+                        </div>
+
+                        <div id="bundleOfferDiv" hidden>
+                            <label for="bundleOfferBarcode" class="a-form-label">Bundled with</label>
+                            <input type="number" id="bundleOfferBarcode" class="form-control" value="0">
                         </div>
 
                         <label for="itemImage" class="a-form-label">Image</label>

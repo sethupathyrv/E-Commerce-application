@@ -78,6 +78,7 @@ public class Seller {
         final int itemQuantity = item.getInt("quantity");
         final int SubCategoryId = item.getInt("subCategoryId");
         final int offerType = item.getInt("offerType");
+        final int itemBarcode = item.getInt("itemBarcode");
         int discountPercentage = 0;
         int priceOffer = 0;
         final ItemDao itemDao=new ItemDao();
@@ -90,6 +91,10 @@ public class Seller {
             offerId = itemDao.createOffer(201, discountPercentage,0 );
         }else if(offerType == -1){
             offerId = -1;
+        } else if(offerType== 203) {
+            ;
+            //TODO add BundleOffer
+
         }
         final JSONObject errors=new JSONObject();
         String imageUrl="";
@@ -117,7 +122,7 @@ public class Seller {
         }
 
         final boolean valid=itemDao.createItem(itemName,itemPrice,imageUrl,this.id,itemDescription,
-                itemBrand,itemHeight,itemWidth,itemQuantity,SubCategoryId,offerId);
+                itemBrand,itemHeight,itemWidth,itemQuantity,SubCategoryId,offerId,itemBarcode);
         JSONObject jsonObject=new JSONObject();
         if(valid){
             jsonObject.put("status", Response.Status.CREATED.getStatusCode());

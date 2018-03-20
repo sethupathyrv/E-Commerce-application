@@ -129,12 +129,15 @@
                         <label>Quantity:</label>
                         <!-- <select id="quantity" class="a-dropdown" name="quantity" autocomplete="off" tabindex="-1"></select>
                          <span id="a-autoid-5" class="a-button-small" tabindex="-1"></span>-->
-                        <select id="quantity">
+                        <%--<select id="quantity">
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
                           <option value="4">4</option>
-                        </select>
+                        </select>--%>
+
+                        <input class="form-control" type="number" name="quantity" id="quantity" autocomplete="off" required="true"/>
+
 
                     </span>
 

@@ -87,11 +87,11 @@
 
                         <div class="a-row a-spacing-base">
 
-                            <label for="storeName" class="a-form-label">Store Name</label>
+                            <label for="storeName" class="a-form-label">Store Name*</label>
 
                             <input type="text" maxlength="128" id="storeName" name="storename" tabindex="1"
                                    class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
-                                    placeholder="<%=seller.getStoreName()%>">
+                                    placeholder="<%=seller.getStoreName()%>" required="true">
 
 
                             <%--<label for="sel" class="a-form-label">Select Product Category</label>
@@ -101,11 +101,11 @@
                             </select>
                             <p id="msg"></p>--%>
 
-                            <label for="mobileNumber" class="a-form-label">Mobile Number</label>
+                            <label for="mobileNumber" class="a-form-label">Mobile Number*</label>
 
                             <input type="text" maxlength="128" id="mobileNumber" name="mobilenumber" tabindex="1"
                                    class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
-                                    placeholder="<%=seller.getMobileNumber()%>">
+                                    placeholder="<%=seller.getMobileNumber()%>" required="true">
 
 
 
@@ -113,45 +113,45 @@
 
                             <h3>Enter your address</h3>
 
-                            <label for="streetAddress" class="a-form-label">Street Address</label>
+                            <label for="streetAddress" class="a-form-label">Street Address*</label>
 
                             <input type="text" maxlength="128" id="streetAddress" name="streetaddress" tabindex="1"
                                    class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
-                                    placeholder="<%=seller.getStreetAddress()%>">
+                                    placeholder="<%=seller.getStreetAddress()%>" required="true">
 
 
-                            <label for="landmark" class="a-form-label">Landmark</label>
+                            <label for="landmark" class="a-form-label">Landmark*</label>
 
                             <input type="text" maxlength="128" id="landmark" name="landmark" tabindex="1"
                                    class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
-                                    placeholder="<%=seller.getLandmark()%>">
+                                    placeholder="<%=seller.getLandmark()%>" required="true">
 
 
-                            <label for="city" class="a-form-label">City</label>
+                            <label for="city" class="a-form-label">City*</label>
 
                             <input type="text" maxlength="128" id="city" name="city" tabindex="1"
                                    class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
-                                    placeholder="<%=seller.getCity()%>">
+                                    placeholder="<%=seller.getCity()%>" required="true">
 
 
-                            <label for="state" class="a-form-label">State</label>
+                            <label for="state" class="a-form-label">State*</label>
 
                             <input type="text" maxlength="128" id="state" name="state" tabindex="1"
                                    class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
-                                    placeholder="<%=seller.getState()%>">
+                                    placeholder="<%=seller.getState()%>" required="true">
 
-                            <label for="pincode" class="a-form-label">Pincode</label>
+                            <label for="pincode" class="a-form-label">Pincode*</label>
 
                             <input type="text" maxlength="128" id="pincode" name="pincode" tabindex="1"
                                    class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
-                                    placeholder="<%=seller.getPincode()%>">
+                                    placeholder="<%=seller.getPincode()%>" required="true">
 
 
-                            <label for="country" class="a-form-label">Country</label>
+                            <label for="country" class="a-form-label">Country*</label>
 
                             <input type="text" maxlength="128" id="country" name="country" tabindex="1"
                                    class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
-                                    placeholder="<%=seller.getCountry()%>">
+                                    placeholder="<%=seller.getCountry()%>" required="true">
 
                         </div>
                     </div>

@@ -161,4 +161,16 @@
         <servlet-name>Items</servlet-name>
         <url-pattern>/items</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <display-name>AdminController</display-name>
+        <servlet-name>Admin</servlet-name>
+        <servlet-class>com.ooad.web.controller.AdminController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
 </web-app>

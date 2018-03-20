@@ -9,7 +9,7 @@ import com.ooad.web.dao.ItemDao;
 import com.ooad.web.dao.SellerDao;
 import com.ooad.web.utils.Constants;
 import org.json.JSONObject;
-
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.io.*;
@@ -118,6 +118,38 @@ public class Seller {
         return country;
     }
 
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public void setMobileNumber(int mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setPincode(int pincode) {
+        this.pincode = pincode;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public JSONObject toJSON() {
         JSONObject sellerJsonObject = new JSONObject();
         sellerJsonObject.put("id", id);
@@ -181,10 +213,31 @@ public class Seller {
         return jsonObject;
     }
 
-    public static Seller find(int id) { return new SellerDao().getSeller(id);}
+    public static Seller find(int id) {
+        SellerDao sellerDao = new SellerDao();
+        return sellerDao.getSeller(id);
+    }
 
-    public boolean save() {
+    /*public boolean save() {
         System.out.println("reached model");
         return new SellerDao().saveSeller(this);
+    }*/
+
+    public JSONObject updateSeller(JSONObject req, int id) {
+        Seller s = Seller.find(id);
+        String str = req.getString("storeName");
+        System.out.println(str);
+        s.setStoreName(req.getString("storeName"));
+        s.setMobileNumber(req.getInt("mobileNumber"));
+        s.setStreetAddress(req.getString("streetAddress"));
+        s.setLandmark(req.getString("landmark"));
+        s.setCity(req.getString("city"));
+        s.setState(req.getString("state"));
+        s.setPincode(req.getInt("pincode"));
+        s.setCountry(req.getString("country"));
+        System.out.println(s.getCountry());
+        SellerDao sellerDao = new SellerDao();
+        sellerDao.updateSeller(s);
+        return new JSONObject().put("status", Status.OK.getStatusCode());
     }
 }

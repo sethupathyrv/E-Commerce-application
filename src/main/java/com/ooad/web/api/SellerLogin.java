@@ -60,7 +60,7 @@ public class SellerLogin {
         return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
 
-    @PUT
+    /*@PUT
     @Path("/updateinfo")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
@@ -73,10 +73,10 @@ public class SellerLogin {
         if(seller==null){
             return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode()).toString()).build();
         } else {
-            /*System.out.println("hello2");
-            ObjectMapper objectMapper = new ObjectMapper();
+            System.out.println("hello2");
+            *//*ObjectMapper objectMapper = new ObjectMapper();
             Seller s = objectMapper.readValue(str, Seller.class);
-            System.out.println(s);*/
+            System.out.println(s);*//*
             boolean b = seller.save();
             System.out.println(b);
             JSONObject jsonObject = seller.toJSON();
@@ -86,5 +86,28 @@ public class SellerLogin {
             }
         }
         return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode()).toString()).build();
+    }*/
+
+    @PUT
+    @Path("updateinfo")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateSeller(String req, @HeaderParam("sellerAuthToken") String token) throws Exception {
+        Seller seller = TokenAuth.getSellerFromToken(token);
+        JSONObject reqJson = new JSONObject(req);
+        System.out.println(reqJson);
+        String str = reqJson.toString();
+
+        if(seller==null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status",Status.UNAUTHORIZED.getStatusCode()).toString()).build();
+        }
+
+        System.out.println("hello2");
+        int id = seller.getId();
+        System.out.println(id);
+        JSONObject jsonObject = seller.updateSeller(reqJson,id);
+        System.out.println("hello3");
+        return Response.status(Status.OK).entity(jsonObject.toString()).build();
+
     }
 }

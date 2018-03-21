@@ -9,6 +9,8 @@ import com.google.common.collect.ImmutableList;
 import com.ooad.web.model.ItemCategory;
 import com.ooad.web.model.ItemSubCategory;
 import com.ooad.web.utils.Database;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -95,4 +97,49 @@ public class ItemCategoryDao {
     }
 
 
+    public JSONObject createCategory(JSONObject re) {
+        final String category = re.getString("category");
+        JSONObject subCategory = re.getJSONObject("subcategory");
+        JSONArray subcategories = subCategory.getJSONArray("subcategory");
+
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("INSERT INTO categories(name, displayName) VALUES (?,?)",Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1,category);
+            ps.setString(2,category);
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            while(rs.next()){
+                int id = rs.getInt(1);
+                createSubCategory(subcategories,id);
+                con.close();
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void createSubCategory(JSONArray subCategories, int id) {
+        try {
+                Connection con = Database.getConnection();
+                PreparedStatement ps = null;
+                ps = con.prepareStatement("INSERT into subcategories(displayName, categoryId) VALUES (?,?) ");
+                for(int i=0;i<subCategories.length();i++) {
+                    ps.setString(1, subCategories.getString(i));
+                    ps.setInt(2, id);
+                    ps.addBatch();
+                }
+                ps.executeBatch();
+                con.close();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

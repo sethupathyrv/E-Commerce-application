@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: minal
-  Date: 19/2/18
-  Time: 9:05 PM
+  Date: 17/3/18
+  Time: 3:43 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -25,7 +25,7 @@
     <script src="../js/bootstrap-dropdownhover.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="../js/infoSeller.js"></script>
+    <script src="../js/updateInfoSeller.js"></script>
     <script src="../js/jquery.cookie.js"></script>
 
     <% Seller seller = (Seller) request.getAttribute("seller"); %>
@@ -78,47 +78,121 @@
 
 
     <%--............Form and button.............--%>
-
+    <form id="updateInfoSeller" action="#" method="post" enctype="multipart/form-data">
         <div class="col-md-6">
             <div class="a-section">
                 <div class="a-box">
                     <div class="a-box-inner a-padding-extra-large">
 
-                        <h1 class="a-spacing-small">Your Details</h1>
+                        <h1 class="a-spacing-small">Tell us about your business</h1>
 
                         <div class="a-row a-spacing-base">
 
-                            <div>Username : <%=seller.getUserName()%></div>
-                            <div>Email :  <%=seller.getEmailId()%></div>
-                            <div>Store Name :  <%=seller.getStoreName()%></div>
-                            <div>Mobile Number : <%=seller.getMobileNumber()%></div>
-                            <div>Street Address : <%=seller.getStreetAddress()%></div>
-                            <div>Landmark : <%=seller.getLandmark()%></div>
-                            <div>City : <%=seller.getCity()%></div>
-                            <div>State : <%=seller.getState()%></div>
-                            <div>Pincode : <%=seller.getPincode()%></div>
-                            <div>Country : <%=seller.getCountry()%></div>
+                            <label for="storeName" class="a-form-label">Store Name*</label>
 
-                        </div>
+                            <input type="text" maxlength="128" id="storeName" name="storename" tabindex="1"
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getStoreName()%>" required="true">
 
-                        <div class="a-section">
-                            <span id="continue" class="a-button a-button-span12 a-button-primary">
-                                <span class="a-button-inner">
-                                    <%--<a href="/jsp/updateInfoSeller.jsp">--%>
-                                    <a href="/sellerupdate">
-                                    <input tabindex="5" class="a-button-input" id="update" type="button" aria-labelledby="continue-announce">
-                                        <span id="continue-announce" class="a-button-text" aria-hidden="true">
-                                            Update
-                                        </span>
-                                     </a>
-                                </span>
-                            </span>
+
+                            <%--<label for="sel" class="a-form-label">Select Product Category</label>
+
+                            <select id="sel" name="productCategory" onchange="show(this)">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <p id="msg"></p>--%>
+
+                            <label for="mobileNumber" class="a-form-label">Mobile Number*</label>
+
+                            <input type="text" maxlength="128" id="mobileNumber" name="mobilenumber" tabindex="1"
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getMobileNumber()%>" required="true">
+
+
+
+                            <div class="a-divider a-divider-break"></div>
+
+                            <h3>Enter your address</h3>
+
+                            <label for="streetAddress" class="a-form-label">Street Address*</label>
+
+                            <input type="text" maxlength="128" id="streetAddress" name="streetaddress" tabindex="1"
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getStreetAddress()%>" required="true">
+
+
+                            <label for="landmark" class="a-form-label">Landmark*</label>
+
+                            <input type="text" maxlength="128" id="landmark" name="landmark" tabindex="1"
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getLandmark()%>" required="true">
+
+
+                            <label for="city" class="a-form-label">City*</label>
+
+                            <input type="text" maxlength="128" id="city" name="city" tabindex="1"
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getCity()%>" required="true">
+
+
+                            <label for="state" class="a-form-label">State*</label>
+
+                            <input type="text" maxlength="128" id="state" name="state" tabindex="1"
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getState()%>" required="true">
+
+                            <label for="pincode" class="a-form-label">Pincode*</label>
+
+                            <input type="text" maxlength="128" id="pincode" name="pincode" tabindex="1"
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getPincode()%>" required="true">
+
+
+                            <label for="country" class="a-form-label">Country*</label>
+
+                            <input type="text" maxlength="128" id="country" name="country" tabindex="1"
+                                   class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off"
+                                    placeholder="<%=seller.getCountry()%>" required="true">
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div class="a-section">
+                <span id="continue1" class="a-button a-button-span12 a-button-primary">
+                    <span class="a-button-inner">
+
+                        <input tabindex="5" class="a-button-input" id="submit" type="submit" aria-labelledby="continue1-announce">
+                            <span id="continue1-announce" class="a-button-text" aria-hidden="true">
+                                Submit
+                            </span>
+
+                    </span>
+                </span>
+            </div>
+
+            <div class="a-section">
+                <span id="continue2" class="a-button a-button-span12 a-button-primary">
+                    <span class="a-button-inner">
+                        <a href="/infoseller">
+                        <input tabindex="5" class="a-button-input" id="back" type="button" aria-labelledby="continue2-announce">
+                            <span id="continue2-announce" class="a-button-text" aria-hidden="true">
+                                Back
+                            </span>
+                        </a>
+                    </span>
+                </span>
+            </div>
+
+
+</div>
+
+
+
+
+
+    </form>
 </div>
 
 <%--..........To populate select dropdown using json file.........

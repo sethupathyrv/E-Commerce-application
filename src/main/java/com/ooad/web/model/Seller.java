@@ -6,9 +6,10 @@
 package com.ooad.web.model;
 
 import com.ooad.web.dao.ItemDao;
+import com.ooad.web.dao.SellerDao;
 import com.ooad.web.utils.Constants;
 import org.json.JSONObject;
-
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.io.*;
@@ -20,13 +21,29 @@ public class Seller {
     private String emailId;
     private String password;
     private boolean isEnabled;
+    private String storeName;
+    private int mobileNumber;
+    private String streetAddress;
+    private String landmark;
+    private String city;
+    private String state;
+    private int pincode;
+    private String country;
 
-    public Seller(int id, String userName, String emailId, String password, boolean isEnbaled) {
+    public Seller(int id, String userName, String emailId, String password, boolean isEnabled, String storeName, int mobileNumber, String streetAddress, String landmark, String city, String state, int pincode, String country) {
         this.id = id;
         this.userName = userName;
         this.emailId = emailId;
         this.password = password;
-        this.isEnabled = isEnbaled;
+        this.isEnabled = isEnabled;
+        this.storeName = storeName;
+        this.mobileNumber = mobileNumber;
+        this.streetAddress = streetAddress;
+        this.landmark = landmark;
+        this.city = city;
+        this.state = state;
+        this.pincode = pincode;
+        this.country = country;
     }
 
     @Override
@@ -36,7 +53,15 @@ public class Seller {
                 ", userName='" + userName + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", password='" + password + '\'' +
-                ", isEnbaled=" + isEnabled +
+                ", isEnabled=" + isEnabled +
+                ", storeName='" + storeName + '\'' +
+                ", mobileNumber=" + mobileNumber +
+                ", streetAddress='" + streetAddress + '\'' +
+                ", landmark='" + landmark + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", pincode=" + pincode +
+                ", country='" + country + '\'' +
                 '}';
     }
 
@@ -61,10 +86,83 @@ public class Seller {
         return isEnabled;
     }
 
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public int getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public int getPincode() {
+        return pincode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public void setMobileNumber(int mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setPincode(int pincode) {
+        this.pincode = pincode;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public JSONObject toJSON() {
         JSONObject sellerJsonObject = new JSONObject();
         sellerJsonObject.put("id", id);
         sellerJsonObject.put("username", userName);
+        sellerJsonObject.put("emailId", emailId);
+        sellerJsonObject.put("storeName", storeName);
+        sellerJsonObject.put("mobileNumber", mobileNumber);
+        sellerJsonObject.put("streetAddress", streetAddress);
+        sellerJsonObject.put("landmark", landmark);
+        sellerJsonObject.put("city", city);
+        sellerJsonObject.put("state", state);
+        sellerJsonObject.put("pincode", pincode);
+        sellerJsonObject.put("country", country);
         return sellerJsonObject;
     }
 
@@ -133,5 +231,33 @@ public class Seller {
         jsonObject.put("errors",errors);
         jsonObject.put("status", Response.Status.BAD_REQUEST.getStatusCode());
         return jsonObject;
+    }
+
+    public static Seller find(int id) {
+        SellerDao sellerDao = new SellerDao();
+        return sellerDao.getSeller(id);
+    }
+
+    /*public boolean save() {
+        System.out.println("reached model");
+        return new SellerDao().saveSeller(this);
+    }*/
+
+    public JSONObject updateSeller(JSONObject req, int id) {
+        Seller s = Seller.find(id);
+        String str = req.getString("storeName");
+        System.out.println(str);
+        s.setStoreName(req.getString("storeName"));
+        s.setMobileNumber(req.getInt("mobileNumber"));
+        s.setStreetAddress(req.getString("streetAddress"));
+        s.setLandmark(req.getString("landmark"));
+        s.setCity(req.getString("city"));
+        s.setState(req.getString("state"));
+        s.setPincode(req.getInt("pincode"));
+        s.setCountry(req.getString("country"));
+        System.out.println(s.getCountry());
+        SellerDao sellerDao = new SellerDao();
+        sellerDao.updateSeller(s);
+        return new JSONObject().put("status", Status.OK.getStatusCode());
     }
 }

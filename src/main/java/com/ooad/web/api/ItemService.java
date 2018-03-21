@@ -168,4 +168,20 @@ public class ItemService {
 //        System.out.println(resp);
         return Response.status(Status.OK).entity(resp2.toString()).build();
     }
+    @Path("addcategory")
+    @POST
+    @Consumes({MediaType.TEXT_PLAIN})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addCategory(String req,@HeaderParam("authToken") String token) throws Exception {
+        JSONObject re = new JSONObject(req);
+        User user = TokenAuth.getUserFromToken(token);
+        if (user == null) {
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        ItemCategoryDao itemCategoryDao = new ItemCategoryDao();
+        itemCategoryDao.createCategory(re);
+        return null;
+    }
+
 }

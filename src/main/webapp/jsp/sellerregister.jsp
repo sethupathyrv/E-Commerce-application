@@ -141,15 +141,80 @@
 
                             </div>
 
-
-                            <div class="a-section a-spacing-top-large a-text-left ap_mobile_number_fields">
+                            <hr>
+                            <%--<div class="a-section a-spacing-top-large a-text-left ap_mobile_number_fields">
                                 <div class="a-row">
                                     We will send you a text to verify your phone.
                                 </div>
                                 <div class="a-row">
                                     Message and Data rates may apply.
                                 </div>
+                            </div>--%>
+
+                            <h1 class="a-spacing-small">Tell us about your business</h1>
+
+                            <div class="a-row a-spacing-base">
+
+                                <label for="storeName" class="a-form-label">Store Name</label>
+
+                                <input type="text" maxlength="128" id="storeName" name="storename" tabindex="1"
+                                       class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+
+
+                                <%--<label for="sel" class="a-form-label">Select Product Category</label>
+
+                                <select id="sel" name="productCategory" onchange="show(this)">
+                                    <option value="">-- Select --</option>
+                                </select>
+                                <p id="msg"></p>--%>
+
+                                <label for="mobileNumber" class="a-form-label">Mobile Number</label>
+
+                                <input type="text" maxlength="128" id="mobileNumber" name="mobilenumber" tabindex="1"
+                                       class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+
+
+
+                                <div class="a-divider a-divider-break"></div>
+
+                                <h3>Enter your address</h3>
+
+                                <label for="streetAddress" class="a-form-label">Street Address</label>
+
+                                <input type="text" maxlength="128" id="streetAddress" name="streetaddress" tabindex="1"
+                                       class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+
+
+                                <label for="landmark" class="a-form-label">Landmark</label>
+
+                                <input type="text" maxlength="128" id="landmark" name="landmark" tabindex="1"
+                                       class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+
+
+                                <label for="city" class="a-form-label">City</label>
+
+                                <input type="text" maxlength="128" id="city" name="city" tabindex="1"
+                                       class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+
+
+                                <label for="state" class="a-form-label">State</label>
+
+                                <input type="text" maxlength="128" id="state" name="state" tabindex="1"
+                                       class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+
+                                <label for="pincode" class="a-form-label">Pincode</label>
+
+                                <input type="text" maxlength="128" id="pincode" name="pincode" tabindex="1"
+                                       class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+
+
+                                <label for="country" class="a-form-label">Country</label>
+
+                                <input type="text" maxlength="128" id="country" name="country" tabindex="1"
+                                       class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
+
                             </div>
+
 
                             <div class="a-section a-spacing-extra-large ap_mobile_number_fields">
                                     <span id="auth-continue"

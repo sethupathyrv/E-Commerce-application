@@ -80,6 +80,14 @@ public class Order {
             calculateItemsSubToatal();
         }
     }
+    public void setItemsSubTotal(int promotionApplied){
+        if(this.itemsSubToatal>0)
+            itemsSubToatal=itemsSubToatal-promotionApplied;
+        else {
+            calculateItemsSubToatal();
+            itemsSubToatal = itemsSubToatal - promotionApplied;
+        }
+    }
 
     private void calculateItemsSubToatal() {
         for (OrderItem oi: this.orderItems) {

@@ -28,12 +28,12 @@ public class AdminController extends HttpServlet {
                 }
             }
         }
-        if( user.getUserName() == "admin"){
+        if( user!=null && user.getEmailId().equals("admin@admin.com")){
             RequestDispatcher rd = request.getRequestDispatcher("jsp/admin.jsp");
             rd.forward(request,response );
         }
         else {
-            RequestDispatcher rd = request.getRequestDispatcher("jsp/headerAmazon.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request,response);
         }
     }

@@ -69,6 +69,7 @@
                         <li class="active"><a href="/infoseller">Seller Information </a></li>
                         <li><a href="/seller/add">Add Item</a></li>
                         <li><a href="#" id="sellerLogout"> Logout</a></li>
+                        <li><a href="/infoseller"> <%=seller.getUserName()%></a></li>
                     </ul>
                 </div>
             </div>

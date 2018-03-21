@@ -1,4 +1,7 @@
-<%@ page import="com.ooad.web.model.Item" %><%--
+<%@ page import="com.ooad.web.model.Item" %>
+<%@ page import="com.ooad.web.model.User" %>
+<%@ page import="com.ooad.web.utils.TokenAuth" %>
+<%@ page import="com.ooad.web.model.Seller" %><%--
   Created by IntelliJ IDEA.
   User: minal
   Date: 19/2/18
@@ -13,6 +16,15 @@
     <meta charset="UTF-8">
     <title>Sell on Amazon</title>
     <% Item item = (Item) request.getAttribute("item"); %>
+    <%Cookie[] cookies = request.getCookies();
+        Seller seller = null;
+        if(cookies != null){
+            for(Cookie cookie: cookies){
+                if(cookie.getName().equals("sellerAuthToken")){
+                    seller = TokenAuth.getSellerFromToken(cookie.getValue());
+                }
+            }
+        }%>
 </head>
 <body>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -65,6 +77,7 @@
                         <li><a href="/infoseller">Seller Information </a></li>
                         <li><a href="/seller/add">Add Item</a></li>
                         <li><a href="#" id="sellerLogout"> Logout</a></li>
+                        <li><a href="/infoseller"> <%=seller.getUserName()%></a></li>
                     </ul>
                 </div>
             </div>

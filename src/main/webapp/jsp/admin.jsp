@@ -26,9 +26,12 @@
     <meta charset="utf-8">
     <title dir="ltr">Admin</title>
 
-
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
     <link rel="stylesheet" href="../css/amazon1.css"/>
     <link rel="stylesheet" href="../css/amazon2.css"/>
+    <script src="../js/admin.js"></script>
+
     <!-- <link rel="stylesheet" href="../../images-na.ssl-images-amazon.com/images/G/01/AUIClients/CVFAssets-e91ba5c6e67c58c7f9c4c413fa67697feade389e._V2_.css#AUIClients/CVFAssets.secure.min" /> -->
 
 
@@ -77,7 +80,7 @@
             <div class="a-section auth-pagelet-container">
 
 
-                <form id="ap_register_form" name="register" method="post" action='register'
+                <form id="submitform" name="register" method="post" action=''
                       class="ap_ango_default auth-validate-form-moa auth-real-time-validation">
 
 
@@ -90,31 +93,40 @@
 
                             <div class="a-row a-spacing-base">
 
-                                <label for="ap_customer_name" class="a-form-label">
+                                <label for="category" class="a-form-label">
                                     Category
                                 </label>
 
-                                <input type="text" maxlength="50" id="ap_customer_name" autocomplete="off"
-                                       name="username" tabindex="1"
+                                <input  type="text" maxlength="50" id="category" autocomplete="off"
+                                       name="category" tabindex="1"
                                        class="a-input-text a-span12 auth-autofocus auth-required-field">
                             </div>
 
 
                             <div class="a-section a-spacing-base ap_email_fields">
-                                <div class="a-row a-spacing-micro">
-                                    <label for="ap_email" class="a-form-label">
-                                        Subcategory
-                                    </label>
-                                    <input type="email" maxlength="64" id="ap_email" name="email" tabindex="4"
-                                           class="a-input-text a-span12 auth-require-email-validaton"
-                                           data-validation-id="email">
+                                <div class="a-row a-spacing-micro" id="wrapper">
+
+                                    <br/>
+                                    <br>
+                                    <div class="a-section a-spacing-extra-large ap_mobile_number_fields">
+                                    <span id="auth-continue"
+                                          class="a-button a-button-span12 a-button-primary auth-requires-verify-modal"><span
+                                            class="a-button-inner"><input id="addfield" tabindex="8"
+                                                                          class="a-button-input" type="button"
+                                                                          aria-labelledby="auth-continue-announce"><span
+                                            id="auth-continue-announce" class="a-button-text" aria-hidden="true">
+          Add Subcategory
+        </span></span>
+                                    </span>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="a-section a-spacing-extra-large ap_mobile_number_fields">
                                     <span id="auth-continue"
                                           class="a-button a-button-span12 a-button-primary auth-requires-verify-modal"><span
-                                            class="a-button-inner"><input id="continue" tabindex="8"
+                                            class="a-button-inner"><input id="submit" tabindex="8"
                                                                           class="a-button-input" type="submit"
                                                                           aria-labelledby="auth-continue-announce"><span
                                             id="auth-continue-announce" class="a-button-text" aria-hidden="true">

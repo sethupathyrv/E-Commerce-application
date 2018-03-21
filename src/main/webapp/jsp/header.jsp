@@ -108,6 +108,7 @@
                 <a href="#">Amazon Pay</a>&nbsp;&nbsp;&nbsp;
                 <a href="/sellerlogin">Sell</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Customer Service</a> &nbsp;&nbsp;
+                <a href="/admin">admin</a> &nbsp;&nbsp;
             </div>
         </div>
         <div class="col-lg-4 col-md-3">

@@ -29,7 +29,7 @@ $(document).ready(function() {
         });
 
     function updateInfoResponse(response) {
-        if(response.status ===201){
+        if(response.status ===200){
             alert("Info Updated");
             window.location("/infoseller");
         }else if(response.status === 401){

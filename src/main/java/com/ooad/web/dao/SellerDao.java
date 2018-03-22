@@ -67,12 +67,12 @@ public class SellerDao {
                         rs.getString("password"),
                         rs.getBoolean("isEnabled"),
                         rs.getString("storeName"),
-                        rs.getInt("mobileNumber"),
+                        rs.getString("mobileNumber"),
                         rs.getString("streetAddress"),
                         rs.getString("landmark"),
                         rs.getString("city"),
                         rs.getString("state"),
-                        rs.getInt("pincode"),
+                        rs.getString("pincode"),
                         rs.getString("country")
                 );
             }
@@ -199,12 +199,12 @@ public class SellerDao {
                             "landmark = ? ,city = ? ,state = ?,pincode = ?,country = ? "+
                             " WHERE id = ?");
             ps.setString(1, seller.getStoreName());
-            ps.setInt(2, seller.getMobileNumber());
+            ps.setString(2, seller.getMobileNumber());
             ps.setString(3, seller.getStreetAddress());
             ps.setString(4, seller.getLandmark());
             ps.setString(5, seller.getCity());
             ps.setString(6, seller.getState());
-            ps.setInt(7, seller.getPincode());
+            ps.setString(7, seller.getPincode());
             ps.setString(8, seller.getCountry());
             ps.setInt(9,seller.getId());
             ps.executeUpdate();
@@ -228,12 +228,12 @@ public class SellerDao {
         final String password = rs.getString("password");
         final Boolean isEnabled = rs.getBoolean("isEnabled");
         final String storeName = rs.getString("storeName");
-        final int mobileNumber = rs.getInt("mobileNumber");
+        final String mobileNumber = rs.getString("mobileNumber");
         final String streetAddress = rs.getString("streetAddress");
         final String landmark = rs.getString("landmark");
         final String city = rs.getString("city");
         final String state = rs.getString("state");
-        final int pincode = rs.getInt("pincode");
+        final String pincode = rs.getString("pincode");
         final String country = rs.getString("country");
 
         return new Seller(id, userName, emailId, password, isEnabled, storeName, mobileNumber, streetAddress,

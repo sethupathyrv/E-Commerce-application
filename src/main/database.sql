@@ -102,6 +102,7 @@ create table Orders
   engine=InnoDB
 ;
 
+-- auto-generated definition
 CREATE TABLE Sellers
 (
   id            INT AUTO_INCREMENT
@@ -111,12 +112,12 @@ CREATE TABLE Sellers
   password      VARCHAR(255)           NOT NULL,
   isEnabled     TINYINT(1) DEFAULT '1' NULL,
   storeName     VARCHAR(255)           NULL,
-  mobileNumber  INT(10)                NULL,
+  mobileNumber  VARCHAR(10)            NULL,
   streetAddress VARCHAR(255)           NULL,
   landmark      VARCHAR(255)           NULL,
   city          VARCHAR(255)           NULL,
   state         VARCHAR(255)           NULL,
-  pincode       INT(6)                 NULL,
+  pincode       VARCHAR(6)             NULL,
   country       VARCHAR(255)           NULL,
   CONSTRAINT Sellers_id_uindex
   UNIQUE (id),

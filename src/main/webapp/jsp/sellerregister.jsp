@@ -170,7 +170,7 @@
 
                                 <label for="mobileNumber" class="a-form-label">Mobile Number</label>
 
-                                <input type="text" maxlength="128" id="mobileNumber" name="mobilenumber" tabindex="1"
+                                <input type="number" maxlength="128" id="mobileNumber" name="mobilenumber" tabindex="1"
                                        class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
 
 
@@ -204,7 +204,7 @@
 
                                 <label for="pincode" class="a-form-label">Pincode</label>
 
-                                <input type="text" maxlength="128" id="pincode" name="pincode" tabindex="1"
+                                <input type="number" maxlength="128" id="pincode" name="pincode" tabindex="1"
                                        class="a-input-text a-span12 auth-autofocus auth-required-field" autocomplete="off">
 
 

@@ -35,27 +35,29 @@ create table ItemDetails
   engine=InnoDB
 ;
 
-create table Items
+CREATE TABLE Items
 (
-  id int auto_increment
-    primary key,
-  name varchar(255) not null,
-  price float not null,
-  description varchar(1000) null,
-  sellerId int null,
-  offerId int null,
-  subCategoryId int null,
-  url varchar(255) null,
-  brand varchar(255) null,
-  height float null,
-  width float null,
-  quantity int null,
-  isEnabled tinyint(1) default '1' not null,
-  constraint Items_id_uindex
-  unique (id)
+  id            INT AUTO_INCREMENT
+    PRIMARY KEY,
+  name          VARCHAR(255)           NOT NULL,
+  price         FLOAT                  NOT NULL,
+  description   VARCHAR(1000)          NULL,
+  sellerId      INT                    NULL,
+  offerId       INT                    NULL,
+  subCategoryId INT                    NULL,
+  url           VARCHAR(255)           NULL,
+  brand         VARCHAR(255)           NULL,
+  height        FLOAT                  NULL,
+  width         FLOAT                  NULL,
+  quantity      INT                    NULL,
+  isEnabled     TINYINT(1) DEFAULT '1' NOT NULL,
+  itemBarcode   INT DEFAULT '0'        NULL,
+  CONSTRAINT Items_id_uindex
+  UNIQUE (id)
 )
-  engine=InnoDB
-;
+  ENGINE = InnoDB;
+
+
 
 create table Offers
 (

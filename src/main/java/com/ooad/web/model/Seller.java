@@ -22,15 +22,15 @@ public class Seller {
     private String password;
     private boolean isEnabled;
     private String storeName;
-    private int mobileNumber;
+    private String mobileNumber;
     private String streetAddress;
     private String landmark;
     private String city;
     private String state;
-    private int pincode;
+    private String pincode;
     private String country;
 
-    public Seller(int id, String userName, String emailId, String password, boolean isEnabled, String storeName, int mobileNumber, String streetAddress, String landmark, String city, String state, int pincode, String country) {
+    public Seller(int id, String userName, String emailId, String password, boolean isEnabled, String storeName, String mobileNumber, String streetAddress, String landmark, String city, String state, String pincode, String country) {
         this.id = id;
         this.userName = userName;
         this.emailId = emailId;
@@ -90,7 +90,7 @@ public class Seller {
         return storeName;
     }
 
-    public int getMobileNumber() {
+    public String getMobileNumber() {
         return mobileNumber;
     }
 
@@ -110,7 +110,7 @@ public class Seller {
         return state;
     }
 
-    public int getPincode() {
+    public String getPincode() {
         return pincode;
     }
 
@@ -122,7 +122,7 @@ public class Seller {
         this.storeName = storeName;
     }
 
-    public void setMobileNumber(int mobileNumber) {
+    public void setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
     }
 
@@ -142,7 +142,7 @@ public class Seller {
         this.state = state;
     }
 
-    public void setPincode(int pincode) {
+    public void setPincode(String pincode) {
         this.pincode = pincode;
     }
 
@@ -248,12 +248,12 @@ public class Seller {
         String str = req.getString("storeName");
         System.out.println(str);
         s.setStoreName(req.getString("storeName"));
-        s.setMobileNumber(req.getInt("mobileNumber"));
+        s.setMobileNumber(req.getString("mobileNumber"));
         s.setStreetAddress(req.getString("streetAddress"));
         s.setLandmark(req.getString("landmark"));
         s.setCity(req.getString("city"));
         s.setState(req.getString("state"));
-        s.setPincode(req.getInt("pincode"));
+        s.setPincode(req.getString("pincode"));
         s.setCountry(req.getString("country"));
         System.out.println(s.getCountry());
         SellerDao sellerDao = new SellerDao();

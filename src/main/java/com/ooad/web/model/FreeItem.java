@@ -20,7 +20,8 @@ public class FreeItem extends Item {
                 item.getItemDetails(),
                 item.getOffer(),
                 item.getSubCategory(),
-                item.getItemBarcode());
+                item.getItemBarcode(),
+                item.getItemColour());
     }
 
     @Override

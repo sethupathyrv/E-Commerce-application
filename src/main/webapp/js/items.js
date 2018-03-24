@@ -78,7 +78,7 @@ function displayItemCategory(response) {
         // $('#items').append('</div></div>');
         // $('#items').append('<div class="col-lg-8"><div id="itemDetails">');
         $('#items').append('<a href="#"><span id="productTitle" class="btn-link">'+response.items[i].name+'</span></a>'+' by '+'<a href="#" id="sellerName">'+response.items[i].seller.username+'</a>'
-            +'<div id="price">&#2352;<span id="currentPrice">'+response.items[i].price+'</span></div>'+'<div id="description>"><span>'+response.items[i].description+'</span></div>');
+            +'<div id="price">&#2352;<span id="currentPrice">'+response.items[i].price+'</span></div>'+'<div id="description>"><span>'+response.items[i].description+'</span></div>'+'<div id="productid"><span>'+response.items[i].id+'</span></div>');
         if (response.items[i].quantity >= 1){
             $('#items').append('<div id="availability"><span id="avail">'+'In stock'+'</span></div>');
         }
@@ -97,12 +97,13 @@ function displayItemCategory(response) {
 }
 
 function checkAndSubmit() {
-    if ((document.getElementById('minimum').value > 0) && (document.getElementById('maximum').value > 0)) {
+    if ((document.getElementById('minimum').value > 0) && (document.getElementById('maximum').value > 0) && (document.getElementById('colour').value)) {
         alert('Filter Applied');
         // console.log('hi');
         var formData = {
             'min': $("#minimum").val(),
             'max': $("#maximum").val(),
+            'color':$("#colour").val(),
             'json': JSON.stringify(resp)
         };
         // console.log(formData);
@@ -146,7 +147,7 @@ function clearFilter() {
     $('#items').empty();
     for (var i = 0; i < resp.items.length; i++) {
         // $('#items').append('<div class="col-lg-4"><div id="itemImage">');
-        $('#items').append('<img id = "prodImage" width="150"  src="'+resp.items[i].url+'" height="150" class = "img-responsive" alt="ItemName">');
+        $('#items').append('<img id = "prodImage" width="150"  src="'+resp.items[i].url+'" height="150" class = "img-responsive" alt="ItemName" style="display:inline-block">');
         // $('#items').append('</div></div>');
         // $('#items').append('<div class="col-lg-8"><div id="itemDetails">');
         $('#items').append('<a href="#"><span id="productTitle" class="btn-link">'+resp.items[i].name+'</span></a>'+' by '+'<a href="#" id="sellerName">'+resp.items[i].seller.username+'</a>'

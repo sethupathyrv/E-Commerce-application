@@ -42,6 +42,11 @@
             <input class="form-control" type="number" name="maximum" id="maximum">
         </span>
         <br>
+            <span id="color">
+            <label>Colour:</label>
+            <input class="form-control" type="text" name="maximum" id="colour">
+            </span>
+            <br>
         </div>
         <div>
             <input id="clearFilter" type="button" class="btn1" value="Clear Filter" onclick="clearFilter()">

@@ -160,6 +160,7 @@ public class ItemService {
         JSONObject re = new JSONObject(req);
         int max = re.getInt("max");
         int min = re.getInt("min");
+        String clr=re.getString("color");
         String response = re.getString("json");
         JSONObject resp = new JSONObject(response);
 //        JSONObject resp = re.getJSONObject("json");
@@ -171,7 +172,8 @@ public class ItemService {
 //            JSONObject json = new JSONObject(items.getString(i));
             JSONObject json = (JSONObject) items.get(i);
             int price = json.getInt("price");
-            if (min <= price && price <= max){
+            String itemcolour=json.getString("itemColour");
+            if ((min <= price && price <= max) && clr.equals(itemcolour)){
                 items_new.put(json);
             }
 //            System.out.println(items_new);

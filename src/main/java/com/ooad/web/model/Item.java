@@ -28,11 +28,12 @@ public class Item {
     private final ItemSubCategory subCategory;
     private JSONArray itemDetails;
     private int itemBarcode;
+    private String itemColour;
 
 
     public Item(int id, String name, float price, String url, int quantity, Seller seller,
                 String description, String brand, float height, float width, JSONArray itemDetails,
-                Offer offer, ItemSubCategory subCategory,int itemBarcode) {
+                Offer offer, ItemSubCategory subCategory,int itemBarcode, String itemColour) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -47,6 +48,7 @@ public class Item {
         this.itemDetails = itemDetails;
         this.offer = offer;
         this.subCategory=subCategory;
+        this.itemColour=itemColour;
     }
 
     public static ArrayList<Item> getLastFive() {
@@ -144,6 +146,10 @@ public class Item {
         return itemBarcode;
     }
 
+    public String getItemColour() {
+        return itemColour;
+    }
+
     public void setOffer(Offer offer) {
         this.offer = offer;
     }
@@ -170,6 +176,7 @@ public class Item {
                 ", subCategory=" + subCategory +
                 ", itemDetails=" + itemDetails +
                 ", itemBarcode=" + itemBarcode +
+                ", itemColour=" + itemColour +
                 '}';
     }
 
@@ -202,6 +209,7 @@ public class Item {
         itemJsonObject.put("itemDetails",this.itemDetails);
         itemJsonObject.put("SubCategory",subCategory.toJSON());
         itemJsonObject.put("itemBarcode",this.itemBarcode);
+        itemJsonObject.put("itemColour",this.itemColour);
         return itemJsonObject;
     }
 

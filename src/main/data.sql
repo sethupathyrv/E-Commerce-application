@@ -35,4 +35,4 @@ INSERT INTO amazon.SubCategories (id, displayName, categoryId, isEnabled) VALUES
 INSERT INTO amazon.SubCategories (id, displayName, categoryId, isEnabled) VALUES (29, 'Others', 4, 1);
 INSERT INTO amazon.SubCategories (id, displayName, categoryId, isEnabled) VALUES (30, 'Others', 5, 1);
 INSERT INTO amazon.SubCategories (id, displayName, categoryId, isEnabled) VALUES (31, 'Furniture', 5, 1);
-INSERT INTO amazon.users (id, userName, emailId, password, isEnabled, defaultAddressId) VALUES (3, 'admin', 'admin@admin.com', '123', 1, -1);
+INSERT INTO amazon.Users (id, userName, emailId, password, isEnabled, defaultAddressId) VALUES (3, 'admin', 'admin@admin.com', '123', 1, -1);

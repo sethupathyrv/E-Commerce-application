@@ -137,7 +137,7 @@
                             <div class="a-span6 a-column a-span-last">
                                 <div data-action="checkout-delete-address" class="a-declarative a-button a-button-small a-button-span12  deletebutton">
                                         <span class="a-button-inner">
-                <a id="delete" class="a-button-text" href="/gp/buy/addressselect/handlers/continue.html/ref=ox_shipaddress_delete_addr_1?ie=UTF8&action=delete&addressID=onpptwoplip&enableDeliveryPreferences=1&fromAnywhere=0&numberOfDistinctItems=1&purchaseId=404-1367193-3314737&requestToken=" data-testid="">
+                <a id="delete<%=u.getId()%>" class="a-button-text" href="#" data-testid="">
                   Delete<span class="screenreader-context-span"> address <span class="aok-offscreen screenreader-context-span screenreader-address-span"></span></span>
                                         </a>
                                         </span>

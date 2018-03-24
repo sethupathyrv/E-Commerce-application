@@ -21,8 +21,26 @@ $(document).ready(function () {
                 success: deliverAddressResponse
             });
         }
-
     });
+
+    jQuery('a').click(function (event) {
+        var id = $(this).attr("id");
+        // console.log(id[id.length-1]);
+        if(id.indexOf("delete")>=0){
+            console.log(id[id.length-1]);
+            var id = id[id.length-1];
+            $.ajax({
+                type:'DELETE',
+                url:'/api/user/address',
+                cache: false,
+                headers:{
+                    'authToken':$.cookie('authToken')
+                },
+                success: deleteAddressResponse
+            });
+        }
+    });
+
     $("#addAddressForm").submit(function (event) {
         event.preventDefault();
         var jsonData ={
@@ -53,7 +71,7 @@ $(document).ready(function () {
 function deliverAddressResponse(response) {
     console.log(response);
     if(response.status ===200){
-        alert("Item added");
+        alert("Address added");
 
         var orderid = response.order.id;
         window.location.replace("/order?id="+orderid);
@@ -75,6 +93,15 @@ function addAddressResponse(response) {
     console.log(response);
 }
 
-
+function deleteAddressResponse (response) {
+    console.log(response);
+    if(response.status ===200){
+        alert("Address deleted");
+        location.reload();
+    }else if(response.status === 401){
+        window.location("/login");
+    }
+    console.log(response);
+}
 });
 

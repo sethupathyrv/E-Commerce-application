@@ -31,27 +31,32 @@ function updateURLParameter(url, param, paramVal){
     var rows_txt = temp + "" + param + "=" + paramVal;
     return baseURL + "?" + newAdditionalURL + rows_txt;
 };
+var resp= new Object();
+function sortResults(prop, asc) {
+    resp.items = resp.items.sort(function(a, b) {
+        if (asc) {
+            return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+        } else {
+            return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+        }
+    });
+}
 
+function sort(){
+    if($('#sort').val()!="000") {
+        if($('#sort').val()=="price:asc"){
+            sortResults("price",true);
+        }else if($('#sort').val()=="price:dec"){sortResults("price",false);}
 
+    displayItemCategory(resp);
+    }
+
+}
 $(document).ready(function() {
     var category = getUrlParameter('category');
     var subcategory = getUrlParameter('subcategory');
     var sortby = getUrlParameter('sortby');
-    $('#sort').change(function () {
-        var url;
-        if($('#sort').val()!="000") {
-            if(document.location.href.localeCompare('sortby')  ){
-                if($('#sort').val()=='price:dec')
-                    url = updateURLParameter(document.location.href,'sortby','price:dec');
-                else
-                    url = updateURLParameter(document.location.href,'sortby','price:asc');
-            }
-            else {
-                url = document.location.href + "&sortby=" + $('#sort').val();
-            }
-            document.location = url;
-        }
-    });
+
     console.log(category);
     console.log(subcategory);
     console.log(sortby);
@@ -67,11 +72,11 @@ $(document).ready(function() {
 
 });
 
-var resp = new Object();
 
 function displayItemCategory(response) {
     console.log(response);
     resp = response;
+    $('#items').empty();
     for (var i = 0; i < response.items.length; i++) {
         // $('#items').append('<div class="col-lg-4"><div id="itemImage">');
         $('#items').append('<img id = "prodImage" width="150"  src="'+response.items[i].url+'" height="150" class = "img-responsive" alt="ItemName">');
@@ -123,6 +128,7 @@ function checkAndSubmit() {
 
 function displayItemCategoryFilter(response) {
     console.log(response);
+    resp=response;
     $('#items').empty();
     for (var i = 0; i < response.items.length; i++) {
         // $('#items').append('<div class="col-lg-4"><div id="itemImage">');

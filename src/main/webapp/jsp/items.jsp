@@ -18,16 +18,20 @@
 <body>
 <%@include file="header.jsp" %>
 <div id="output" class="container-fluid">
-    <div id="sortColumn" class="col-lg-3" onchange="checkAndSubmit()">
+    <div id="sortColumn" class="col-lg-3" >
         <span class="dropdown">
             <label>Sort By:</label>
             <select id="sort">
-                <option value="1">Price</option>
+                <option value="000">-Sort by-</option>
+                <option value="price:asc">Price (low to high)</option>
+                <option value="price:dec">Price (high to low)</option>
+
                 <%--<option value="2">Weight</option>--%>
             </select>
         </span>
         <br>
         <br>
+        <div onchange="checkAndSubmit()">
         <span id="min">
             <label>Minimum Price:</label>
             <input class="form-control" type="number" name="minimum" id="minimum">
@@ -38,6 +42,7 @@
             <input class="form-control" type="number" name="maximum" id="maximum">
         </span>
         <br>
+        </div>
         <div>
             <input id="clearFilter" type="button" class="btn1" value="Clear Filter" onclick="clearFilter()">
         </div>

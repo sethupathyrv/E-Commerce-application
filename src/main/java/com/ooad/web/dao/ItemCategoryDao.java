@@ -99,27 +99,37 @@ public class ItemCategoryDao {
 
     public JSONObject createCategory(JSONObject re) {
         final String category = re.getString("category");
+
         JSONObject subCategory = re.getJSONObject("subcategory");
         JSONArray subcategories = subCategory.getJSONArray("subcategory");
+        ItemCategoryDao itemCategoryDao = new ItemCategoryDao();
+        ArrayList<ItemCategory> categories = (ArrayList<ItemCategory>) itemCategoryDao.getAllCategories();
+        for(ItemCategory itemCategory:categories){
+            if(itemCategory.getDisplayName().equals(category)) {
+                createSubCategory(subcategories, itemCategory.getId());
+                return null;
+            }
+        }
 
-        try {
-            Connection con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO categories(name, displayName) VALUES (?,?)",Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1,category);
-            ps.setString(2,category);
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            while(rs.next()){
-                int id = rs.getInt(1);
-                createSubCategory(subcategories,id);
-                con.close();
+            try {
+                Connection con = Database.getConnection();
+                PreparedStatement ps = con.prepareStatement("INSERT INTO categories(name, displayName) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, category);
+                ps.setString(2, category);
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    createSubCategory(subcategories, id);
+                    con.close();
+                }
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 

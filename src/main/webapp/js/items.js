@@ -12,16 +12,53 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+function updateURLParameter(url, param, paramVal){
+    var newAdditionalURL = "";
+    var tempArray = url.split("?");
+    var baseURL = tempArray[0];
+    var additionalURL = tempArray[1];
+    var temp = "";
+    if (additionalURL) {
+        tempArray = additionalURL.split("&");
+        for (var i=0; i<tempArray.length; i++){
+            if(tempArray[i].split('=')[0] != param){
+                newAdditionalURL += temp + tempArray[i];
+                temp = "&";
+            }
+        }
+    }
+
+    var rows_txt = temp + "" + param + "=" + paramVal;
+    return baseURL + "?" + newAdditionalURL + rows_txt;
+};
+
 
 $(document).ready(function() {
     var category = getUrlParameter('category');
     var subcategory = getUrlParameter('subcategory');
+    var sortby = getUrlParameter('sortby');
+    $('#sort').change(function () {
+        var url;
+        if($('#sort').val()!="000") {
+            if(document.location.href.localeCompare('sortby')  ){
+                if($('#sort').val()=='price:dec')
+                    url = updateURLParameter(document.location.href,'sortby','price:dec');
+                else
+                    url = updateURLParameter(document.location.href,'sortby','price:asc');
+            }
+            else {
+                url = document.location.href + "&sortby=" + $('#sort').val();
+            }
+            document.location = url;
+        }
+    });
     console.log(category);
     console.log(subcategory);
+    console.log(sortby);
 
     $.ajax({
         type:'GET',
-        url:'/api/item/'+category+'/'+subcategory,
+        url:'/api/item/'+category+'/'+subcategory+'/'+sortby,
         dataType:"json",
         contentType:"text/plain",
         cache: false,

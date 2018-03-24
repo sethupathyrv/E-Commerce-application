@@ -31,10 +31,10 @@ $(document).ready(function() {
     function updateInfoResponse(response) {
         if(response.status ===200){
             alert("Info Updated");
-            window.location("/infoseller");
+            window.location.replace("/infoseller");
         }else if(response.status === 401){
             alert("Not authorized");
-            window.location("/sellerlogin");
+            window.location.replace("/sellerlogin");
         }
         //console.log(response);
         alert("Not Updated");

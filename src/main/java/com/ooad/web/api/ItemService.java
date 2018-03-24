@@ -22,6 +22,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 @Path("/item")
 public class ItemService {
@@ -89,17 +91,36 @@ public class ItemService {
         return Response.status(Status.OK).entity(j.toString()).build();
     }
 
-    @Path("/{category}/{subcategory}")
+    @Path("/{category}/{subcategory}/{sortby}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getItemsfromCategory(@PathParam("category") String category,@PathParam("subcategory") String subcategory) {
+    public Response getItemsfromCategory(@PathParam("category") String category,@PathParam("subcategory") String subcategory,@PathParam("sortby") String sortby) {
 
         String CategoryName = category;
         String SubCategoryName = subcategory;
-        ArrayList<Item> items = Item.getItemsfromCategory(CategoryName,SubCategoryName);
+        String SortBy = sortby;
         final JSONArray j = new JSONArray();
+        ArrayList<Item> items = Item.getItemsfromCategory(CategoryName, SubCategoryName);
+        if(sortby.equals("price:dec")){
+            Collections.sort(items, new Comparator<Item>() {
+                @Override
+                public int compare(Item item1, Item item2) {
+                    return (int) (item2.getPrice()-item1.getPrice());
+                }
+            });
+
+        }
+        else if (sortby.equals("price:asc")){
+            Collections.sort(items, new Comparator<Item>() {
+                @Override
+                public int compare(Item item1, Item item2) {
+                    return (int) (item1.getPrice()-item2.getPrice());
+                }
+            });
+
+        }
         for (Item item : items) {
-            j.put(item.toJSON());
+                j.put(item.toJSON());
         }
         return Response.status(Status.OK).entity(new JSONObject().put("items", j).toString()).build();
     }

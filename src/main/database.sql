@@ -35,27 +35,29 @@ create table ItemDetails
   engine=InnoDB
 ;
 
-create table Items
+CREATE TABLE Items
 (
-  id int auto_increment
-    primary key,
-  name varchar(255) not null,
-  price float not null,
-  description varchar(1000) null,
-  sellerId int null,
-  offerId int null,
-  subCategoryId int null,
-  url varchar(255) null,
-  brand varchar(255) null,
-  height float null,
-  width float null,
-  quantity int null,
-  isEnabled tinyint(1) default '1' not null,
-  constraint Items_id_uindex
-  unique (id)
+  id            INT AUTO_INCREMENT
+    PRIMARY KEY,
+  name          VARCHAR(255)           NOT NULL,
+  price         FLOAT                  NOT NULL,
+  description   VARCHAR(1000)          NULL,
+  sellerId      INT                    NULL,
+  offerId       INT                    NULL,
+  subCategoryId INT                    NULL,
+  url           VARCHAR(255)           NULL,
+  brand         VARCHAR(255)           NULL,
+  height        FLOAT                  NULL,
+  width         FLOAT                  NULL,
+  quantity      INT                    NULL,
+  isEnabled     TINYINT(1) DEFAULT '1' NOT NULL,
+  itemBarcode   INT DEFAULT '0'        NULL,
+  CONSTRAINT Items_id_uindex
+  UNIQUE (id)
 )
-  engine=InnoDB
-;
+  ENGINE = InnoDB;
+
+
 
 create table Offers
 (
@@ -100,21 +102,31 @@ create table Orders
   engine=InnoDB
 ;
 
-create table Sellers
+-- auto-generated definition
+CREATE TABLE Sellers
 (
-  id int auto_increment
-    primary key,
-  userName varchar(255) not null,
-  emailId varchar(255) not null,
-  password varchar(255) not null,
-  isEnabled tinyint(1) default '1' null,
-  constraint Sellers_id_uindex
-  unique (id),
-  constraint Sellers_emailId_uindex
-  unique (emailId)
+  id            INT AUTO_INCREMENT
+    PRIMARY KEY,
+  userName      VARCHAR(255)           NOT NULL,
+  emailId       VARCHAR(255)           NOT NULL,
+  password      VARCHAR(255)           NOT NULL,
+  isEnabled     TINYINT(1) DEFAULT '1' NULL,
+  storeName     VARCHAR(255)           NULL,
+  mobileNumber  VARCHAR(10)            NULL,
+  streetAddress VARCHAR(255)           NULL,
+  landmark      VARCHAR(255)           NULL,
+  city          VARCHAR(255)           NULL,
+  state         VARCHAR(255)           NULL,
+  pincode       VARCHAR(6)             NULL,
+  country       VARCHAR(255)           NULL,
+  CONSTRAINT Sellers_id_uindex
+  UNIQUE (id),
+  CONSTRAINT Sellers_emailId_uindex
+  UNIQUE (emailId)
 )
-  engine=InnoDB
-;
+  ENGINE = InnoDB;
+
+
 
 create table UserAddresses
 (

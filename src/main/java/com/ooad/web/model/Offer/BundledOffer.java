@@ -17,7 +17,17 @@ public class BundledOffer extends Offer{
 
     @Override
     public int applyOffer(CartItem c, Cart cart) {
-        return 0;
+     if(c.isOfferApplied()){
+         return 0;
+     }else {
+         CartItem freeCartItem = new CartItem(0,freeItem,1,true);
+         cart.addCartItem(freeCartItem);
+         return 0;
+     }
+    }
+
+    public FreeItem getFreeItem() {
+        return freeItem;
     }
 
     @Override

@@ -81,7 +81,7 @@
                         <tbody class="totalCost">
                         <tr>
                             <td id="c1">Items:</td>
-                            <td>&#2352; <%=order.getItemsSubToatal()%></td>
+                            <td>&#2352; <%=order.grandTotal()%></td>
                         </tr>
                         <tr>
                             <td id="c2">Delivery:</td>

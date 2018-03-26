@@ -1,6 +1,7 @@
 package com.ooad.web.model;
 
 import com.ooad.web.dao.*;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.json.JSONObject;
 
 import javax.json.JsonObject;
@@ -154,7 +155,9 @@ public class User {
                             .put("error", "Cant create a cart");
                 }
             }
+
             o.setOrderItems(orderItems);
+            o.setItemsSubTotal(cart.getPromotionApplied());
             o.setOrderStatus(OrderStatus.PLACED);
             o.setShippingCharges(0);
             o.save();
@@ -271,10 +274,23 @@ public class User {
         Transaction transaction = null;
         UserDao userDao = new UserDao();
         UserAccount userAccount = userDao.getUserAccountFromId(id);
+        UserAccount amazonAccount = userDao.getUserAccountFromId(2);
+        int currentAmount = amazonAccount.getAmount();
         if(order.grandTotal()<= userAccount.getAmount()){
             transaction = transactionDao.createTransaction(order,userAccount,1);
             userAccount.setAmount(userAccount.getAmount()-order.grandTotal());
             userAccount.save();
+            amazonAccount.setAmount(currentAmount+order.grandTotal());
+            amazonAccount.save();
+            ArrayList<OrderItem> orderItems = (ArrayList<OrderItem>) order.getOrderItems();
+            ItemDao itemDao = new ItemDao();
+            for(OrderItem orderItem: orderItems){
+                int id = orderItem.getItem().getId();
+                Item item = itemDao.getItembyId(id);
+                item.setQuantity(item.getQuantity()-orderItem.getQuantity());
+                item.save();
+            }
+
         }else{
             transaction = transactionDao.createTransaction(order,userAccount,0);
         }

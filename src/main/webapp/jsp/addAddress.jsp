@@ -47,6 +47,8 @@
                         <label for="landmark" class="a-form-label">landmark</label>
                         <input class="form-control" type="text" name="landmark" id="landmark"/>
 
+                        <label for="city" class="a-form-label">city</label>
+                        <input class="form-control" type="text" name="city" id="city" autocomplete="off" />
                         <label for="pincode" class="a-form-label">city</label>
                         <input class="form-control" type="text" name="city" id="city" />
 

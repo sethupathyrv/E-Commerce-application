@@ -6,7 +6,6 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
     for (i = 0; i < sURLVariables.length; i++) {
         sParameterName = sURLVariables[i].split('=');
-
         if (sParameterName[0] === sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
@@ -90,12 +89,6 @@ function displayItemCategory(response) {
         }
         $('#items').append('<hr>')
     }
-    // console.log(response.items[0].name);
-    // if(response.status ===200){
-    //     $('#output').append(response);
-    // }else if(response.status === 401){
-    // }else if(response.status === 400){
-    // }
 }
 
 function checkAndSubmit() {
@@ -138,6 +131,7 @@ function displayItemCategoryFilter(response) {
 }
 
 function clearFilter() {
+
     $('#items').empty();
     for (var i = 0; i < orig.items.length; i++) {
         $('#items').append('<img id = "prodImage" width="150"  src="'+orig.items[i].url+'" height="150" class = "img-responsive" alt="ItemName">');

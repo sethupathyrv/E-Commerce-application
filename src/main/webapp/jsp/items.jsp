@@ -49,22 +49,9 @@
     </div>
     <div class="col-lg-9">
         <div class="row" id="items">
-            <%--<div class="col-lg-4">--%>
-                <%--<div id="itemImage">--%>
-                    <%--<img id = "prodImage" width="150"  src="/images/watch.jpg" height="150" class = "img-responsive" alt="watch">--%>
-                <%--</div>--%>
-            <%--</div>--%>
-            <%--<div class="col-lg-8">--%>
-                <%--<div id="itemDetails">--%>
-                    <%--<a href="#"><span id="productTitle" class="btn-link">Harsha</span></a> by <a href="#" id="sellerName">Sandeep</a>--%>
-                    <%--<div id="Price">&#2352;<span id="currentPrice">100</span></div>--%>
-                    <%--<div id="availability"><span id="avail">In stock</span></div>--%>
-                <%--</div>--%>
-            <%--</div>--%>
         </div>
     </div>
 </div>
-<%--<%=item.toString()%>--%>
 <%@include file="footer.jsp" %>
 </body>
 </html>

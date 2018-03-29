@@ -50,15 +50,15 @@ public class Order {
         return os;
     }
 
-    public void generateInvoice(){
+    public void generateInvoice() {
         //TODO generate invoice.
     }
 
-    public int totalItems(){
+    public int totalItems() {
         return this.orderItems.size();
     }
 
-    public int grandTotal(){
+    public int grandTotal() {
         return this.shippingCharges + this.itemsSubToatal;
     }
 
@@ -76,13 +76,14 @@ public class Order {
 
     public void setOrderItems(Collection<OrderItem> orderItems) {
         this.orderItems = orderItems;
-        if(this.itemsSubToatal == 0) {
+        if (this.itemsSubToatal == 0) {
             calculateItemsSubToatal();
         }
     }
-    public void setItemsSubTotal(int promotionApplied){
-        if(this.itemsSubToatal>0)
-            itemsSubToatal=itemsSubToatal-promotionApplied;
+
+    public void setItemsSubTotal(int promotionApplied) {
+        if (this.itemsSubToatal > 0)
+            itemsSubToatal = itemsSubToatal - promotionApplied;
         else {
             calculateItemsSubToatal();
             itemsSubToatal = itemsSubToatal - promotionApplied;
@@ -90,8 +91,8 @@ public class Order {
     }
 
     private void calculateItemsSubToatal() {
-        for (OrderItem oi: this.orderItems) {
-            itemsSubToatal += oi.getItem().getPrice()*oi.getQuantity();
+        for (OrderItem oi : this.orderItems) {
+            itemsSubToatal += oi.getItem().getPrice() * oi.getQuantity();
         }
     }
 
@@ -115,16 +116,16 @@ public class Order {
         return new OrderDao().saveOrder(this);
     }
 
-    public JSONObject toJSON(){
+    public JSONObject toJSON() {
         JSONObject j = new JSONObject();
-        j.put("id",this.id);
-        j.put("user",this.user);
+        j.put("id", this.id);
+        j.put("user", this.user);
         JSONArray ja = new JSONArray();
-        for (OrderItem oi: this.orderItems) {
+        for (OrderItem oi : this.orderItems) {
             ja.put(oi.toJSON());
         }
-        j.put("orderItems",ja);
-        j.put("deliveryAddress",this.deliveryAddress.toJSON() );
+        j.put("orderItems", ja);
+        j.put("deliveryAddress", this.deliveryAddress.toJSON());
         return j;
     }
 

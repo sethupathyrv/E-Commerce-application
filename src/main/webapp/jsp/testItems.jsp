@@ -21,14 +21,25 @@
 <div class="container-fluid">
     <div class="row col-sm-2 filter">
         <div class="row"><h4 class="filterQuantifier pull-left">Price</h4></div>
-        <div class="row pull-left">
+        <div class="row priceInputRow pull-left">
             <input type="text" class="col-sm-3 filterInput" id="minPrice" placeholder="Min" maxlength="9"
                    name="minPrice">
             <input type="text" class="col-sm-3 filterInput" id="maxPrice" placeholder="Max" maxlength="9"
                    name="maxPrice">
-            <button class="pull-right filterButton" id="priceFilterButton" onclick="applyPriceFilter()">Go</button>
+            <button class="filterButton" id="priceFilterButton" onclick="applyPriceFilter()">Go</button>
         </div>
-
+        <br><br>
+        <div class="row">
+            <h4 class="filterQuantifier pull-left">Sort By</h4>
+        </div>
+        <div class="row">
+            <select id="sort" onchange="sort()">
+                <option value="000">-Sort by-</option>
+                <option value="price:asc">Price (low to high)</option>
+                <option value="price:dec">Price (high to low)</option>
+            </select>
+        </div>
+        <div class="row"><a class="btn" onclick="clearFilter()">Clear Filters</a></div>
     </div>
     <div id="items" class="col-sm-10">
 

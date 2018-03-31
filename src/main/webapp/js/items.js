@@ -29,7 +29,7 @@ function updateURLParameter(url, param, paramVal){
 
     var rows_txt = temp + "" + param + "=" + paramVal;
     return baseURL + "?" + newAdditionalURL + rows_txt;
-};
+}
 var resp = new Object();
 function sortResults(prop, asc) {
     resp.items = resp.items.sort(function(a, b) {

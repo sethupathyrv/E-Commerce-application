@@ -10,6 +10,10 @@
     line-height: 18px;
 }
 
+.filter .priceInputRow {
+    height: 31px;
+}
+
 .filter .filterInput {
     padding: 3px 7px 3px 18px;
     width:65px;

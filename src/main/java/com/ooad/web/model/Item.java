@@ -174,12 +174,8 @@ public class Item {
     }
 
     @Override
-    public boolean equals(Object o){
-        if (!(o instanceof Item)){
-            return false;
-        } else {
-            return this.id == ((Item) o).getId();
-        }
+    public boolean equals(Object o) {
+        return o instanceof Item && this.id == ((Item) o).getId();
     }
 
     public JSONArray getItemDetails() {
@@ -202,6 +198,7 @@ public class Item {
         itemJsonObject.put("itemDetails",this.itemDetails);
         itemJsonObject.put("SubCategory",subCategory.toJSON());
         itemJsonObject.put("itemBarcode",this.itemBarcode);
+        itemJsonObject.put("offer",this.offer.toJSON());
         return itemJsonObject;
     }
 

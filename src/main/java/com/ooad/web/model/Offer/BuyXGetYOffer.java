@@ -2,6 +2,7 @@ package com.ooad.web.model.Offer;
 
 import com.ooad.web.model.Cart;
 import com.ooad.web.model.CartItem;
+import org.json.JSONObject;
 
 public class BuyXGetYOffer extends Offer {
     private int x;
@@ -44,5 +45,12 @@ public class BuyXGetYOffer extends Offer {
     @Override
     public int getOfferCode() {
         return 203;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        return new JSONObject().put("x",getX() )
+                .put("y",getY() )
+                .put("offerCode",getOfferCode());
     }
 }

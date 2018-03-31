@@ -104,6 +104,18 @@ public class ItemService {
         return Response.status(Status.OK).entity(new JSONObject().put("items", j).toString()).build();
     }
 
+    @Path("/{category}/{subCategory}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getItemsfromCategory(@PathParam("category") String category,@PathParam("subCategory") String subCategory) {
+        final JSONArray j = new JSONArray();
+        ArrayList<Item> items = Item.getItemsfromCategory(category, subCategory);
+        for (Item item : items) {
+            j.put(item.toJSON());
+        }
+        return Response.status(Status.OK).entity(new JSONObject().put("items", j).toString()).build();
+    }
+
     @Path("/getcategories")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -139,8 +151,7 @@ public class ItemService {
         JSONObject re = new JSONObject(req);
         int max = re.getInt("max");
         int min = re.getInt("min");
-        String response = re.getString("json");
-        JSONObject resp = new JSONObject(response);
+        JSONObject resp = re.getJSONObject("data");
         JSONArray items = resp.getJSONArray("items");
         JSONArray items_new = new JSONArray();
         for (int i = 0; i < items.length(); i++) {

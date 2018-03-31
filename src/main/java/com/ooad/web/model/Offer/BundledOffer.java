@@ -5,6 +5,7 @@ import com.ooad.web.model.Cart;
 import com.ooad.web.model.CartItem;
 import com.ooad.web.model.FreeItem;
 import com.ooad.web.model.Item;
+import org.json.JSONObject;
 
 public class BundledOffer extends Offer{
 
@@ -33,5 +34,11 @@ public class BundledOffer extends Offer{
     @Override
     public int getOfferCode() {
         return 205;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        return new JSONObject().put("offerCode",getOfferCode())
+                .put("freeItem","freeItem");
     }
 }

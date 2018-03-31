@@ -97,7 +97,7 @@ function checkAndSubmit() {
         var formData = {
             'min': $("#minimum").val(),
             'max': $("#maximum").val(),
-            'json': JSON.stringify(resp)
+            'data': resp
         };
 
         $.ajax({

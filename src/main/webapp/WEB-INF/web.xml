@@ -161,6 +161,16 @@
         <servlet-name>Items</servlet-name>
         <url-pattern>/items</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <display-name>TestItemsController</display-name>
+        <servlet-name>TestItems</servlet-name>
+        <servlet-class>com.ooad.web.controller.TestItemsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestItems</servlet-name>
+        <url-pattern>/testitems</url-pattern>
+    </servlet-mapping>
+
 
 
     <servlet>

@@ -155,4 +155,51 @@ public class OrderDao {
         }
         return null;
     }
+
+    private OrderItem orderItem(int id, int orderId) {
+        Order o= Order.find(orderId);
+        return o.getOrderItemById(id);
+    }
+
+    public Collection<OrderItem> getSellerOrderItems(Seller seller) {
+        ArrayList<OrderItem> sellerOrderItems = new ArrayList<OrderItem>();
+        try {
+            Connection con=Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT OI.* FROM OrderItems AS OI JOIN Items as I ON OI.itemId = I.id  WHERE I.sellerId = ?");
+            ps.setInt(1,seller.getId());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("id");
+                int orderId = rs.getInt("orderId");
+                OrderItem oi = orderItem(id,orderId);
+                sellerOrderItems.add(oi);
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return sellerOrderItems;
+    }
+
+
+    public OrderItem getOrderItem(int id) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT orderId FROM OrderItems WHERE id= ?");
+            ps.setInt(1,id );
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int orderId = rs.getInt("orderId");
+                return orderItem(id,orderId );
+            }
+            con.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

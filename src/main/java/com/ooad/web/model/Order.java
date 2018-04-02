@@ -4,6 +4,7 @@ import com.ooad.web.dao.OrderDao;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.annotation.Nullable;
 import java.sql.Date;
 import java.util.Collection;
 
@@ -131,5 +132,14 @@ public class Order {
 
     public static Order find(int orderId) {
         return new OrderDao().getOrderById(orderId);
+    }
+
+    public OrderItem getOrderItemById(int id) {
+        for (OrderItem oi: this.getOrderItems()) {
+            if(oi.getId() == id){
+                return oi;
+            }
+        }
+        return null;
     }
 }

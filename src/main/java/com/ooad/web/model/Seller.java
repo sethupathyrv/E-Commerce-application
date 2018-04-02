@@ -6,6 +6,7 @@
 package com.ooad.web.model;
 
 import com.ooad.web.dao.ItemDao;
+import com.ooad.web.dao.OrderDao;
 import com.ooad.web.dao.SellerDao;
 import com.ooad.web.utils.Constants;
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Seller {
     private int id;
@@ -238,11 +240,6 @@ public class Seller {
         return sellerDao.getSeller(id);
     }
 
-    /*public boolean save() {
-        System.out.println("reached model");
-        return new SellerDao().saveSeller(this);
-    }*/
-
     public JSONObject updateSeller(JSONObject req, int id) {
         Seller s = Seller.find(id);
         String str = req.getString("storeName");
@@ -259,5 +256,9 @@ public class Seller {
         SellerDao sellerDao = new SellerDao();
         sellerDao.updateSeller(s);
         return new JSONObject().put("status", Status.OK.getStatusCode());
+    }
+
+    public Collection<OrderItem> getOrderItems(){
+        return new OrderDao().getSellerOrderItems(this);
     }
 }

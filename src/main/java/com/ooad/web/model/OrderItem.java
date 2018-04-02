@@ -1,5 +1,6 @@
 package com.ooad.web.model;
 
+import com.ooad.web.dao.OrderDao;
 import org.json.JSONObject;
 
 public class OrderItem {
@@ -69,5 +70,9 @@ public class OrderItem {
 
     public OrderItemStatus getOrderItemStatus() {
         return orderItemStatus;
+    }
+
+    public static OrderItem find(int id){
+        return new OrderDao().getOrderItem(id);
     }
 }

@@ -73,6 +73,7 @@ $(document).ready(function() {
 });
 
 var orig = new Object();
+
 function displayItemCategory(response) {
     console.log(response);
     orig = response;
@@ -80,7 +81,7 @@ function displayItemCategory(response) {
     $('#items').empty();
     for (var i = 0; i < response.items.length; i++) {
         $('#items').append('<img id = "prodImage" width="150"  src="'+response.items[i].url+'" height="150" class = "img-responsive" alt="ItemName">');
-        $('#items').append('<a href="#"><span id="productTitle" class="btn-link">'+response.items[i].name+'</span></a>'+' by '+'<a href="#" id="sellerName">'+response.items[i].seller.username+'</a>'
+        $('#items').append('<a href="/item?id='+response.items[i].id+'"><span id="productTitle" class="btn-link">'+response.items[i].name+'</span></a>'+' by '+'<a href="#" id="sellerName">'+response.items[i].seller.username+'</a>'
             +'<div id="price">&#2352;<span id="currentPrice">'+response.items[i].price+'</span></div>'+'<div id="description>"><span>'+response.items[i].description+'</span></div>');
         if (response.items[i].quantity >= 1){
             $('#items').append('<div id="availability"><span id="avail">'+'In stock'+'</span></div>');
@@ -97,6 +98,7 @@ function displayItemCategory(response) {
     // }else if(response.status === 400){
     // }
 }
+
 
 function checkAndSubmit() {
     if ((document.getElementById('minimum').value > 0) && (document.getElementById('maximum').value > 0)) {
@@ -125,7 +127,7 @@ function displayItemCategoryFilter(response) {
     $('#items').empty();
     for (var i = 0; i < response.items.length; i++) {
         $('#items').append('<img id = "prodImage" width="150"  src="'+response.items[i].url+'" height="150" class = "img-responsive" alt="ItemName">');
-        $('#items').append('<a href="#"><span id="productTitle" class="btn-link">'+response.items[i].name+'</span></a>'+' by '+'<a href="#" id="sellerName">'+response.items[i].seller.username+'</a>'
+        $('#items').append('<a href="/item?id='+response.items[i].id+'"><span id="productTitle" class="btn-link">'+response.items[i].name+'</span></a>'+' by '+'<a href="#" id="sellerName">'+response.items[i].seller.username+'</a>'
             +'<div id="price">&#2352;<span id="currentPrice">'+response.items[i].price+'</span></div>'+'<div id="description>"><span>'+response.items[i].description+'</span></div>');
         if (response.items[i].quantity >= 1){
             $('#items').append('<div id="availability"><span id="avail">'+'In stock'+'</span></div>');
@@ -141,7 +143,7 @@ function clearFilter() {
     $('#items').empty();
     for (var i = 0; i < orig.items.length; i++) {
         $('#items').append('<img id = "prodImage" width="150"  src="'+orig.items[i].url+'" height="150" class = "img-responsive" alt="ItemName">');
-        $('#items').append('<a href="#"><span id="productTitle" class="btn-link">'+orig.items[i].name+'</span></a>'+' by '+'<a href="#" id="sellerName">'+orig.items[i].seller.username+'</a>'
+        $('#items').append('<a href="/item?id='+orig.items[i].id+'"><span id="productTitle" class="btn-link">'+orig.items[i].name+'</span></a>'+' by '+'<a href="#" id="sellerName">'+orig.items[i].seller.username+'</a>'
             +'<div id="price">&#2352;<span id="currentPrice">'+orig.items[i].price+'</span></div>'+'<div id="description>"><span>'+orig.items[i].description+'</span></div>');
         if (orig.items[i].quantity >= 1){
             $('#items').append('<div id="availability"><span id="avail">'+'In stock'+'</span></div>');

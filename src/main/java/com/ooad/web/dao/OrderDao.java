@@ -7,6 +7,7 @@ import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class OrderDao {
     public Order createEmptyOrder(User u,int addressId){
@@ -153,4 +154,26 @@ public class OrderDao {
         }
         return null;
     }
+
+    public Collection<Order> getOrdersByUserId(int userId){
+        try {
+            Connection con = Database.getConnection();
+            final ArrayList<Order> orders = new ArrayList<Order>();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Orders,OrderItems WHERE Orders.userId = ? AND OrderItems.orderId = Orders.id ");
+            ps.setInt(1,userId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                final Order o = orderBuilder(rs);
+                orders.add(o);
+            }
+            con.close();
+            return orders;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

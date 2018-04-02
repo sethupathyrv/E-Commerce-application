@@ -119,6 +119,14 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <span>OOAD MID-TERM LAB EXAM OUTPUT :</span>
+
+        <%--<a href="jsp/exam1.jsp"><input tabindex="5" class="a-button-input" id="exam1" type="button" value="Exam1"></a>--%>
+        <a href="jsp/exam2.jsp"><input tabindex="5" class="a-button-input" id="exam2" type="button" value="Exam2"></a>
+            <%--<input tabindex="5" class="a-button-input" id="exam3" type="button" value="Exam3">--%>
+    </div>
+    <hr>
 </div>
 <%@include file="jsp/footer.jsp" %>
 </body>

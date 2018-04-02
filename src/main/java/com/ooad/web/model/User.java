@@ -1,10 +1,8 @@
 package com.ooad.web.model;
 
 import com.ooad.web.dao.*;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.json.JSONObject;
 
-import javax.json.JsonObject;
 import javax.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -297,4 +295,10 @@ public class User {
         return new JSONObject().put("status", Status.OK.getStatusCode())
                 .put("transaction", transaction.toJSON());
     }
+
+    public Collection<Order> getAllOrders(int id){
+        //array //Goto Orders Table and get all the orders with user id
+        return new OrderDao().getOrdersByUserId(id);
+    }
+
 }

@@ -8,13 +8,15 @@ public class OrderItem {
     private final Order order;
     private float itemPrice;
     private int quantity;
+    private OrderItemStatus orderItemStatus;
 
-    public OrderItem(int id, Item item, Order order, float itemPrice, int quantity) {
+    public OrderItem(int id, Item item, Order order, float itemPrice, int quantity,OrderItemStatus orderItemStatus) {
         this.id = id;
         this.item = item;
         this.order = order;
         this.itemPrice = itemPrice;
         this.quantity = quantity;
+        this.orderItemStatus = orderItemStatus;
     }
 
     public int getId() {
@@ -59,5 +61,13 @@ public class OrderItem {
                 ", itemPrice=" + itemPrice +
                 ", quantity=" + quantity +
                 '}';
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public OrderItemStatus getOrderItemStatus() {
+        return orderItemStatus;
     }
 }

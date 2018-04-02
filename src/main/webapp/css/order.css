@@ -2,10 +2,10 @@ body {
     font-family: "Amazon Ember", Arial, sans-serif;
 }
 
-.container-fluid {
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
+/*.container-fluid {*/
+    /*margin-bottom: 20px;*/
+    /*margin-top: 20px;*/
+/*}*/
 
 .paymentDetails {
     display: block;

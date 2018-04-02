@@ -1,8 +1,6 @@
 package com.ooad.web.dao;
 
-import com.ooad.web.model.CartItem;
-import com.ooad.web.model.User;
-import com.ooad.web.model.UserAccount;
+import com.ooad.web.model.*;
 import com.ooad.web.utils.Constants;
 import com.ooad.web.utils.Database;
 import com.ooad.web.utils.TokenAuth;
@@ -138,6 +136,24 @@ public class UserDao {
         }
         return null;
     }
+
+    public void createDummyAccount(int userId, String userName, String accountNumber) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Accounts(userId, name, number, amount) VALUES (?,?,?,?)");
+            ps.setInt(1,userId);
+            ps.setString(2,userName);
+            ps.setInt(3, Integer.parseInt(accountNumber));
+            ps.setInt(4,77777);
+            ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean save(User user) {
         try {
             Connection con = Database.getConnection();
@@ -160,7 +176,7 @@ public class UserDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Accounts WHERE userId=?");
             ps.setInt(1,userId);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            if(rs.next()){
                 UserAccount ua = new UserAccount(rs.getInt("id"),rs.getString("name"),rs.getInt("number"),rs.getInt("amount"));
                 con.close();
                 return ua;

@@ -35,6 +35,22 @@ public enum OrderStatus {
             return false;
         }
     },
+    AMOUNT_DEDUCTED(){
+        @Override
+        public String getStatus() {
+            return "Amount Deducted from User";
+        }
+
+        @Override
+        public int getStatusCode() {
+            return 0;
+        }
+
+        @Override
+        public boolean isDelivered() {
+            return false;
+        }
+    },
     DELIVERED() {
         @Override
         public String getStatus() {

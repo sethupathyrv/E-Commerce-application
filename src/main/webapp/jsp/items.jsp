@@ -21,7 +21,7 @@
     <div id="sortColumn" class="col-lg-3" >
         <span class="dropdown">
             <label>Sort By:</label>
-            <select id="sort">
+            <select id="sort" onchange="sort()">
                 <option value="000">-Sort by-</option>
                 <option value="price:asc">Price (low to high)</option>
                 <option value="price:dec">Price (high to low)</option>

@@ -101,7 +101,7 @@ public class ItemService {
         String SortBy = sortby;
         final JSONArray j = new JSONArray();
         ArrayList<Item> items = Item.getItemsfromCategory(CategoryName, SubCategoryName);
-        if(sortby.equals("price:dec")){
+       /* if(sortby.equals("price:dec")){
             Collections.sort(items, new Comparator<Item>() {
                 @Override
                 public int compare(Item item1, Item item2) {
@@ -118,7 +118,7 @@ public class ItemService {
                 }
             });
 
-        }
+        }*/
         for (Item item : items) {
                 j.put(item.toJSON());
         }

@@ -127,6 +127,9 @@
                         <label for="itemBarcode" class="a-form-label">Item Barcode*</label>
                         <input class="form-control" type="number" name="itemBarcode" id="itemBarcode" autocomplete="off" required="true"/>
 
+                        <label for="itemColour" class="a-form-label">Colour*</label>
+                        <input class="form-control" type="text" name="itemColour" id="itemColour" autocomplete="off" required="true"/>
+
 
                         <label>Category*:</label>
                         <select id="category" name="category">

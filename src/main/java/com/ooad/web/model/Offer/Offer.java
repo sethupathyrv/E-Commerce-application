@@ -7,10 +7,12 @@ package com.ooad.web.model.Offer;
 
 import com.ooad.web.model.Cart;
 import com.ooad.web.model.CartItem;
+import org.json.JSONObject;
 
 public abstract class Offer {
     public abstract int applyOffer(CartItem c, Cart cart);
     public abstract int getOfferCode();
+    public abstract JSONObject toJSON();
     protected int id;
 
     Offer(int id){

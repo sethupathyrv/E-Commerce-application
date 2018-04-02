@@ -229,7 +229,6 @@ public class User {
         return new UserDao().save(this);
     }
 
-
     public JSONObject createOrder(String req) {
         JSONObject j = new JSONObject(req);
         if (!j.has("addressId")) {
@@ -262,7 +261,6 @@ public class User {
           return new JSONObject().put("status", Status.OK.getStatusCode());
     }
 
-
     public JSONObject createTransaction(JSONObject req) {
         final int orderId = req.getInt("orderId");
         final JSONObject errors = new JSONObject();
@@ -288,6 +286,8 @@ public class User {
                 item.setQuantity(item.getQuantity()-orderItem.getQuantity());
                 item.save();
             }
+            order.setOrderStatus(OrderStatus.MONEY_PAID);
+            order.save();
 
         }else{
             transaction = transactionDao.createTransaction(order,userAccount,0);

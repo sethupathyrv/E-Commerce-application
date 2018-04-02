@@ -160,35 +160,6 @@ public class SellerDao {
         return null;
     }
 
-   /* public boolean saveSeller(Seller seller){
-        try {
-            System.out.println("reached database");
-            System.out.println(seller);
-            Connection con = Database.getConnection();
-            PreparedStatement ps = con
-                    .prepareStatement("UPDATE Sellers SET storeName = ? ,mobileNumber = ?,streetAddress = ?," +
-                            "landmark = ? ,city = ? ,state = ?,pincode = ?,country = ? "+
-                            " WHERE id = ?");
-            ps.setString(1, seller.getStoreName());
-            ps.setInt(2, seller.getMobileNumber());
-            ps.setString(3, seller.getStreetAddress());
-            ps.setString(4, seller.getLandmark());
-            ps.setString(5, seller.getCity());
-            ps.setString(6, seller.getState());
-            ps.setInt(7, seller.getPincode());
-            ps.setString(8, seller.getCountry());
-            ps.setInt(9,seller.getId());
-            ps.executeUpdate();
-            System.out.println("database updated");
-            con.close();
-            System.out.println("reached database end");
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-*/
     public boolean updateSeller(Seller seller){
         try {
             System.out.println("reached database");

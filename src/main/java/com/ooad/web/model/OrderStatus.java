@@ -3,36 +3,60 @@ package com.ooad.web.model;
 import org.json.JSONObject;
 
 public enum OrderStatus {
-    CANCELLED(){
-        @Override
-        public String getStatus() {
-            return "Cancelled";
-        }
-
-        @Override
-        public int getStatusCode() {
-            return 103;
-        }
-
-        @Override
-        public boolean isDelivered() {
-            return false;
-        }
-    },
     PLACED() {
         @Override
         public String getStatus() {
-            return "Order Placed";
+            return "Order Placed by User";
         }
 
         @Override
         public int getStatusCode() {
             return 102;
         }
+    },
+    MONEY_PAID(){
+        @Override
+        public String getStatus() {
+            return "Money Paid";
+        }
 
         @Override
-        public boolean isDelivered() {
-            return false;
+        public int getStatusCode() {
+            return 103;
+        }
+    },
+    PARTIALLY_SHIPPED(){
+        @Override
+        public String getStatus() {
+            return "Partially Shipped";
+        }
+
+        @Override
+        public int getStatusCode() {
+            return 104;
+        }
+    },
+    SHIPPED(){
+        @Override
+        public String getStatus() {
+            return "Shipped";
+        }
+
+        @Override
+        public int getStatusCode() {
+            return 105;
+        }
+
+    },
+    PARTIALLY_DELIVERED(){
+        @Override
+        public String getStatus() {
+            return "Partially Delivered";
+        }
+
+        @Override
+        public int getStatusCode() {
+            return 106;
         }
     },
     DELIVERED() {
@@ -43,25 +67,38 @@ public enum OrderStatus {
 
         @Override
         public int getStatusCode() {
-            return 101;
+            return 107;
+        }
+    },
+    CANCELLED(){
+        @Override
+        public String getStatus() {
+            return "Cancelled";
         }
 
         @Override
-        public boolean isDelivered() {
-            return true;
+        public int getStatusCode() {
+            return 108;
         }
     };
 
     public abstract String getStatus();
     public abstract int getStatusCode();
-    public abstract boolean isDelivered();
     public static OrderStatus getStatusByCode(int code){
         switch (code){
-            case 101:
-                return OrderStatus.DELIVERED;
             case 102:
                 return OrderStatus.PLACED;
             case 103:
+                return OrderStatus.MONEY_PAID;
+            case 104:
+                return OrderStatus.PARTIALLY_SHIPPED;
+            case 105:
+                return OrderStatus.SHIPPED;
+            case 106:
+                return OrderStatus.PARTIALLY_DELIVERED;
+            case 107:
+                return OrderStatus.DELIVERED;
+            case 108:
                 return OrderStatus.CANCELLED;
             default:
                 return null;

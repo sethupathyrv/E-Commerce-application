@@ -28,7 +28,6 @@
     <div class="row nav-belt ">
         <div class="logo col-lg-2 col-md-2">
             <a href="/" class="nav-logo-link"><img src="../images/logo.png" alt=""></a>
-            <a href="#" class="nav-logo-tagline">Try Prime</a>
         </div>
         <div class="col-lg-6 col-md-6">
             <div class="row  search-box ">
@@ -69,7 +68,7 @@
                             <a href="#" id="nav-deliver">
                                 <span style="font-size: 12px;font-weight: 400; ">Deliver to
                                     <%= (user==null)? "" : user.getUserName() %> </span>
-                                <br>Bangalore 560100
+                                <br><p id="loc"></p>
                             </a>
                         </div>
                     </div>
@@ -105,10 +104,8 @@
                 <a href="#">
                     <%= (user==null)? "your":user.getUserName()%>
                     Amazon.in</a> &nbsp;&nbsp;&nbsp;
-                <a href="#">Today's deals</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Amazon Pay</a>&nbsp;&nbsp;&nbsp;
                 <a href="/sellerlogin">Sell</a>&nbsp;&nbsp;&nbsp;
-                <a href="#">Customer Service</a> &nbsp;&nbsp;
                 <% if(user!=null && user.getEmailId().equals("admin@admin.com")) { %>
                     <a href="/admin">admin</a> &nbsp;&nbsp;
                 <%}%>

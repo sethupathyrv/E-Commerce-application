@@ -40,17 +40,18 @@ public class OrderDao {
     public OrderItem createOrderItem(Item item, Order o, float price, int quantity) {
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO OrderItems(orderId, itemId, itemPrice, quantity)" +
-                    "VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement("INSERT INTO OrderItems(orderId, itemId, itemPrice, quantity,status)" +
+                    "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,o.getId() );
             ps.setInt(2,item.getId() );
             ps.setFloat(3,price );
             ps.setInt(4, quantity);
+            ps.setInt(5,OrderItemStatus.WAITING_FOR_SELLER.getStatusCode());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             OrderItem oi = null;
             if(rs.next()){
-                oi=new OrderItem(rs.getInt(1),item,o,price,quantity);
+                oi=new OrderItem(rs.getInt(1),item,o,price,quantity,OrderItemStatus.WAITING_FOR_SELLER);
             }
             con.close();
             return oi;
@@ -146,8 +147,9 @@ public class OrderDao {
             int itemId = rs.getInt("itemId");
             float itemPrice = rs.getFloat("itemPrice");
             int quantity = rs.getInt("quantity");
+            int status = rs.getInt("status");
             Item item = Item.find(itemId);
-            return new OrderItem(id,item,o,itemPrice,quantity);
+            return new OrderItem(id,item,o,itemPrice,quantity,OrderItemStatus.getOrderItemStatus(status));
         } catch (SQLException e) {
             e.printStackTrace();
         }

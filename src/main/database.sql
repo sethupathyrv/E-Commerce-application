@@ -74,17 +74,19 @@ create table Offers
   engine=InnoDB
 ;
 
-create table OrderItems
+CREATE TABLE OrderItems
 (
-  id int auto_increment
-    primary key,
-  orderId int null,
-  itemId int null,
-  itemPrice float null,
-  quantity int null
+  id        INT AUTO_INCREMENT
+    PRIMARY KEY,
+  orderId   INT   NULL,
+  itemId    INT   NULL,
+  itemPrice FLOAT NULL,
+  quantity  INT   NULL,
+  status    INT   NULL
 )
-  engine=InnoDB
-;
+  ENGINE = InnoDB;
+
+
 
 create table Orders
 (

@@ -17,13 +17,17 @@ $(document).ready(function () {
             success: TransactionResponse
         });
     });
+    $('#close').click(function () {
+       window.location.replace("/");
+    });
 });
 
 function TransactionResponse(response) {
     console.log(response);
     $('#toggle').trigger("click");
-    if(response.transaction.status==1)
+    if(response.transaction.status==1) {
         $('#status').text("transaction is successful");
+    }
     else
         $('#status').text("Transaction declined!!Money insufficient");
 

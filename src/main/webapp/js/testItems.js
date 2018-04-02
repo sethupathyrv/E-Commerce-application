@@ -66,8 +66,6 @@ function clearFilter() {
     displayData = JSON.parse(JSON.stringify(initData));
     displayItems();
     $('#sort').val("000");
-    $('#minPrice').val('');
-    $('#maxPrice').val('');
 }
 
 function sortResults(prop, asc) {

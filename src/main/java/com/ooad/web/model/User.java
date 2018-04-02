@@ -231,7 +231,6 @@ public class User {
         return new UserDao().save(this);
     }
 
-
     public JSONObject createOrder(String req) {
         JSONObject j = new JSONObject(req);
         if (!j.has("addressId")) {
@@ -263,7 +262,6 @@ public class User {
           userAddressDao.updateAddress(u);
           return new JSONObject().put("status", Status.OK.getStatusCode());
     }
-
 
     public JSONObject createTransaction(JSONObject req) {
         final int orderId = req.getInt("orderId");

@@ -91,36 +91,27 @@ public class ItemService {
         return Response.status(Status.OK).entity(j.toString()).build();
     }
 
-    @Path("/{category}/{subcategory}/{sortby}")
+    @Path("/{category}/{subCategory}/{sortby}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getItemsfromCategory(@PathParam("category") String category,@PathParam("subcategory") String subcategory,@PathParam("sortby") String sortby) {
-
-        String CategoryName = category;
-        String SubCategoryName = subcategory;
-        String SortBy = sortby;
+    public Response getItemsfromCategory(@PathParam("category") String category,@PathParam("subCategory") String subCategory,@PathParam("sortby") String sortby) {
+        //TODO SortBy not Implemented
         final JSONArray j = new JSONArray();
-        ArrayList<Item> items = Item.getItemsfromCategory(CategoryName, SubCategoryName);
-       /* if(sortby.equals("price:dec")){
-            Collections.sort(items, new Comparator<Item>() {
-                @Override
-                public int compare(Item item1, Item item2) {
-                    return (int) (item2.getPrice()-item1.getPrice());
-                }
-            });
-
-        }
-        else if (sortby.equals("price:asc")){
-            Collections.sort(items, new Comparator<Item>() {
-                @Override
-                public int compare(Item item1, Item item2) {
-                    return (int) (item1.getPrice()-item2.getPrice());
-                }
-            });
-
-        }*/
+        ArrayList<Item> items = Item.getItemsfromCategory(category, subCategory);
         for (Item item : items) {
                 j.put(item.toJSON());
+        }
+        return Response.status(Status.OK).entity(new JSONObject().put("items", j).toString()).build();
+    }
+
+    @Path("/{category}/{subCategory}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getItemsfromCategory(@PathParam("category") String category,@PathParam("subCategory") String subCategory) {
+        final JSONArray j = new JSONArray();
+        ArrayList<Item> items = Item.getItemsfromCategory(category, subCategory);
+        for (Item item : items) {
+            j.put(item.toJSON());
         }
         return Response.status(Status.OK).entity(new JSONObject().put("items", j).toString()).build();
     }
@@ -160,37 +151,23 @@ public class ItemService {
         JSONObject re = new JSONObject(req);
         int max = re.getInt("max");
         int min = re.getInt("min");
+        JSONObject resp = re.getJSONObject("data");
         String clr=re.getString("color");
-        String response = re.getString("json");
-        JSONObject resp = new JSONObject(response);
-//        JSONObject resp = re.getJSONObject("json");
         JSONArray items = resp.getJSONArray("items");
         JSONArray items_new = new JSONArray();
         for (int i = 0; i < items.length(); i++) {
-//            String jstr = items.getString(i);
-//            JSONObject json = new JSONObject(jstr);
-//            JSONObject json = new JSONObject(items.getString(i));
             JSONObject json = (JSONObject) items.get(i);
             int price = json.getInt("price");
             String itemcolour=json.getString("itemColour");
             if ((min <= price && price <= max) && clr.equals(itemcolour)){
                 items_new.put(json);
             }
-//            System.out.println(items_new);
-//            System.out.println(price);
-//            System.out.println(json.getClass().getName());
-//            System.out.println(json);
         }
         JSONObject resp2 = new JSONObject();
         resp2.put("items",items_new);
-//        System.out.println(resp2);
-//        for (Object item: items) {
-//            System.out.println(item);
-//        }
-//        System.out.println(items.length());
-//        System.out.println(resp);
         return Response.status(Status.OK).entity(resp2.toString()).build();
     }
+
     @Path("addcategory")
     @POST
     @Consumes({MediaType.TEXT_PLAIN})

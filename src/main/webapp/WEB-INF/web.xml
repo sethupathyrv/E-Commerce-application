@@ -161,8 +161,6 @@
         <servlet-name>Items</servlet-name>
         <url-pattern>/items</url-pattern>
     </servlet-mapping>
-
-
     <servlet>
         <display-name>AdminController</display-name>
         <servlet-name>Admin</servlet-name>

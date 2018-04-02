@@ -14,7 +14,8 @@
        }
    }
 %>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/bootstrap-dropdownhover.css">
 <link rel="stylesheet" href="../css/header.css">
@@ -108,7 +109,9 @@
                 <a href="#">Amazon Pay</a>&nbsp;&nbsp;&nbsp;
                 <a href="/sellerlogin">Sell</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Customer Service</a> &nbsp;&nbsp;
-                <a href="/admin">admin</a> &nbsp;&nbsp;
+                <% if(user!=null && user.getEmailId().equals("admin@admin.com")) { %>
+                    <a href="/admin">admin</a> &nbsp;&nbsp;
+                <%}%>
             </div>
         </div>
         <div class="col-lg-4 col-md-3">

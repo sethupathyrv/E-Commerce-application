@@ -2,6 +2,7 @@ package com.ooad.web.model.Offer;
 
 import com.ooad.web.model.Cart;
 import com.ooad.web.model.CartItem;
+import org.json.JSONObject;
 
 public class PriceOffer extends Offer {
     private int priceCut;
@@ -26,6 +27,12 @@ public class PriceOffer extends Offer {
     @Override
     public int getOfferCode() {
         return 202;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        return new JSONObject().put("offerCode",getOfferCode() )
+                .put("priceCut",getPriceCut());
     }
 
     public int getPriceCut() {

@@ -268,6 +268,7 @@ public class ItemDao {
         }
         return itemDetailsArray;
     }
+
     public Collection<Item> getItemsFromSubCategory(String CategoryName,String SubCategoryName){
         try {
             Connection con = Database.getConnection();

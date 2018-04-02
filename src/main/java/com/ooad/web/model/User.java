@@ -288,6 +288,8 @@ public class User {
                 item.setQuantity(item.getQuantity()-orderItem.getQuantity());
                 item.save();
             }
+            order.setOrderStatus(OrderStatus.MONEY_PAID);
+            order.save();
 
         }else{
             transaction = transactionDao.createTransaction(order,userAccount,0);

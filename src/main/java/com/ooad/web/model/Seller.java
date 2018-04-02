@@ -179,6 +179,7 @@ public class Seller {
         final int SubCategoryId = item.getInt("subCategoryId");
         final int offerType = item.getInt("offerType");
         final int itemBarcode = item.getInt("itemBarcode");
+        final String itemColour = item.getString("itemColour");
         int discountPercentage = 0;
         int priceOffer = 0;
         final ItemDao itemDao=new ItemDao();
@@ -222,7 +223,7 @@ public class Seller {
         }
 
         final boolean valid=itemDao.createItem(itemName,itemPrice,imageUrl,this.id,itemDescription,
-                itemBrand,itemHeight,itemWidth,itemQuantity,SubCategoryId,offerId,itemBarcode);
+                itemBrand,itemHeight,itemWidth,itemQuantity,SubCategoryId,offerId,itemBarcode, itemColour);
         JSONObject jsonObject=new JSONObject();
         if(valid){
             jsonObject.put("status", Response.Status.CREATED.getStatusCode());

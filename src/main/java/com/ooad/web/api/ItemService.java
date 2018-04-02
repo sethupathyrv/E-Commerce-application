@@ -152,12 +152,14 @@ public class ItemService {
         int max = re.getInt("max");
         int min = re.getInt("min");
         JSONObject resp = re.getJSONObject("data");
+        String clr=re.getString("color");
         JSONArray items = resp.getJSONArray("items");
         JSONArray items_new = new JSONArray();
         for (int i = 0; i < items.length(); i++) {
             JSONObject json = (JSONObject) items.get(i);
             int price = json.getInt("price");
-            if (min <= price && price <= max){
+            String itemcolour=json.getString("itemColour");
+            if ((min <= price && price <= max) && clr.equals(itemcolour)){
                 items_new.put(json);
             }
         }

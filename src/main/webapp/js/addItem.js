@@ -76,6 +76,7 @@ $(document).ready(function() {
                     'priceOffer':$("#priceOffer").val(),
                     'subCategoryId':$("#subCategory").val(),
                     'itemBarcode':$('#itemBarcode').val(),
+                    'itemColour':$('#itemColour').val(),
                     'bundleOfferBarcode':$('#bundleOfferBarcode').val()
 
                 };

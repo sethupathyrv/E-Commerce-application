@@ -171,15 +171,6 @@
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <display-name>Exam2Controller</display-name>
-        <servlet-name>Exam2</servlet-name>
-        <servlet-class>com.ooad.web.controller.Exam2Controller</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Exam2</servlet-name>
-        <url-pattern>/exam2</url-pattern>
-    </servlet-mapping>
 
     <servlet>
         <display-name>MyOrdersController</display-name>

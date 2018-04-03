@@ -96,13 +96,17 @@
                             <br>
                         </div>
                         <div class="col-lg-3">
-                            Quantity:<%=oi.getQuantity()%>
-                            <br>
-                            user name <%=oi.getOrder().getUser().getUserName()%>
-                            <br>
-                            Delivery name <%=deliveryAddress.getFullname()%>
-                            <br>
-                                DeliveryCity: <%=deliveryAddress.getCity()%>
+                            <h1 id="title">
+                                <span id="productTitle"><%=item.getName()%></span>
+                            </h1>
+                            <div>Quantity:<%=oi.getQuantity()%></div>
+
+                            <%--<div class="Price col-lg-2 text-left">&#2352;<span id="currentPrice<%=item.getId()%>"><%=oi.getOrder().getItemsSubToatal()%></span></div>--%>
+                            <div>Buyer name: <%=oi.getOrder().getUser().getUserName()%></div>
+
+                            <div>Delivery name: <%=deliveryAddress.getFullname()%></div>
+
+                             <div>DeliveryCity: <%=deliveryAddress.getCity()%></div>
                             <br>
                         </div>
 

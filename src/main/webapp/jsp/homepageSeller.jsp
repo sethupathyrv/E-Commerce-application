@@ -101,7 +101,7 @@
                             </h1>
                             <div>Quantity:<%=oi.getQuantity()%></div>
 
-                            <%--<div class="Price col-lg-2 text-left">&#2352;<span id="currentPrice<%=item.getId()%>"><%=oi.getOrder().getItemsSubToatal()%></span></div>--%>
+                            <div>Price: &#2352;<span id="currentPrice<%=item.getId()%>"><%=oi.getOrder().getItemsSubToatal()%></span></div>
                             <div>Buyer name: <%=oi.getOrder().getUser().getUserName()%></div>
 
                             <div>Delivery name: <%=deliveryAddress.getFullname()%></div>

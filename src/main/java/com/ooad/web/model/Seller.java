@@ -262,4 +262,14 @@ public class Seller {
     public Collection<OrderItem> getOrderItems(){
         return new OrderDao().getSellerOrderItems(this);
     }
+
+    public JSONObject dispatchOrderItem(OrderItem oi){
+        if(oi.getOrderItemStatus() != OrderItemStatus.WAITING_FOR_SELLER){
+            return new JSONObject().put("status", Status.BAD_REQUEST.getStatusCode())
+                    .put("error","Order Item already dispatched or does not exist" );
+        }
+        oi.setOrderItemStatus(OrderItemStatus.SHIPPED);
+        oi.save();
+        return new JSONObject().put("status",Status.OK.getStatusCode() );
+    }
 }

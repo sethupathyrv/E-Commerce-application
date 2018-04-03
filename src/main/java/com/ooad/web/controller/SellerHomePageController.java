@@ -39,6 +39,7 @@ public class SellerHomePageController extends HttpServlet {
             Collection<OrderItem> orderItems = seller.getOrderItems();
             rd = request.getRequestDispatcher("jsp/homepageSeller.jsp");
             request.setAttribute("orderItems",orderItems );
+            request.setAttribute("seller",seller );
             rd.forward(request,response );
         }
     }

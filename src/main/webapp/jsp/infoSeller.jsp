@@ -104,7 +104,6 @@
                         <div class="a-section">
                             <span id="continue" class="a-button a-button-span12 a-button-primary">
                                 <span class="a-button-inner">
-                                    <%--<a href="/jsp/updateInfoSeller.jsp">--%>
                                     <a href="/sellerupdate">
                                     <input tabindex="5" class="a-button-input" id="update" type="button" aria-labelledby="continue-announce">
                                         <span id="continue-announce" class="a-button-text" aria-hidden="true">
@@ -120,68 +119,5 @@
         </div>
 
 </div>
-
-<%--..........To populate select dropdown using json file.........
-<script>
-    window.onload = populateSelect();
-
-    function populateSelect() {
-
-        //......... THE JSON ARRAY..........
-        $.getJSON("/json/test.json", function(json) {
-            //..............Json object containg category: json ..............
-            console.log(json);
-
-            //........... POPULATE SELECT ELEMENT WITH JSON...........
-            var ele = document.getElementById('sel');
-            for (var i = 0; i < json.length; i++) {
-                ele.innerHTML = ele.innerHTML +
-                    '<option value="' + json[i]['ID'] + '">' + json[i]['Category_Name'] + '</option>';
-            }
-        });
-    }
-
-    //............GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT............
-    function show(ele) {
-        var msg = document.getElementById('msg');
-        msg.innerHTML = 'Selected Category: <b>' + ele.options[ele.selectedIndex].text + '</b> </br>' +
-            'ID: <b>' + ele.value + '</b>';
-    }
-
-</script>
-
-&lt;%&ndash;............To convert form values into json object........&ndash;%&gt;
-<script>
-    (function() {
-        function toJSONString( form ) {
-            var obj = {};
-            var elements = form.querySelectorAll( "input, select, textarea" );
-            for( var i = 0; i < elements.length; ++i ) {
-                var element = elements[i];
-                var name = element.name;
-                var value = element.value;
-
-                if( name ) {
-                    obj[ name ] = value;
-                }
-            }
-
-            return JSON.stringify( obj );
-        }
-
-        document.addEventListener( "DOMContentLoaded", function() {
-            var form = document.getElementById( "test" );
-
-            form.addEventListener( "submit", function( e ) {
-                e.preventDefault();
-                var json = toJSONString( this );
-//..............Json object containg inputed form values : json..............
-                console.log(json);
-            }, false);
-
-        });
-    })();
-</script>--%>
-
 </body>
 </html>

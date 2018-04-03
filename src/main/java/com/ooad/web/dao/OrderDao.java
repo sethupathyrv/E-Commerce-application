@@ -3,7 +3,6 @@ package com.ooad.web.dao;
 import com.ooad.web.model.*;
 import com.ooad.web.utils.Database;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -201,5 +200,23 @@ public class OrderDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean saveOrderItem(OrderItem orderItem) {
+        Connection con = null;
+        try {
+            con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE OrderItems SET status = ? WHERE id = ?");
+            ps.setInt(1,orderItem.getOrderItemStatus().getStatusCode());
+            ps.setInt(2,orderItem.getId() );
+            ps.executeUpdate();
+            con.close();
+            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

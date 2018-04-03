@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -183,5 +184,20 @@ public class ItemService {
         itemCategoryDao.createCategory(re);
         return null;
     }
+
+    @Path("dispatchitem/{orderItemId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response dispatchItem(@HeaderParam("sellerAuthToken") String token,@PathParam("orderItemId") int orderItemId) {
+        Seller seller = TokenAuth.getSellerFromToken(token);
+        if (seller == null) {
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        OrderItem orderItem = OrderItem.find(orderItemId);
+        JSONObject resp = seller.dispatchOrderItem(orderItem);
+        return Response.status(Status.OK).entity(resp.toString()).build();
+    }
+
 
 }

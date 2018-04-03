@@ -113,7 +113,7 @@ public class ItemCategoryDao {
 
             try {
                 Connection con = Database.getConnection();
-                PreparedStatement ps = con.prepareStatement("INSERT INTO categories(name, displayName) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = con.prepareStatement("INSERT INTO Categories(name, displayName) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, category);
                 ps.setString(2, category);
                 ps.executeUpdate();
@@ -137,7 +137,7 @@ public class ItemCategoryDao {
         try {
                 Connection con = Database.getConnection();
                 PreparedStatement ps = null;
-                ps = con.prepareStatement("INSERT into subcategories(displayName, categoryId) VALUES (?,?) ");
+                ps = con.prepareStatement("INSERT INTO SubCategories(displayName, categoryId) VALUES (?,?) ");
                 for(int i=0;i<subCategories.length();i++) {
                     ps.setString(1, subCategories.getString(i));
                     ps.setInt(2, id);

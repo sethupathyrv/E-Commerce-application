@@ -43,6 +43,7 @@
 <script src="../js/jquery.cookie.js"></script>
 <script src="../js/addItem.js"></script>
 
+<div class="container-fluid">
 <%-- ..........Logo header...........--%>
 <div class="row nav-belt ">
     <header class="container-fluid header">
@@ -183,8 +184,9 @@
             </span>
         </div>
     </div>
+
 </form>
 
-
+</div>
 </body>
 </html>

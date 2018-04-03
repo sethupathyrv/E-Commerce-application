@@ -9,6 +9,6 @@ public class Constants {
     public static final String ERROR_WRONG_PASSWD = "Invalid Password!";
     public static final String ERROR_USER_EXIST = "Email already registered";
     public static final String ERROR_NO_USER = "Email not registered";
-    public static final String FILE_UPLOAD_PATH="/home/shravan/OOAD/AmazonFiles/";
+    public static final String FILE_UPLOAD_PATH= "/home/minal/amazonFileUploads/";
 
 }

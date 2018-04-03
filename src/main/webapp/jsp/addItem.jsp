@@ -79,9 +79,9 @@
             <!-- Collection of nav links and other content for toggling -->
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <ul class="nav nav-tabs">
-                    <li><a href="/jsp/homepageSeller.jsp">Dashboard</a></li>
+                    <li><a href="/seller">Dashboard</a></li>
                     <li><a href="/infoseller">Seller Information </a></li>
-                    <li class="active"><a href="/jsp/addItem.jsp">Add Item</a></li>
+                    <li class="active"><a href="/seller/add">Add Item</a></li>
                     <li><a href="#" id="sellerLogout"> Logout</a></li>
                     <li><a href="/infoseller"> <%=seller.getUserName()%></a></li>
                 </ul>

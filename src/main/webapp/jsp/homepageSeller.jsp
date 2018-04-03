@@ -18,12 +18,18 @@
     <% Seller seller = (Seller) request.getAttribute("seller"); %>
 </head>
 <body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/bootstrap-dropdownhover.css">
 <link rel="stylesheet" href="../css/homepageSeller.css">
+<link rel="stylesheet" href="../css/amazon1.css"/>
+<link rel="stylesheet" href="../css/amazon2.css"/>
+<link rel="stylesheet" href="../css/cart.css">
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.cookie.js"></script>
 <script src="/js/homepageSeller.js"></script>
+<script src="../js/addItem.js"></script>
+
 <div class="container-fluid">
     <%-- ..........Logo header...........--%>
     <div class="row nav-belt ">
@@ -66,29 +72,57 @@
         </nav>
     </div>
 
-    <% for (OrderItem oi :orderItems) {
-        UserAddress deliveryAddress = oi.getOrder().getDeliveryAddress();
-        Item item = oi.getItem(); %>
-        <img src="<%=item.getUrl()%>" alt="" style="height: 160px;width: 160px;">
-        <br>
-        Quantity:<%=oi.getQuantity()%>
-        <br>
-        user name <%=oi.getOrder().getUser().getUserName()%>
-        <br>
-        Delivery name <%=deliveryAddress.getFullname()%>
-        <br>
-            DeliveryCity: <%=deliveryAddress.getCity()%>
-        <br>
-            OrderItemStatus: <%=oi.getOrderItemStatus().getStatusCode()%>
-        <br>
-        <%if (oi.getOrderItemStatus()== OrderItemStatus.WAITING_FOR_SELLER){%>
-            <button onclick="dispatchItem(<%=oi.getId()%>)">Dispatch this Item</button>
-        <%} else { %>
-            <p><%=oi.getOrderItemStatus().getStatus()%></p>
-        <%}%>
-        <br>
-        <hr>
-    <%}%>
+        <div class="col-lg-12">
+            <h1 id="pageTitle">Your Orders</h1>
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-3">
+                        <h5 class="headTiles text-left">Order Details</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5 class="headTiles text-left">Order Status</h5>
+                    </div>
+                </div>
+                <hr>
+
+                <% for (OrderItem oi :orderItems) {
+                    UserAddress deliveryAddress = oi.getOrder().getDeliveryAddress();
+                    Item item = oi.getItem(); %>
+
+                <div class="cartItems row">
+                    <div class=item-box-big">
+                        <div class="col-lg-3">
+                            <img id = "prodImage<%=item.getId()%>" width="150"  src="<%=item.getUrl()%>" height="150" class = "img-responsive" alt="watch">
+                            <br>
+                        </div>
+                        <div class="col-lg-3">
+                            Quantity:<%=oi.getQuantity()%>
+                            <br>
+                            user name <%=oi.getOrder().getUser().getUserName()%>
+                            <br>
+                            Delivery name <%=deliveryAddress.getFullname()%>
+                            <br>
+                                DeliveryCity: <%=deliveryAddress.getCity()%>
+                            <br>
+                        </div>
+
+                        <div class="col-lg-3">
+                                OrderItemStatus: <%=oi.getOrderItemStatus().getStatusCode()%>
+                            <br>
+                            <%if (oi.getOrderItemStatus()== OrderItemStatus.WAITING_FOR_SELLER){%>
+                                <button onclick="dispatchItem(<%=oi.getId()%>)">Dispatch this Item</button>
+                            <%} else { %>
+                                <p><%=oi.getOrderItemStatus().getStatus()%></p>
+                            <%}%>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <%}%>
+</div>
+
+
 </div>
 </body>
 </html>

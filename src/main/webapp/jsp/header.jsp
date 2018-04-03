@@ -131,7 +131,7 @@
                             <li><a href="#" id="nav-logout">Logout</a></li>
                             <li><a href="#">Your account</a></li>
                             <li><a href="#">Your List</a></li>
-                            <li><a href="#">Your Orders</a></li>
+                            <li><a href="/myorders">Your Orders</a></li>
                         </ul>
                     </div>
                     <%}%>

@@ -41,9 +41,15 @@
                     <tbody>
                     <tr class="text-c1">
                         <td class="text-right text-nowrap">M.R.P:</td>
+                        <%if (item.getOffer().getOfferCode() == -1){ %>
+                            <td class="text-left text-nowrap">
+                            &#2352;<span id="originalPrice"><%= item.getPrice()%> </span>
+                            </td>
+                        <%} else{%>
                         <td class="text-left text-nowrap">
                             <del>&#2352;</del><del><span id="originalPrice"><%= item.getPrice()%> </span></del>
                         </td>
+                        <%}%>
                     </tr>
                     <%--<tr>--%>
                         <%--<td class="text-right text-c1">Price:</td>--%>

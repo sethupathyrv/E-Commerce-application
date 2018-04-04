@@ -170,7 +170,7 @@ public class UserDao {
         }
         return false;
     }
-    public UserAccount getUserAccountFromId(int userId){
+    public UserAccount getUserAccountFromUserId(int userId){
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Accounts WHERE userId=?");
@@ -190,6 +190,8 @@ public class UserDao {
         }
         return null;
     }
+
+
 
     public boolean save(UserAccount userAccount) {
         try {

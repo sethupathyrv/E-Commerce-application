@@ -166,7 +166,7 @@ public class OrderDao {
         ArrayList<OrderItem> sellerOrderItems = new ArrayList<OrderItem>();
         try {
             Connection con=Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT OI.* FROM OrderItems AS OI JOIN Items as I ON OI.itemId = I.id  WHERE I.sellerId = ?");
+            PreparedStatement ps = con.prepareStatement("SELECT OI.* FROM OrderItems AS OI JOIN Items as I ON OI.itemId = I.id  WHERE I.sellerId = ? ORDER BY OI.id DESC ");
             ps.setInt(1,seller.getId());
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -226,7 +226,7 @@ public class OrderDao {
         try {
             Connection con = Database.getConnection();
             final ArrayList<Order> orders = new ArrayList<Order>();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Orders,OrderItems WHERE Orders.userId = ? AND OrderItems.orderId = Orders.id ");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Orders WHERE Orders.userId = ? ORDER BY Orders.id DESC ");
             ps.setInt(1,userId);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {

@@ -270,6 +270,7 @@ public class Seller {
         }
         oi.setOrderItemStatus(OrderItemStatus.SHIPPED);
         oi.save();
+        oi.getOrder().refreshStatus();
         return new JSONObject().put("status",Status.OK.getStatusCode() );
     }
 }

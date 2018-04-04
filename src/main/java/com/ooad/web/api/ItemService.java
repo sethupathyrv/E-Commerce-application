@@ -199,5 +199,19 @@ public class ItemService {
         return Response.status(Status.OK).entity(resp.toString()).build();
     }
 
+    @Path("delivered/{orderItemId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response itemDelivered(@HeaderParam("authToken") String token, @PathParam("orderItemId") int orderItemId){
+        User u = TokenAuth.getUserFromToken(token);
+        if(u == null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        OrderItem orderItem = OrderItem.find(orderItemId);
+        JSONObject resp = u.itemDelivered(orderItem);
+        return Response.status(Status.OK).entity(resp.toString()).build();
+    }
+
 
 }

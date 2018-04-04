@@ -37,107 +37,84 @@
 <body>
 <%@include file="header.jsp" %>
 
-<%--<div class="container-fluid">
+<div class="container-fluid orders">
     <div class="col-lg-12">
         <h1 id="pageTitle">Your Orders</h1>
-        <span><h5>Ship to <%=user.getUserName()%></h5></span>
+        <span><h5><%=orderedItems.size()%> orders placed</h5></span>
         <div class="row">
-                <div class="col-lg-5"></div>
-                <div class="col-lg-3">
-                    <h5 class="headTiles text-left">Shipping Address</h5>
-                </div>
-                <div class="col-lg-2">
-                    <h5 class="headTiles text-left">Order Status</h5>
-                </div>
-                <div class="col-lg-2">
-                    <h5 class="headTiles text-left">Seller Review</h5>
-                </div>
-        </div>
-        <hr>
-
-        <% for (Order order: orderedItems) {%>
-        <div class="cartItems row">
-            <% for (OrderItem orderItem: order.getOrderItems()) {%>
-            <div class=item-box-big">
-
-            <div class="col-lg-3">
-                    <img id = "prodImage<%=orderItem.getItem().getId()%>" width="150"  src="<%=orderItem.getItem().getUrl()%>" height="150" class = "img-responsive" alt="watch">
-                </div>
-                <div class="col-lg-2">
-                    <% System.out.println(orderItem); %>
-                    &lt;%&ndash;<% System.out.println(order.getUser()); %>&ndash;%&gt;
-                    <h1 id="title">
-                        <span id="productTitle"><%=orderItem.getItem().getName()%></span>
-                    </h1>
-                    <div id="seller">Sold by <a href="#" id="sellerName" data-toggle="tooltip" title="<%=orderItem.getItem().getSeller().getId()%>"><%=orderItem.getItem().getSeller().getUserName()%></a></div>
-                    <div>Quantity: <%=orderItem.getQuantity()%></div>
-                    <div class="Price col-lg-2 text-left">&#2352;<span id="currentPrice<%=orderItem.getItemPrice()%>"><%=order.getItemsSubToatal()%></span></div>
-                </div>
-                <div class="col-lg-3">
-                    &lt;%&ndash;<p><%=order.getDeliveryAddress()%></p>&ndash;%&gt;
-                    <br>
-                    <div class="displayAddressDiv">
-                        <div><b><%=order.getDeliveryAddress().getFullname()%></b></div>
-                        <div><%=order.getDeliveryAddress().getStreetAddress()%>,</div>
-                        <div><%=order.getDeliveryAddress().getLandmark()%>, <%=order.getDeliveryAddress().getCity()%>,</div>
-                        <div><%=order.getDeliveryAddress().getState()%>, <%=order.getDeliveryAddress().getPincode()%>,</div>
-                        <div>Mob:<%=order.getDeliveryAddress().getMobilenumber()%></div>
-                    </div>
-                </div>
-                <div class="col-lg-2 text-left">
-                    &lt;%&ndash;<p><%=order.getOrderStatus()%></p>&ndash;%&gt;
-                    <br><br>
-                        <a href="#"><input type="button" class="btn" value="<%=order.getOrderStatus()%>"></a>
-
-                </div>
-
-                <div class="col-lg-2">
-                    &lt;%&ndash;Add Seller review part&ndash;%&gt;
-                </div>
+            <div class="col-lg-6">
+                <h5 class="headTiles text-center">Order Details</h5>
             </div>
-            <% } %>
+            <div class="col-lg-2">
+                <h5 class="headTiles text-left">Shipping Address</h5>
+            </div>
+            <div class="col-lg-2">
+                <h5 class="headTiles text-left">Order Status</h5>
+            </div>
+            <div class="col-lg-2">
+                <h5 class="headTiles text-left">Seller Review</h5>
+            </div>
         </div>
         <hr>
-        <% } %>
-
     </div>
-
-</div>--%>
-
-
-<div class="container-fluid orders">
-    <%=orderedItems.size()%>
     <%for(Order o: orderedItems) {
         ArrayList<OrderItem> orderItems = (ArrayList<OrderItem>) o.getOrderItems();
         OrderStatus os = o.getOrderStatus();
         UserAddress shippingAddress = o.getDeliveryAddress(); %>
         <div class="container order">
-            <div class="row orderDetails">
-                OrderId <%=o.getId()%>
-                Ship to  <%=shippingAddress.getFullname()%>
-                Order Status <%=os.getStatus()%>
-            </div>
+
             <div class="row orderItems center-block">
             <%for(OrderItem oi : orderItems){
                 Offer offer= oi.getItem().getOffer();%>
 
-                <div class="row orderItem">
-                    <img class="col-sm-2" src="<%=oi.getItem().getUrl()%>" alt="" style="height: 160px;width: 160px">
-                    <%=oi.getItem().getName()%>
-                    <%if(offer.getOfferCode() == 201){
-                        DiscountOffer dof = (DiscountOffer) offer;%>
-                        <%=oi.getItemPrice()*(100-dof.getPercentage())/100%>
-                    <%}else if(offer.getOfferCode() == 202){
-                        PriceOffer p = (PriceOffer) offer;%>
-                        <%=oi.getItemPrice() - p.getPriceCut()%>
-                    <%} else { %>
-                        <%=oi.getItemPrice()%>
-                    <%}%>
+                <div class="cartItems row">
+                    <div class=item-box-big">
+                    <div class="col-lg-1">
+                        <div>OrderId <b><%=o.getId()%></b></div>
+                    </div>
+                    <div class="col-lg-2">
+                        <img id = "prodImage<%=oi.getItem().getId()%>" width="150"  src="<%=oi.getItem().getUrl()%>" height="150" class = "img-responsive" alt="watch">
+                    </div>
+                    <div class="col-lg-3 text-left">
+                        <h1 id="title">
+                            <span id="productTitle"><%=oi.getItem().getName()%></span>
+                        </h1>
+                        <div id="seller">Sold by <a href="#" id="sellerName" data-toggle="tooltip" title="<%=oi.getItem().getSeller().getId()%>"><%=oi.getItem().getSeller().getUserName()%></a></div>
+                        <div>Ship to:  <%=shippingAddress.getFullname()%></div>
+                        <div>Order Status: <%=os.getStatus()%></div>
+                        <div class="Price col-lg-2 text-left"><span id="currentPrice<%=oi.getItemPrice()%>">
+                                <%if(offer.getOfferCode() == 201){
+                                    DiscountOffer dof = (DiscountOffer) offer;%>
+                                &#2352;<%=oi.getItemPrice()*(100-dof.getPercentage())/100%>
+                                <%}else if(offer.getOfferCode() == 202){
+                                    PriceOffer p = (PriceOffer) offer;%>
+                                &#2352;<%=oi.getItemPrice() - p.getPriceCut()%>
+                                <%} else { %>
+                                &#2352;<%=oi.getItemPrice()%>
+                                <%}%>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-left">
+                        <div class="displayAddressDiv">
+                            <div><b><%=shippingAddress.getFullname()%></b></div>
+                            <div><%=shippingAddress.getStreetAddress()%>,</div>
+                            <div><%=shippingAddress.getLandmark()%>, <%=shippingAddress.getCity()%>,</div>
+                            <div><%=shippingAddress.getState()%>, <%=shippingAddress.getPincode()%>,</div>
+                            <div>Mob:<%=shippingAddress.getMobilenumber()%></div>
+                        </div>
+                    </div>
 
-                    Status :<%=oi.getOrderItemStatus()%>
-                    <%if(oi.getOrderItemStatus() == OrderItemStatus.SHIPPED){ %>
+                    <div class="col-lg-2 text-left">
+                        <%=oi.getOrderItemStatus()%>
+                        <%if(oi.getOrderItemStatus() == OrderItemStatus.SHIPPED){ %>
                         <button onclick="itemDelivered(<%=oi.getId()%>)">Item Delivered</button>
-                    <%}%>
+                        <%}%>
+                    </div>
+                    <div class="col-lg-2">
+                        <%--Add Seller review part--%>
+                    </div>
+                </div>
                 </div>
             <%}%>
 

@@ -182,4 +182,22 @@ public class ItemService {
         return null;
     }
 
+    @Path("/updatecart")
+    @PUT
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateAddress(String req,@HeaderParam("authToken") String token) {
+        JSONObject reqJson = new JSONObject(req);
+        User user = TokenAuth.getUserFromToken(token);
+        if (user == null) {
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        Cart cart = user.getCart();
+        int quantity = reqJson.getInt("quantity");
+        int id = reqJson.getInt("itemid");
+        cart.updateCart(quantity,id);
+        return null;
+    }
+
 }

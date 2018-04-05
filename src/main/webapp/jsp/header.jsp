@@ -22,6 +22,7 @@
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="../js/bootstrap-dropdownhover.js"></script>
 <script src="js/header.js"></script>
 <header class="container-fluid header">
@@ -131,7 +132,7 @@
                             <li><a href="#" id="nav-logout">Logout</a></li>
                             <li><a href="#">Your account</a></li>
                             <li><a href="#">Your List</a></li>
-                            <li><a href="#">Your Orders</a></li>
+                            <li><a href="/myorders">Your Orders</a></li>
                         </ul>
                     </div>
                     <%}%>

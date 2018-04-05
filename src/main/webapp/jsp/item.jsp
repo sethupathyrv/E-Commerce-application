@@ -41,22 +41,34 @@
                     <tbody>
                     <tr class="text-c1">
                         <td class="text-right text-nowrap">M.R.P:</td>
+                        <%if (item.getOffer().getOfferCode() == -1){ %>
+                            <td class="text-left text-nowrap">
+                            &#2352;<span id="originalPrice"><%= item.getPrice()%> </span>
+                            </td>
+                        <%} else{%>
                         <td class="text-left text-nowrap">
                             <del>&#2352;</del><del><span id="originalPrice"><%= item.getPrice()%> </span></del>
                         </td>
+                        <%}%>
                     </tr>
-                    <tr>
-                        <td class="text-right text-c1">Price:</td>
-                        <td class="text-left text-c2">
-                            &#2352; <span id="currentPrice"><%=item.getPrice()%></span>
-                        </td>
-                    </tr>
+                    <%--<tr>--%>
+                        <%--<td class="text-right text-c1">Price:</td>--%>
+                        <%--<td class="text-left text-c2">--%>
+                            <%--&#2352; <span id="currentPrice"><%=item.getPrice()%></span>--%>
+                        <%--</td>--%>
+                    <%--</tr>--%>
                     <% if(item.getOffer().getOfferCode()==201){
                         DiscountOffer o = (DiscountOffer) item.getOffer();%>
                     <tr class="saving">
                         <td class="text-right text-c1">Offer:</td>
                         <td class="text-left text-c2">
                             &#2352;<span id="savingPrice"> <%=o.getPercentage()*item.getPrice()/100%>   (<span id="savingPercentage"><%=o.getPercentage()%></span>%)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right text-c1">Price:</td>
+                        <td class="text-left text-c2">
+                            &#2352; <span id="currentPrice"><%=item.getPrice()-(o.getPercentage()*item.getPrice()/100)%> </span>
                         </td>
                     </tr>
                     <%} else if (item.getOffer().getOfferCode() == 202){
@@ -67,6 +79,12 @@
                         <td class="text-left text-c2">
                            &#2352;<span id="savingPrice"> <%=o.getPriceCut()%></span>
                     </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right text-c1">Price:</td>
+                        <td class="text-left text-c2">
+                            &#2352; <span id="currentPrice"><%=item.getPrice()-(o.getPriceCut())%> </span>
+                        </td>
                     </tr>
 
                     <%} else if(item.getOffer().getOfferCode() == 203){
@@ -90,8 +108,15 @@
                     </tbody>
                 </table>
             </div>
-            <div id="cod">Cash on delivery <span id="cod_elgiblity">eligible.</span></div>
+            <% if(item.getQuantity()>0){ %>
             <div id="availability"><span id="avail">In stock.</span></div>
+            <div id="numitems"><span id="numbitems">Quantity available : <%=item.getQuantity()%></span></div>
+            <%} else { %>
+
+            <div id="availability"><span id="avail">Out of stock.</span></div>
+            <%} %>
+
+
             <%--<div id="itemId" type="hidden"><%=item.getId()%></div>--%>
             <input type="hidden" value="<%=item.getId()%>" id='itemId' class='h_v'>
 
@@ -117,13 +142,6 @@
             </span>
             <img id="purchase_protection" src="/images/amazon_purchase_protection.JPG" class="img-responsive" width="248" alt="Purchase Protection">
             <div class="item-box">
-               <span>
-                   <a href="#">
-                       <div class="item-row">
-                           <span id="deliverLocation">Deliver to Bangalore 560100</span>
-                       </div>
-                   </a>
-               </span>
                 <div class="item-column">
                     <span class="dropdown">
                         <label>Quantity:</label>

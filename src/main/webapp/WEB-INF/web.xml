@@ -171,4 +171,16 @@
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <display-name>MyOrdersController</display-name>
+        <servlet-name>MyOrders</servlet-name>
+        <servlet-class>com.ooad.web.controller.MyOrdersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyOrders</servlet-name>
+        <url-pattern>/myorders</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

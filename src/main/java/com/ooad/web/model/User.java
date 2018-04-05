@@ -1,10 +1,8 @@
 package com.ooad.web.model;
 
 import com.ooad.web.dao.*;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.json.JSONObject;
 
-import javax.json.JsonObject;
 import javax.ws.rs.core.Response.Status;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -271,8 +269,8 @@ public class User {
         TransactionDao transactionDao = new TransactionDao();
         Transaction transaction = null;
         UserDao userDao = new UserDao();
-        UserAccount userAccount = userDao.getUserAccountFromId(id);
-        UserAccount amazonAccount = userDao.getUserAccountFromId(2);
+        UserAccount userAccount = userDao.getUserAccountFromUserId(id);
+        UserAccount amazonAccount = userDao.getUserAccountFromUserId(1);
         int currentAmount = amazonAccount.getAmount();
         if(order.grandTotal()<= userAccount.getAmount()){
             transaction = transactionDao.createTransaction(order,userAccount,1);
@@ -296,5 +294,26 @@ public class User {
         }
         return new JSONObject().put("status", Status.OK.getStatusCode())
                 .put("transaction", transaction.toJSON());
+    }
+
+    public Collection<Order> getAllOrders(int id){
+        //array //Goto Orders Table and get all the orders with user id
+        return new OrderDao().getOrdersByUserId(id);
+    }
+
+    public JSONObject itemDelivered(OrderItem orderItem) {
+        orderItem.setOrderItemStatus(OrderItemStatus.DELIVERED);
+        orderItem.save();
+        orderItem.getOrder().refreshStatus();
+        UserAccount amazonAccount = new UserDao().getUserAccountFromUserId(1);
+        UserAccount sellerAccount = new SellerDao().getUserAccountFromSellerId(orderItem.getItem().getSeller().getId());
+        int amount = (int) (orderItem.getItemPrice() * orderItem.getQuantity());
+        amazonAccount.setAmount(amazonAccount.getAmount()-amount);
+        sellerAccount.setAmount(sellerAccount.getAmount()+amount);
+        amazonAccount.save();
+        sellerAccount.save();
+        Transaction transaction = new TransactionDao().createTransaction(orderItem.getOrder(),sellerAccount,1 ,amount);
+        return new JSONObject().put("status",Status.OK.getStatusCode())
+                .put("transaction",transaction.toJSON());
     }
 }

@@ -114,6 +114,8 @@
                                                class="a-input-text a-span12 auth-autofocus auth-required-field">
                                         <br>
                                         <span class="error text-danger" id="emailError"></span>
+                                        <span class="error text-danger" id="verificationError"></span>
+
                                         <br>
                                         <%--<div class="form-group">
                                             <strong>Password</strong>

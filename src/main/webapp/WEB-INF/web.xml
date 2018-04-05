@@ -182,5 +182,15 @@
         <url-pattern>/myorders</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <display-name>VerifyRegisteredEmail</display-name>
+        <servlet-name>verifyemail</servlet-name>
+        <servlet-class>com.ooad.web.controller.VerifyRegisteredEmail</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>verifyemail</servlet-name>
+        <url-pattern>/verifyregisteredemail</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

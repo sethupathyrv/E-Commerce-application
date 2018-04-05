@@ -1,7 +1,11 @@
 package com.ooad.web.controller;
 
 import com.ooad.web.dao.UserDao;
+import com.ooad.web.utils.BCrypt;
+import com.ooad.web.utils.Constants;
+import com.ooad.web.utils.EmailUtil;
 
+import javax.mail.MessagingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,12 +38,30 @@ public class RegisterController extends HttpServlet {
         String un = request.getParameter("username");
         String pw = request.getParameter("psword");
         String email = request.getParameter("email");
+        String hash = EmailUtil.prepareRandomString(30);
+        String EmailVerificationHash = BCrypt.hashpw(hash, Constants.BCRYPT_SALT);
+        String message="";
+        if(!dao.isEmailExists(email)) {
+            dao.createUser(un, email, pw, EmailVerificationHash);
+            try {
+                EmailUtil.sendEmailRegistrationLink(email, hash, un);
+                message="Registation Link Was Sent To Your Mail Successfully. Please Verify Your Email";
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                System.out.print(e.getMessage());
+            }
+            pwOut.print(message);
+            response.setContentType("text/html");
+            RequestDispatcher view = request.getRequestDispatcher("jsp/login.jsp");
+            view.include(request, response); //index page is reloaded with text for new user to login
+        }else{
+            message="This Email was already registered";
+            pwOut.print(message);
+            response.setContentType("text/html");
+            RequestDispatcher view = request.getRequestDispatcher("jsp/register.jsp");
+            view.include(request, response); //index page is reloaded with text for new user to login
+        }
 
-        dao.createUser(un, email, pw);
-        pwOut.print("Registration Successful! Please Login.");
-        response.setContentType("text/html");
-        RequestDispatcher view = request.getRequestDispatcher("jsp/login.jsp");
-        view.include(request, response); //index page is reloaded with text for new user to login
 
     }
 }

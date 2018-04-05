@@ -22,11 +22,18 @@ public class UserDao {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 if (rs.getString("password").equals(password)) {
-                    final User user = getUser(email);
-                    status.put("status", Status.OK.getStatusCode());
-                    status.put("user", user.toJSON());
-                    status.put("token", TokenAuth.generateToken(user));
-                    status.put("errors", "");
+                    if(rs.getBoolean("isEnabled")) {
+                        final User user = getUser(email);
+                        status.put("status", Status.OK.getStatusCode());
+                        status.put("user", user.toJSON());
+                        status.put("token", TokenAuth.generateToken(user));
+                        status.put("errors", "");
+                    }else{
+                        status.put("status", Status.BAD_REQUEST.getStatusCode());
+                        final JSONObject errors = new JSONObject();
+                        errors.put("verification","Email not verified. Please verify it" );
+                        status.put("errors", errors);
+                    }
                 } else {
                     status.put("status", Status.BAD_REQUEST.getStatusCode());
                     final JSONObject errors = new JSONObject();
@@ -93,7 +100,7 @@ public class UserDao {
         return null;
     }
 
-    public JSONObject validateRegister(final String userName, final String email, final String password) {
+    /*public JSONObject validateRegister(final String userName, final String email, final String password) {
         JSONObject status = new JSONObject();
         try {
             Connection con = Database.getConnection();
@@ -119,15 +126,16 @@ public class UserDao {
         }
         return null;
     }
-
-    public User createUser(final String userName, final String email, final String password) {
+*/
+    public User createUser(final String userName, final String email, final String password, String EmailVerificationHash) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Users(userName,emailId,password) VALUES (?,?,?)");//add user to database
+                    .prepareStatement("INSERT INTO Users(userName,emailId,password,EmailVerificationHash) VALUES (?,?,?,?)");//add user to database
             ps.setString(1, userName);
             ps.setString(2, email);
             ps.setString(3, password);
+            ps.setString(4,EmailVerificationHash);
             ps.executeUpdate();
             con.close();
             return getUser(email);
@@ -211,4 +219,59 @@ public class UserDao {
     }
 
 
+    public boolean verifyEmailHash(String email,String hash) {
+        boolean verified = false;
+        try {
+            Connection con  = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT EmailVerificationHash FROM users WHERE emailId=?");
+            ps.setString(1,email);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String dbhash = rs.getString("EmailVerificationHash");
+                if(dbhash.equals(hash)){
+                    verified=true;
+                }
+            }
+            con.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return verified;
+    }
+
+    public void updateStatus(String email) {
+        try {
+            Connection con  = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE users SET isEnabled=? WHERE emailId=?");
+            ps.setBoolean(1,true);
+            ps.setString(2,email);
+            ps.executeUpdate();
+            con.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isEmailExists(String email) {
+        boolean isexist=false;
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE emailId=?");
+            ps.setString(1,email);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                isexist=true;
+            }
+            con.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isexist;
+    }
 }

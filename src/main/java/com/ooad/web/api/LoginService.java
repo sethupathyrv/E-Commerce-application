@@ -32,7 +32,7 @@ public class LoginService {
         return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
 
-    @POST
+    /*@POST
     @Path("/register")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,7 +46,7 @@ public class LoginService {
         final JSONObject jsonObject = userDao.validateRegister(userName, email, password);
         return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
-
+*/
     @GET
     @Path("/test")
     @Consumes(MediaType.TEXT_PLAIN)

@@ -19,6 +19,7 @@
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/index.css">
+
     <script src="js/index.js"></script>
 </head>
 <body>
@@ -96,7 +97,7 @@
                                             final Item item = items.get(i); %>
                                             <div class="col-md-4">
                                                 <div class='card'>
-                                                    <img class='card-img-top' src='<%= item.getUrl() %>' alt='card image cap'>
+                                                    <img class='card-img-top' src='<%= item.getUrl() %>' alt='card image cap' style="height: 160px; width: 160px">
                                                     <div class="card-body">
                                                         <h5 class="card-title"><%=item.getName()%></h5>
                                                         <p class="card-text">Price <%=item.getPrice()%></p>

@@ -14,7 +14,9 @@ function loginResponse(response) {
         if("psword" in response.errors){
             $("#passwordError").html(response.errors.psword);
         }
-
+        if("verification" in response.errors){
+            $('#verificationError').html(response.errors.verification);
+        }
     }
 }
 $(document).ready(function () {

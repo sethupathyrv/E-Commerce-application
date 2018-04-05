@@ -2,6 +2,8 @@ package com.ooad.web.model.Offer;
 
 import com.ooad.web.model.Cart;
 import com.ooad.web.model.CartItem;
+import com.ooad.web.model.Item;
+import org.json.JSONObject;
 
 public class DiscountOffer extends Offer {
     private float percentage;
@@ -24,9 +26,21 @@ public class DiscountOffer extends Offer {
         return 0;
     }
 
+    public int applyOffer(Item i){
+        Float price = i.getPrice();
+        int discountPrice = (int) ((price*percentage)/100);
+        return discountPrice;
+    }
+
     @Override
     public int getOfferCode() {
         return 201;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        return new JSONObject().put("percentage",this.percentage )
+                .put("offerCode",getOfferCode() );
     }
 
     public float getPercentage() {

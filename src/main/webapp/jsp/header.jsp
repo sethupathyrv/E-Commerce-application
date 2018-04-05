@@ -14,20 +14,21 @@
        }
    }
 %>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/bootstrap-dropdownhover.css">
 <link rel="stylesheet" href="../css/header.css">
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script src="../js/bootstrap-dropdownhover.js"></script>
 <script src="js/header.js"></script>
 <header class="container-fluid header">
     <div class="row nav-belt ">
         <div class="logo col-lg-2 col-md-2">
             <a href="/" class="nav-logo-link"><img src="../images/logo.png" alt=""></a>
-            <a href="#" class="nav-logo-tagline">Try Prime</a>
         </div>
         <div class="col-lg-6 col-md-6">
             <div class="row  search-box ">
@@ -68,7 +69,7 @@
                             <a href="#" id="nav-deliver">
                                 <span style="font-size: 12px;font-weight: 400; ">Deliver to
                                     <%= (user==null)? "" : user.getUserName() %> </span>
-                                <br>Bangalore 560100
+                                <br><p id="loc"></p>
                             </a>
                         </div>
                     </div>
@@ -104,11 +105,11 @@
                 <a href="#">
                     <%= (user==null)? "your":user.getUserName()%>
                     Amazon.in</a> &nbsp;&nbsp;&nbsp;
-                <a href="#">Today's deals</a>&nbsp;&nbsp;&nbsp;
                 <a href="#">Amazon Pay</a>&nbsp;&nbsp;&nbsp;
                 <a href="/sellerlogin">Sell</a>&nbsp;&nbsp;&nbsp;
-                <a href="#">Customer Service</a> &nbsp;&nbsp;
-                <a href="/admin">admin</a> &nbsp;&nbsp;
+                <% if(user!=null && user.getEmailId().equals("admin@admin.com")) { %>
+                    <a href="/admin">admin</a> &nbsp;&nbsp;
+                <%}%>
             </div>
         </div>
         <div class="col-lg-4 col-md-3">
@@ -131,7 +132,7 @@
                             <li><a href="#" id="nav-logout">Logout</a></li>
                             <li><a href="#">Your account</a></li>
                             <li><a href="#">Your List</a></li>
-                            <li><a href="#">Your Orders</a></li>
+                            <li><a href="/myorders">Your Orders</a></li>
                         </ul>
                     </div>
                     <%}%>

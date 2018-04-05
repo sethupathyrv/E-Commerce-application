@@ -43,6 +43,7 @@
 <script src="../js/jquery.cookie.js"></script>
 <script src="../js/addItem.js"></script>
 
+<div class="container-fluid">
 <%-- ..........Logo header...........--%>
 <div class="row nav-belt ">
     <header class="container-fluid header">
@@ -78,9 +79,9 @@
             <!-- Collection of nav links and other content for toggling -->
             <div id="navbarCollapse" class="collapse navbar-collapse">
                 <ul class="nav nav-tabs">
-                    <li><a href="/jsp/homepageSeller.jsp">Dashboard</a></li>
+                    <li><a href="/seller">Dashboard</a></li>
                     <li><a href="/infoseller">Seller Information </a></li>
-                    <li class="active"><a href="/jsp/addItem.jsp">Add Item</a></li>
+                    <li class="active"><a href="/seller/add">Add Item</a></li>
                     <li><a href="#" id="sellerLogout"> Logout</a></li>
                     <li><a href="/infoseller"> <%=seller.getUserName()%></a></li>
                 </ul>
@@ -125,6 +126,9 @@
 
                         <label for="itemBarcode" class="a-form-label">Item Barcode*</label>
                         <input class="form-control" type="number" name="itemBarcode" id="itemBarcode" autocomplete="off" required="true"/>
+
+                        <label for="itemColour" class="a-form-label">Colour*</label>
+                        <input class="form-control" type="text" name="itemColour" id="itemColour" autocomplete="off" required="true"/>
 
 
                         <label>Category*:</label>
@@ -180,8 +184,9 @@
             </span>
         </div>
     </div>
+
 </form>
 
-
+</div>
 </body>
 </html>

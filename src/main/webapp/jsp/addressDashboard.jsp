@@ -157,7 +157,7 @@
 
 
                 <div class="cl"></div>
-        </div>
+
         </form>
 
         <div class="a-divider a-divider-section">
@@ -306,6 +306,9 @@
                             margin: 0 !important;
                         }
                     </style>
+                </div>
+            </div>
+        </div>
 </body>
 
 </html>

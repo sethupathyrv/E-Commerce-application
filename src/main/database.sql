@@ -74,17 +74,19 @@ create table Offers
   engine=InnoDB
 ;
 
-create table OrderItems
+CREATE TABLE OrderItems
 (
-  id int auto_increment
-    primary key,
-  orderId int null,
-  itemId int null,
-  itemPrice float null,
-  quantity int null
+  id        INT AUTO_INCREMENT
+    PRIMARY KEY,
+  orderId   INT   NULL,
+  itemId    INT   NULL,
+  itemPrice FLOAT NULL,
+  quantity  INT   NULL,
+  status    INT   NULL
 )
-  engine=InnoDB
-;
+  ENGINE = InnoDB;
+
+
 
 create table Orders
 (
@@ -144,22 +146,22 @@ create table UserAddresses
   engine=InnoDB
 ;
 
-create table Users
+CREATE TABLE users
 (
-  id int auto_increment
-    primary key,
-  userName varchar(255) not null,
-  emailId varchar(255) not null,
-  password varchar(255) not null,
-  isEnabled tinyint(1) default '1' not null,
-  defaultAddressId int default '-1' null,
-  constraint Users_id_uindex
-  unique (id),
-  constraint users_emailId_uindex
-  unique (emailId)
+  id                    INT AUTO_INCREMENT
+    PRIMARY KEY,
+  userName              VARCHAR(255)           NOT NULL,
+  emailId               VARCHAR(255)           NOT NULL,
+  password              VARCHAR(255)           NOT NULL,
+  isEnabled             TINYINT(1) DEFAULT '0' NOT NULL,
+  defaultAddressId      INT DEFAULT '-1'       NULL,
+  EmailVerificationHash VARCHAR(255)           NULL,
+  CONSTRAINT Users_id_uindex
+  UNIQUE (id),
+  CONSTRAINT users_emailId_uindex
+  UNIQUE (emailId)
 )
-  engine=InnoDB
-;
+  ENGINE = InnoDB;
 
 CREATE TABLE SubCategories
 (

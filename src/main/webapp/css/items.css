@@ -1,0 +1,92 @@
+.filter {
+
+}
+
+.filter .filterQuantifier {
+    color: rgb(17,17,17);
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 18px;
+}
+
+.filter .priceInputRow {
+    height: 31px;
+}
+
+.filter .filterInput {
+    padding: 3px 7px 3px 18px;
+    width:65px;
+    background-color: #fff;
+    height: 31px;
+    border: 1px solid #a6a6a6;
+    border-top-color: #949494;
+    border-radius:3px;
+    box-shadow: 0 1px 0 rgba(255,255,255,.5), 0 1px 0 rgba(0,0,0,.07) inset;
+    margin-top: 6px!important;
+    margin-left: 3px;
+}
+
+.filter .filterInput :focus {
+    border-color: #e77600;
+    box-shadow: 0 0 3px 2px rgba(228,121,17,.5);
+    background-color: #fff;
+    height: 31px;
+    padding: 3px 7px;
+    line-height: normal;
+}
+
+.filter .filterButton {
+    cursor: pointer;
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: normal;
+    height: 29px;
+    width: 37px;
+    margin-left: 3px;
+}
+
+.item {
+    height: 415px;
+}
+
+.item .productImage{
+    vertical-align: top;
+    max-width: 100%;
+    border : 0;
+    width: 160px;
+    height: 160px;
+}
+
+.item .productName{
+    font-size: 15px!important;
+    font-weight: 400!important;
+    font-style:normal!important;
+    text-transform: none!important;
+    text-decoration: none!important;
+    color: #0066c0
+}
+
+.item .productName :hover {
+    cursor: pointer!important;
+    color: #c45500!important;
+    outline: 0!important;
+}
+
+.item .productSeller {
+    line-height: 1.25!important;
+    font-size: 12px!important;
+    color: #555!important;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+.item .productPrice {
+    line-height: 1.25!important;
+    font-size: 14px!important;
+    font-weight: 700!important;
+    color: #B12704!important;
+    word-wrap: break-word;
+    box-sizing: border-box;
+}

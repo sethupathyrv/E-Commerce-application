@@ -6,6 +6,7 @@
 package com.ooad.web.dao;
 
 import com.ooad.web.model.Seller;
+import com.ooad.web.model.UserAccount;
 import com.ooad.web.utils.Constants;
 import com.ooad.web.utils.Database;
 import com.ooad.web.utils.TokenAuth;
@@ -160,35 +161,6 @@ public class SellerDao {
         return null;
     }
 
-   /* public boolean saveSeller(Seller seller){
-        try {
-            System.out.println("reached database");
-            System.out.println(seller);
-            Connection con = Database.getConnection();
-            PreparedStatement ps = con
-                    .prepareStatement("UPDATE Sellers SET storeName = ? ,mobileNumber = ?,streetAddress = ?," +
-                            "landmark = ? ,city = ? ,state = ?,pincode = ?,country = ? "+
-                            " WHERE id = ?");
-            ps.setString(1, seller.getStoreName());
-            ps.setInt(2, seller.getMobileNumber());
-            ps.setString(3, seller.getStreetAddress());
-            ps.setString(4, seller.getLandmark());
-            ps.setString(5, seller.getCity());
-            ps.setString(6, seller.getState());
-            ps.setInt(7, seller.getPincode());
-            ps.setString(8, seller.getCountry());
-            ps.setInt(9,seller.getId());
-            ps.executeUpdate();
-            System.out.println("database updated");
-            con.close();
-            System.out.println("reached database end");
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-*/
     public boolean updateSeller(Seller seller){
         try {
             System.out.println("reached database");
@@ -238,5 +210,24 @@ public class SellerDao {
 
         return new Seller(id, userName, emailId, password, isEnabled, storeName, mobileNumber, streetAddress,
                 landmark, city, state, pincode, country );
+    }
+
+    public UserAccount getUserAccountFromSellerId(int sellerId){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Accounts WHERE sellerId = ?");
+            ps.setInt(1,sellerId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                UserAccount ua = new UserAccount(rs.getInt("id"),rs.getString("name"),rs.getInt("number"),rs.getInt("amount"));
+                con.close();
+                return ua;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

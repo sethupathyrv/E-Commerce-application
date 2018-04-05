@@ -7,6 +7,7 @@ import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class OrderDao {
     public Order createEmptyOrder(User u,int addressId){
@@ -40,17 +41,18 @@ public class OrderDao {
     public OrderItem createOrderItem(Item item, Order o, float price, int quantity) {
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("INSERT INTO OrderItems(orderId, itemId, itemPrice, quantity)" +
-                    "VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement("INSERT INTO OrderItems(orderId, itemId, itemPrice, quantity,status)" +
+                    "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,o.getId() );
             ps.setInt(2,item.getId() );
             ps.setFloat(3,price );
             ps.setInt(4, quantity);
+            ps.setInt(5,OrderItemStatus.WAITING_FOR_SELLER.getStatusCode());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             OrderItem oi = null;
             if(rs.next()){
-                oi=new OrderItem(rs.getInt(1),item,o,price,quantity);
+                oi=new OrderItem(rs.getInt(1),item,o,price,quantity,OrderItemStatus.WAITING_FOR_SELLER);
             }
             con.close();
             return oi;
@@ -146,11 +148,99 @@ public class OrderDao {
             int itemId = rs.getInt("itemId");
             float itemPrice = rs.getFloat("itemPrice");
             int quantity = rs.getInt("quantity");
+            int status = rs.getInt("status");
             Item item = Item.find(itemId);
-            return new OrderItem(id,item,o,itemPrice,quantity);
+            return new OrderItem(id,item,o,itemPrice,quantity,OrderItemStatus.getOrderItemStatus(status));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+
+    private OrderItem orderItem(int id, int orderId) {
+        Order o= Order.find(orderId);
+        return o.getOrderItemById(id);
+    }
+
+    public Collection<OrderItem> getSellerOrderItems(Seller seller) {
+        ArrayList<OrderItem> sellerOrderItems = new ArrayList<OrderItem>();
+        try {
+            Connection con=Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT OI.* FROM OrderItems AS OI JOIN Items as I ON OI.itemId = I.id  WHERE I.sellerId = ? ORDER BY OI.id DESC ");
+            ps.setInt(1,seller.getId());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("id");
+                int orderId = rs.getInt("orderId");
+                OrderItem oi = orderItem(id,orderId);
+                sellerOrderItems.add(oi);
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return sellerOrderItems;
+    }
+
+
+    public OrderItem getOrderItem(int id) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT orderId FROM OrderItems WHERE id= ?");
+            ps.setInt(1,id );
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int orderId = rs.getInt("orderId");
+                return orderItem(id,orderId );
+            }
+            con.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean saveOrderItem(OrderItem orderItem) {
+        Connection con = null;
+        try {
+            con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE OrderItems SET status = ? WHERE id = ?");
+            ps.setInt(1,orderItem.getOrderItemStatus().getStatusCode());
+            ps.setInt(2,orderItem.getId() );
+            ps.executeUpdate();
+            con.close();
+            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Collection<Order> getOrdersByUserId(int userId){
+        try {
+            Connection con = Database.getConnection();
+            final ArrayList<Order> orders = new ArrayList<Order>();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Orders WHERE Orders.userId = ? ORDER BY Orders.id DESC ");
+            ps.setInt(1,userId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                final Order o = orderBuilder(rs);
+                orders.add(o);
+            }
+            con.close();
+            return orders;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

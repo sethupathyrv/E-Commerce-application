@@ -6,6 +6,7 @@
 package com.ooad.web.model;
 
 import com.ooad.web.dao.ItemDao;
+import com.ooad.web.dao.OrderDao;
 import com.ooad.web.dao.SellerDao;
 import com.ooad.web.utils.Constants;
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Seller {
     private int id;
@@ -177,6 +179,7 @@ public class Seller {
         final int SubCategoryId = item.getInt("subCategoryId");
         final int offerType = item.getInt("offerType");
         final int itemBarcode = item.getInt("itemBarcode");
+        final String itemColour = item.getString("itemColour");
         int discountPercentage = 0;
         int priceOffer = 0;
         final ItemDao itemDao=new ItemDao();
@@ -220,7 +223,7 @@ public class Seller {
         }
 
         final boolean valid=itemDao.createItem(itemName,itemPrice,imageUrl,this.id,itemDescription,
-                itemBrand,itemHeight,itemWidth,itemQuantity,SubCategoryId,offerId,itemBarcode);
+                itemBrand,itemHeight,itemWidth,itemQuantity,SubCategoryId,offerId,itemBarcode, itemColour);
         JSONObject jsonObject=new JSONObject();
         if(valid){
             jsonObject.put("status", Response.Status.CREATED.getStatusCode());
@@ -238,11 +241,6 @@ public class Seller {
         return sellerDao.getSeller(id);
     }
 
-    /*public boolean save() {
-        System.out.println("reached model");
-        return new SellerDao().saveSeller(this);
-    }*/
-
     public JSONObject updateSeller(JSONObject req, int id) {
         Seller s = Seller.find(id);
         String str = req.getString("storeName");
@@ -259,5 +257,20 @@ public class Seller {
         SellerDao sellerDao = new SellerDao();
         sellerDao.updateSeller(s);
         return new JSONObject().put("status", Status.OK.getStatusCode());
+    }
+
+    public Collection<OrderItem> getOrderItems(){
+        return new OrderDao().getSellerOrderItems(this);
+    }
+
+    public JSONObject dispatchOrderItem(OrderItem oi){
+        if(oi.getOrderItemStatus() != OrderItemStatus.WAITING_FOR_SELLER){
+            return new JSONObject().put("status", Status.BAD_REQUEST.getStatusCode())
+                    .put("error","Order Item already dispatched or does not exist" );
+        }
+        oi.setOrderItemStatus(OrderItemStatus.SHIPPED);
+        oi.save();
+        oi.getOrder().refreshStatus();
+        return new JSONObject().put("status",Status.OK.getStatusCode() );
     }
 }

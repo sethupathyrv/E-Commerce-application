@@ -43,7 +43,7 @@
             <div class="a-section a-spacing-medium a-text-center">
 
 
-                <a class="a-link-nav-icon" tabindex="-1" href="https://www.amazon.in/ref=ap_frn_logo">
+                <a class="a-link-nav-icon" tabindex="-1" href="/">
 
 
                     <i class="a-icon a-icon-logo" aria-label="Amazon"><span class="a-icon-alt">Amazon</span></i>

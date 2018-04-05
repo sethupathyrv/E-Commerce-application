@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -91,36 +92,27 @@ public class ItemService {
         return Response.status(Status.OK).entity(j.toString()).build();
     }
 
-    @Path("/{category}/{subcategory}/{sortby}")
+    @Path("/{category}/{subCategory}/{sortby}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getItemsfromCategory(@PathParam("category") String category,@PathParam("subcategory") String subcategory,@PathParam("sortby") String sortby) {
-
-        String CategoryName = category;
-        String SubCategoryName = subcategory;
-        String SortBy = sortby;
+    public Response getItemsfromCategory(@PathParam("category") String category,@PathParam("subCategory") String subCategory,@PathParam("sortby") String sortby) {
+        //TODO SortBy not Implemented
         final JSONArray j = new JSONArray();
-        ArrayList<Item> items = Item.getItemsfromCategory(CategoryName, SubCategoryName);
-       /* if(sortby.equals("price:dec")){
-            Collections.sort(items, new Comparator<Item>() {
-                @Override
-                public int compare(Item item1, Item item2) {
-                    return (int) (item2.getPrice()-item1.getPrice());
-                }
-            });
-
-        }
-        else if (sortby.equals("price:asc")){
-            Collections.sort(items, new Comparator<Item>() {
-                @Override
-                public int compare(Item item1, Item item2) {
-                    return (int) (item1.getPrice()-item2.getPrice());
-                }
-            });
-
-        }*/
+        ArrayList<Item> items = Item.getItemsfromCategory(category, subCategory);
         for (Item item : items) {
                 j.put(item.toJSON());
+        }
+        return Response.status(Status.OK).entity(new JSONObject().put("items", j).toString()).build();
+    }
+
+    @Path("/{category}/{subCategory}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getItemsfromCategory(@PathParam("category") String category,@PathParam("subCategory") String subCategory) {
+        final JSONArray j = new JSONArray();
+        ArrayList<Item> items = Item.getItemsfromCategory(category, subCategory);
+        for (Item item : items) {
+            j.put(item.toJSON());
         }
         return Response.status(Status.OK).entity(new JSONObject().put("items", j).toString()).build();
     }
@@ -160,35 +152,23 @@ public class ItemService {
         JSONObject re = new JSONObject(req);
         int max = re.getInt("max");
         int min = re.getInt("min");
-        String response = re.getString("json");
-        JSONObject resp = new JSONObject(response);
-//        JSONObject resp = re.getJSONObject("json");
+        JSONObject resp = re.getJSONObject("data");
+        String clr=re.getString("color");
         JSONArray items = resp.getJSONArray("items");
         JSONArray items_new = new JSONArray();
         for (int i = 0; i < items.length(); i++) {
-//            String jstr = items.getString(i);
-//            JSONObject json = new JSONObject(jstr);
-//            JSONObject json = new JSONObject(items.getString(i));
             JSONObject json = (JSONObject) items.get(i);
             int price = json.getInt("price");
-            if (min <= price && price <= max){
+            String itemcolour=json.getString("itemColour");
+            if ((min <= price && price <= max) && clr.equals(itemcolour)){
                 items_new.put(json);
             }
-//            System.out.println(items_new);
-//            System.out.println(price);
-//            System.out.println(json.getClass().getName());
-//            System.out.println(json);
         }
         JSONObject resp2 = new JSONObject();
         resp2.put("items",items_new);
-//        System.out.println(resp2);
-//        for (Object item: items) {
-//            System.out.println(item);
-//        }
-//        System.out.println(items.length());
-//        System.out.println(resp);
         return Response.status(Status.OK).entity(resp2.toString()).build();
     }
+
     @Path("addcategory")
     @POST
     @Consumes({MediaType.TEXT_PLAIN})
@@ -204,5 +184,52 @@ public class ItemService {
         itemCategoryDao.createCategory(re);
         return null;
     }
+
+    @Path("/updatecart")
+    @PUT
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateAddress(String req,@HeaderParam("authToken") String token) {
+        JSONObject reqJson = new JSONObject(req);
+        User user = TokenAuth.getUserFromToken(token);
+        if (user == null) {
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        Cart cart = user.getCart();
+        int quantity = reqJson.getInt("quantity");
+        int id = reqJson.getInt("itemid");
+        cart.updateCart(quantity,id);
+        return null;
+    }
+
+    @Path("dispatchitem/{orderItemId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response dispatchItem(@HeaderParam("sellerAuthToken") String token,@PathParam("orderItemId") int orderItemId) {
+        Seller seller = TokenAuth.getSellerFromToken(token);
+        if (seller == null) {
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        OrderItem orderItem = OrderItem.find(orderItemId);
+        JSONObject resp = seller.dispatchOrderItem(orderItem);
+        return Response.status(Status.OK).entity(resp.toString()).build();
+    }
+
+    @Path("delivered/{orderItemId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response itemDelivered(@HeaderParam("authToken") String token, @PathParam("orderItemId") int orderItemId){
+        User u = TokenAuth.getUserFromToken(token);
+        if(u == null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.UNAUTHORIZED.getStatusCode())
+                    .toString()).build();
+        }
+        OrderItem orderItem = OrderItem.find(orderItemId);
+        JSONObject resp = u.itemDelivered(orderItem);
+        return Response.status(Status.OK).entity(resp.toString()).build();
+    }
+
 
 }

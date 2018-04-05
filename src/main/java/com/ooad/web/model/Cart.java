@@ -4,6 +4,7 @@ import com.ooad.web.dao.CartDao;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Cart {
@@ -97,6 +98,13 @@ public class Cart {
 
     public float getGrandTotal(){
         return this.getSubTotal() - this.promotionApplied;
+    }
+
+    public void updateCart(int quantity,int id){
+        ArrayList<CartItem> items = (ArrayList<CartItem>) getCartItems();
+        CartItem cartItem = items.get(id);
+        cartItem.setQuantity(quantity);
+        cartItem.saveCartItem();
     }
 }
 

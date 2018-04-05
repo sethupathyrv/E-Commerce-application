@@ -161,8 +161,6 @@
         <servlet-name>Items</servlet-name>
         <url-pattern>/items</url-pattern>
     </servlet-mapping>
-
-
     <servlet>
         <display-name>AdminController</display-name>
         <servlet-name>Admin</servlet-name>
@@ -172,5 +170,27 @@
         <servlet-name>Admin</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <display-name>MyOrdersController</display-name>
+        <servlet-name>MyOrders</servlet-name>
+        <servlet-class>com.ooad.web.controller.MyOrdersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyOrders</servlet-name>
+        <url-pattern>/myorders</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>VerifyRegisteredEmail</display-name>
+        <servlet-name>verifyemail</servlet-name>
+        <servlet-class>com.ooad.web.controller.VerifyRegisteredEmail</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>verifyemail</servlet-name>
+        <url-pattern>/verifyregisteredemail</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

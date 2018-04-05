@@ -1,8 +1,6 @@
 package com.ooad.web.dao;
 
-import com.ooad.web.model.CartItem;
-import com.ooad.web.model.User;
-import com.ooad.web.model.UserAccount;
+import com.ooad.web.model.*;
 import com.ooad.web.utils.Constants;
 import com.ooad.web.utils.Database;
 import com.ooad.web.utils.TokenAuth;
@@ -24,11 +22,18 @@ public class UserDao {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 if (rs.getString("password").equals(password)) {
-                    final User user = getUser(email);
-                    status.put("status", Status.OK.getStatusCode());
-                    status.put("user", user.toJSON());
-                    status.put("token", TokenAuth.generateToken(user));
-                    status.put("errors", "");
+                    if(rs.getBoolean("isEnabled")) {
+                        final User user = getUser(email);
+                        status.put("status", Status.OK.getStatusCode());
+                        status.put("user", user.toJSON());
+                        status.put("token", TokenAuth.generateToken(user));
+                        status.put("errors", "");
+                    }else{
+                        status.put("status", Status.BAD_REQUEST.getStatusCode());
+                        final JSONObject errors = new JSONObject();
+                        errors.put("verification","Email not verified. Please verify it" );
+                        status.put("errors", errors);
+                    }
                 } else {
                     status.put("status", Status.BAD_REQUEST.getStatusCode());
                     final JSONObject errors = new JSONObject();
@@ -95,7 +100,7 @@ public class UserDao {
         return null;
     }
 
-    public JSONObject validateRegister(final String userName, final String email, final String password) {
+    /*public JSONObject validateRegister(final String userName, final String email, final String password) {
         JSONObject status = new JSONObject();
         try {
             Connection con = Database.getConnection();
@@ -121,15 +126,16 @@ public class UserDao {
         }
         return null;
     }
-
-    public User createUser(final String userName, final String email, final String password) {
+*/
+    public User createUser(final String userName, final String email, final String password, String EmailVerificationHash) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Users(userName,emailId,password) VALUES (?,?,?)");//add user to database
+                    .prepareStatement("INSERT INTO Users(userName,emailId,password,EmailVerificationHash) VALUES (?,?,?,?)");//add user to database
             ps.setString(1, userName);
             ps.setString(2, email);
             ps.setString(3, password);
+            ps.setString(4,EmailVerificationHash);
             ps.executeUpdate();
             con.close();
             return getUser(email);
@@ -138,6 +144,24 @@ public class UserDao {
         }
         return null;
     }
+
+    public void createDummyAccount(int userId, String userName, String accountNumber) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Accounts(userId, name, number, amount) VALUES (?,?,?,?)");
+            ps.setInt(1,userId);
+            ps.setString(2,userName);
+            ps.setInt(3, Integer.parseInt(accountNumber));
+            ps.setInt(4,77777);
+            ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean save(User user) {
         try {
             Connection con = Database.getConnection();
@@ -154,13 +178,13 @@ public class UserDao {
         }
         return false;
     }
-    public UserAccount getUserAccountFromId(int userId){
+    public UserAccount getUserAccountFromUserId(int userId){
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Accounts WHERE userId=?");
             ps.setInt(1,userId);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            if(rs.next()){
                 UserAccount ua = new UserAccount(rs.getInt("id"),rs.getString("name"),rs.getInt("number"),rs.getInt("amount"));
                 con.close();
                 return ua;
@@ -174,6 +198,8 @@ public class UserDao {
         }
         return null;
     }
+
+
 
     public boolean save(UserAccount userAccount) {
         try {
@@ -190,5 +216,62 @@ public class UserDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+    public boolean verifyEmailHash(String email,String hash) {
+        boolean verified = false;
+        try {
+            Connection con  = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT EmailVerificationHash FROM users WHERE emailId=?");
+            ps.setString(1,email);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String dbhash = rs.getString("EmailVerificationHash");
+                if(dbhash.equals(hash)){
+                    verified=true;
+                }
+            }
+            con.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return verified;
+    }
+
+    public void updateStatus(String email) {
+        try {
+            Connection con  = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE users SET isEnabled=? WHERE emailId=?");
+            ps.setBoolean(1,true);
+            ps.setString(2,email);
+            ps.executeUpdate();
+            con.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isEmailExists(String email) {
+        boolean isexist=false;
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE emailId=?");
+            ps.setString(1,email);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                isexist=true;
+            }
+            con.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isexist;
     }
 }

@@ -22,11 +22,11 @@ import java.util.List;
 public class ItemDao {
     public boolean createItem(final String name, final float price, final String url, final int sellerId,
                               String description, final String brand, float height, float width,int quantity,
-                              int subCategoryId,int offerId,int itemBarcode) {
+                              int subCategoryId,int offerId,int itemBarcode, final String itemColour) {
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con
-                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId,description,brand,height,width,quantity,subCategoryId,offerId,itemBarcode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+                    .prepareStatement("INSERT INTO Items(name,price,url,sellerId,description,brand,height,width,quantity,subCategoryId,offerId,itemBarcode,itemColour) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
             ps.setString(1, name);
             ps.setFloat(2, price);
             ps.setString(3, url);
@@ -39,6 +39,7 @@ public class ItemDao {
             ps.setInt(10,subCategoryId);
             ps.setInt(11,offerId);
             ps.setInt(12,itemBarcode);
+            ps.setString(13,itemColour);
             ps.executeUpdate();
             con.close();
             return true;
@@ -71,6 +72,26 @@ public class ItemDao {
             con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Items WHERE itemBarcode= ?");
             ps.setInt(1,barcode );
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Item item = itemBuilder(rs);
+                con.close();
+                return item;
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public Item getItemColour(String itemcolour){
+        Connection con = null;
+        try {
+            con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Items WHERE itemColour= ?");
+            ps.setString(1,itemcolour );
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 Item item = itemBuilder(rs);
@@ -147,10 +168,11 @@ public class ItemDao {
         final int offerId = rs.getInt("offerId");
         final int subCategoryId = rs.getInt("SubCategoryId");
         final int itemBarcode = rs.getInt("itemBarcode");
+        final String itemColour=rs.getString("itemColour");
         SellerDao sellerDao = new SellerDao();
         Seller seller = sellerDao.getSeller(sellerId);
         return new Item(id, name, price, url, quantity, seller, itemDescription, brand, height,
-                width, getItemDetails(id),getOffer(offerId),getItemSubCategory(subCategoryId),itemBarcode);
+                width, getItemDetails(id),getOffer(offerId),getItemSubCategory(subCategoryId),itemBarcode,itemColour);
     }
     private ItemSubCategory getItemSubCategory(int subCategoryId){
         try {
@@ -246,6 +268,7 @@ public class ItemDao {
         }
         return itemDetailsArray;
     }
+
     public Collection<Item> getItemsFromSubCategory(String CategoryName,String SubCategoryName){
         try {
             Connection con = Database.getConnection();

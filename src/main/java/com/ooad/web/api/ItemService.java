@@ -5,6 +5,7 @@
 
 package com.ooad.web.api;
 
+import com.ooad.web.dao.CartDao;
 import com.ooad.web.dao.ItemCategoryDao;
 import com.ooad.web.dao.ItemDao;
 import com.ooad.web.model.*;
@@ -231,5 +232,19 @@ public class ItemService {
         return Response.status(Status.OK).entity(resp.toString()).build();
     }
 
+    @Path("/directbuy")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response directBuy(@HeaderParam("authToken")String token,String req){
+        JSONObject jreq = new JSONObject(req);
+        int itemId = jreq.getInt("itemId");
+        int quantity = jreq.getInt("quantity");
+        User u = TokenAuth.getUserFromToken(token);
+        u.getCart().emptyCart();
+        CartDao cartDao = new CartDao();
+        cartDao.insertItem(u.getId(), itemId,quantity );
+        return Response.status(Status.OK).entity(new JSONObject().put("status",Status.OK.getStatusCode()).toString()).build();
+    }
 
 }

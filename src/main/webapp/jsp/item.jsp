@@ -154,7 +154,7 @@
                           <option value="4">4</option>
                         </select>--%>
 
-                        <input class="form-control" type="number" name="quantity" id="quantity" autocomplete="off" required="true"/>
+                        <input class="form-control" type="number" value="1" name="quantity" id="quantity" autocomplete="off" required="true"/>
 
 
                     </span>
@@ -165,7 +165,7 @@
                     <input id="addtocart"type="button" class="btn1" value="Add to cart">
                 </div>
                 <div>
-                    <input type="button" class="btn1" value="Buy now">
+                    <input type="button" class="btn1" id="directBuy" value="Buy now">
                 </div>
 
             </div>

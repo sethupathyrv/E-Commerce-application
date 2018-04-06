@@ -33,4 +33,9 @@ public class FreeItem extends Item {
     public Offer getOffer(){
         return new EmptyOffer();
     }
+
+    @Override
+    public int getEffectivePrice(){
+        return 0;
+    }
 }

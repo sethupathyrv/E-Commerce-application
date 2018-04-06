@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.crypto.Data;
 import java.sql.*;
+import java.util.Collection;
 
 public class UserDao {
 
@@ -223,11 +224,11 @@ public class UserDao {
         boolean verified = false;
         try {
             Connection con  = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT EmailVerificationHash FROM users WHERE emailId=?");
+            PreparedStatement ps = con.prepareStatement("SELECT emailVerificationHash FROM users WHERE emailId=?");
             ps.setString(1,email);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                String dbhash = rs.getString("EmailVerificationHash");
+                String dbhash = rs.getString("emailVerificationHash");
                 if(dbhash.equals(hash)){
                     verified=true;
                 }
@@ -274,4 +275,6 @@ public class UserDao {
         }
         return isexist;
     }
+
+//    private WishListItem/
 }

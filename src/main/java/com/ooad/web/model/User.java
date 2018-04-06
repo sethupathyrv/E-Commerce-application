@@ -143,7 +143,7 @@ public class User {
             Order o = orderDao.createEmptyOrder(this, addressId);
             for (CartItem c : cart.getCartItems()) {
                 Item item = c.getItem();
-                float price = c.getItem().getPrice();
+                float price = c.getItem().getEffectivePrice();
                 int quantity = c.getQuantity();
                 OrderItem oi = orderDao.createOrderItem(item, o, price, quantity);
                 if (oi != null) {
@@ -315,5 +315,9 @@ public class User {
         Transaction transaction = new TransactionDao().createTransaction(orderItem.getOrder(),sellerAccount,1 ,amount);
         return new JSONObject().put("status",Status.OK.getStatusCode())
                 .put("transaction",transaction.toJSON());
+    }
+
+    public Collection<Item> getUserWishList(){
+        return null;
     }
 }

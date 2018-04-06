@@ -54,6 +54,10 @@ function addItemtoCartResponse(response) {
 }
 
 function directBuy(response) {
-    window.location.replace("/checkout");
+    if(response.status == 200){
+        window.location.replace("/checkout");
+    }else{
+        alert(response.error);
+    }
 }
 

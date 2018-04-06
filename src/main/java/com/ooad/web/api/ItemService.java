@@ -243,8 +243,14 @@ public class ItemService {
         User u = TokenAuth.getUserFromToken(token);
         u.getCart().emptyCart();
         CartDao cartDao = new CartDao();
-        cartDao.insertItem(u.getId(), itemId,quantity );
-        return Response.status(Status.OK).entity(new JSONObject().put("status",Status.OK.getStatusCode()).toString()).build();
+        Item i = Item.find(itemId);
+        if(i.getQuantity() > quantity) {
+            cartDao.insertItem(u.getId(), itemId, quantity);
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
+        }else{
+            return Response.status(Status.OK).entity(new JSONObject().put("status",Status.BAD_REQUEST.getStatusCode())
+                    .put("error","Quantity Exeeded").toString()).build();
+        }
     }
 
 }

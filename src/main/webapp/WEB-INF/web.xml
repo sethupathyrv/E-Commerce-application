@@ -171,6 +171,16 @@
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <display-name>WishList</display-name>
+        <servlet-name>wishList</servlet-name>
+        <servlet-class>com.ooad.web.controller.WishListController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>wishList</servlet-name>
+        <url-pattern>/list</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <display-name>MyOrdersController</display-name>
@@ -191,6 +201,7 @@
         <servlet-name>verifyemail</servlet-name>
         <url-pattern>/verifyregisteredemail</url-pattern>
     </servlet-mapping>
+
 
 
 </web-app>

@@ -317,7 +317,8 @@ public class User {
                 .put("transaction",transaction.toJSON());
     }
 
-    public Collection<Item> getUserWishList(){
-        return null;
+    public ArrayList<WishListItem> getUserWishList(){
+        UserDao userDao = new UserDao();
+        return userDao.getWishListByUserId(this.id);
     }
 }

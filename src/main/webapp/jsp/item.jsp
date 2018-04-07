@@ -145,18 +145,7 @@
                 <div class="item-column">
                     <span class="dropdown">
                         <label>Quantity:</label>
-                        <!-- <select id="quantity" class="a-dropdown" name="quantity" autocomplete="off" tabindex="-1"></select>
-                         <span id="a-autoid-5" class="a-button-small" tabindex="-1"></span>-->
-                        <%--<select id="quantity">
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                        </select>--%>
-
                         <input class="form-control" type="number" value="1" name="quantity" id="quantity" autocomplete="off" required="true"/>
-
-
                     </span>
 
                 </div>
@@ -164,8 +153,12 @@
                 <div>
                     <input id="addtocart"type="button" class="btn1" value="Add to cart">
                 </div>
+
                 <div>
                     <input type="button" class="btn1" id="directBuy" value="Buy now">
+                </div>
+                <div>
+                    <input type="button" class="btn1" id="moveToList" value="Save for Later">
                 </div>
 
             </div>

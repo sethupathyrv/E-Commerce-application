@@ -1,16 +1,15 @@
 package com.ooad.web.model;
 
+import com.ooad.web.dao.UserDao;
 import org.json.JSONObject;
 
 public class WishListItem {
     private int id;
     private Item item;
-    private User user;
 
-    public WishListItem(int id, Item item, User user) {
+    public WishListItem(int id, Item item) {
         this.id = id;
         this.item = item;
-        this.user = user;
     }
 
     public int getId() {
@@ -21,9 +20,6 @@ public class WishListItem {
         return item;
     }
 
-    public User getUser() {
-        return user;
-    }
 
     @Override
     public String toString() {
@@ -35,5 +31,10 @@ public class WishListItem {
 
     public JSONObject toJSON(){
         return new JSONObject().put("id",id ).put("item",item );
+    }
+
+    public static WishListItem find(int wishListItemId) {
+        UserDao u = new UserDao();
+        return u.getWishListItem(wishListItemId);
     }
 }

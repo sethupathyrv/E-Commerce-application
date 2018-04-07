@@ -8,6 +8,7 @@ package com.ooad.web.api;
 import com.ooad.web.dao.CartDao;
 import com.ooad.web.dao.ItemCategoryDao;
 import com.ooad.web.dao.ItemDao;
+import com.ooad.web.dao.UserDao;
 import com.ooad.web.model.*;
 import com.ooad.web.utils.TokenAuth;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -253,4 +254,43 @@ public class ItemService {
         }
     }
 
+    @POST
+    @Path("/list")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addToList(@HeaderParam("authToken")String token,String req){
+        User u = TokenAuth.getUserFromToken(token);
+        if(u==null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.UNAUTHORIZED.getStatusCode())).build();
+        }
+        JSONObject j = new JSONObject(req);
+        int itemId = j.getInt("itemId");
+        UserDao userDao = new UserDao();
+        WishListItem w = userDao.addItemToWishList(u, itemId);
+        return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
+    }
+
+    @DELETE
+    @Path("/list/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeItemFromList(@HeaderParam("authToken")String token,@PathParam("id") int wishListItemId){
+        User u = TokenAuth.getUserFromToken(token);
+        UserDao userDao = new UserDao();
+        userDao.removeWishListItem(wishListItemId);
+        return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
+    }
+
+    @POST
+    @Path("/movetocart")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response moveToCart(@HeaderParam("authToken")String token,String req){
+        User u = TokenAuth.getUserFromToken(token);
+        UserDao userDao = new UserDao();
+        JSONObject j = new JSONObject(req);
+        int wishListItemId = j.getInt("wishListItemId");
+        WishListItem w = WishListItem.find(wishListItemId);
+        userDao.moveToCart(u,w);
+        return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
+    }
 }

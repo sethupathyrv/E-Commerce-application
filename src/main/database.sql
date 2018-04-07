@@ -204,6 +204,16 @@ CREATE TABLE Accounts
 )
   ENGINE = InnoDB;
 
+CREATE TABLE WishList
+(
+  id     INT AUTO_INCREMENT
+    PRIMARY KEY,
+  userId INT NULL,
+  itemId INT NULL,
+  CONSTRAINT WishList_id_uindex
+  UNIQUE (id)
+)
+  ENGINE = InnoDB;
 
 
 

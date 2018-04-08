@@ -1,8 +1,15 @@
 $(document).ready(function () {
+
     $('#placeorder').click(function () {
         console.log($("#orderId").val());
+        var wallet;
+        if($('#wallet').is(":checked"))
+            wallet=true
+        else
+            wallet=false;
         var formData = {
             'orderId':$("#orderId").val(),
+            'wallet':wallet
         };
         $.ajax({
             type:'POST',

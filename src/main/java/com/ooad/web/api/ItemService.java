@@ -189,7 +189,7 @@ public class ItemService {
     @PUT
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateAddress(String req,@HeaderParam("authToken") String token) {
+    public Response updateCartItem(String req,@HeaderParam("authToken") String token) {
         JSONObject reqJson = new JSONObject(req);
         User user = TokenAuth.getUserFromToken(token);
         if (user == null) {
@@ -198,9 +198,9 @@ public class ItemService {
         }
         Cart cart = user.getCart();
         int quantity = reqJson.getInt("quantity");
-        int id = reqJson.getInt("itemid");
-        cart.updateCart(quantity,id);
-        return null;
+        int id = reqJson.getInt("cartItemId");
+        JSONObject jsonObject = cart.updateCart(quantity,id);
+        return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
 
     @Path("dispatchitem/{orderItemId}")

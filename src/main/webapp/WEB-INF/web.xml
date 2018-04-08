@@ -192,5 +192,15 @@
         <url-pattern>/verifyregisteredemail</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <display-name>AmazonPayController</display-name>
+        <servlet-name>amazonpay</servlet-name>
+        <servlet-class>com.ooad.web.controller.AmazonPayController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>amazonpay</servlet-name>
+        <url-pattern>/amazonpay</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

@@ -4,11 +4,9 @@ import com.ooad.web.model.*;
 import com.ooad.web.utils.Constants;
 import com.ooad.web.utils.Database;
 import com.ooad.web.utils.TokenAuth;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.core.Response.Status;
-import javax.xml.crypto.Data;
 import java.sql.*;
 
 public class UserDao {
@@ -67,7 +65,7 @@ public class UserDao {
                         rs.getString("emailId"),
                         rs.getString("password"),
                         rs.getBoolean("isEnabled"),
-                        rs.getInt("defaultAddressId"));
+                        rs.getInt("PayBalance"), rs.getInt("defaultAddressId"));
             }
             con.close();
             return u;
@@ -90,7 +88,7 @@ public class UserDao {
                         rs.getString("emailId"),
                         rs.getString("password"),
                         rs.getBoolean("isEnabled"),
-                        rs.getInt("defaultAddressId"));
+                        rs.getInt("PayBalance"), rs.getInt("defaultAddressId"));
             }
             con.close();
             return u;
@@ -162,12 +160,14 @@ public class UserDao {
         }
     }
 
+
     public boolean save(User user) {
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("UPDATE User SET defaultAddrId = ? WHERE id = ?");
+            PreparedStatement ps = con.prepareStatement("UPDATE users SET defaultAddressId=?,PayBalance=? WHERE id=?");
             ps.setInt(1,user.getDefaultAddressId() );
-            ps.setInt(2,user.getId() );
+            ps.setInt(2,user.getAmazonPayBalance());
+            ps.setInt(3,user.getId() );
             ps.executeUpdate();
             con.close();
             return true;
@@ -178,6 +178,7 @@ public class UserDao {
         }
         return false;
     }
+
     public UserAccount getUserAccountFromUserId(int userId){
         try {
             Connection con = Database.getConnection();
@@ -274,4 +275,11 @@ public class UserDao {
         }
         return isexist;
     }
+
+
+
+
+
+
+
 }

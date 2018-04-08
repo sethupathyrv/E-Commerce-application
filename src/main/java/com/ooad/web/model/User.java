@@ -15,14 +15,18 @@ public class User {
     private String password;
     private boolean isEnabled;
     private Cart cart;
+    private int amazonPayBalance;
     private int defaultAddressId;
 
-    public User(int id, String userName, String emailId, String password, boolean isEnbaled, int defaultAddressId) {
+
+
+    public User(int id, String userName, String emailId, String password, boolean isEnbaled, int amazonPayBalance, int defaultAddressId) {
         this.id = id;
         this.userName = userName;
         this.emailId = emailId;
         this.password = password;
         this.isEnabled = isEnbaled;
+        this.amazonPayBalance = amazonPayBalance;
         this.cart = new Cart(this);
         this.defaultAddressId = defaultAddressId;
     }
@@ -60,6 +64,13 @@ public class User {
 
     public Cart getCart() {
         return cart;
+    }
+    public int getAmazonPayBalance() {
+        return amazonPayBalance;
+    }
+
+    public void setAmazonPayBalance(int amazonPayBalance) {
+        this.amazonPayBalance = amazonPayBalance;
     }
 
     public JSONObject toJSON() {
@@ -263,34 +274,61 @@ public class User {
 
     public JSONObject createTransaction(JSONObject req) {
         final int orderId = req.getInt("orderId");
+        final boolean wallet = req.getBoolean("wallet");
         final JSONObject errors = new JSONObject();
         OrderDao orderDao = new OrderDao();
         Order order = orderDao.getOrderById(orderId);
         TransactionDao transactionDao = new TransactionDao();
         Transaction transaction = null;
         UserDao userDao = new UserDao();
-        UserAccount userAccount = userDao.getUserAccountFromUserId(id);
-        UserAccount amazonAccount = userDao.getUserAccountFromUserId(1);
+        UserAccount amazonAccount = userDao.getUserAccountFromUserId(2);
         int currentAmount = amazonAccount.getAmount();
-        if(order.grandTotal()<= userAccount.getAmount()){
-            transaction = transactionDao.createTransaction(order,userAccount,1);
-            userAccount.setAmount(userAccount.getAmount()-order.grandTotal());
-            userAccount.save();
-            amazonAccount.setAmount(currentAmount+order.grandTotal());
-            amazonAccount.save();
-            ArrayList<OrderItem> orderItems = (ArrayList<OrderItem>) order.getOrderItems();
-            ItemDao itemDao = new ItemDao();
-            for(OrderItem orderItem: orderItems){
-                int id = orderItem.getItem().getId();
-                Item item = itemDao.getItembyId(id);
-                item.setQuantity(item.getQuantity()-orderItem.getQuantity());
-                item.save();
-            }
-            order.setOrderStatus(OrderStatus.MONEY_PAID);
-            order.save();
+        UserAccount userAccount = userDao.getUserAccountFromUserId(id);
+        if(wallet){
+            User user = userDao.getUser(id);
+            int PayBalance = user.getAmazonPayBalance();
+            if(order.grandTotal()<= PayBalance){
+                transaction = transactionDao.createTransactionwithAmazonPay(order,user,1);
+                user.setAmazonPayBalance(PayBalance-order.grandTotal());
+                user.save();
+                amazonAccount.setAmount(currentAmount+order.grandTotal());
+                amazonAccount.save();
+                ArrayList<OrderItem> orderItems = (ArrayList<OrderItem>) order.getOrderItems();
+                ItemDao itemDao = new ItemDao();
+                for(OrderItem orderItem: orderItems){
+                    int id = orderItem.getItem().getId();
+                    Item item = itemDao.getItembyId(id);
+                    item.setQuantity(item.getQuantity()-orderItem.getQuantity());
+                    item.save();
+                }
+                order.setOrderStatus(OrderStatus.MONEY_PAID);
+                order.save();
 
-        }else{
-            transaction = transactionDao.createTransaction(order,userAccount,0);
+            }else{
+                transaction = transactionDao.createTransactionwithAmazonPay(order,user,0);
+            }
+        }
+        else {
+            if (order.grandTotal() <= userAccount.getAmount()) {
+                transaction = transactionDao.createTransaction(order, userAccount, 1);
+                userAccount.setAmount(userAccount.getAmount() - order.grandTotal());
+                userAccount.save();
+                amazonAccount.setAmount(currentAmount + order.grandTotal());
+                amazonAccount.save();
+                ArrayList<OrderItem> orderItems = (ArrayList<OrderItem>) order.getOrderItems();
+                ItemDao itemDao = new ItemDao();
+                for (OrderItem orderItem : orderItems) {
+                    int id = orderItem.getItem().getId();
+                    Item item = itemDao.getItembyId(id);
+                    item.setQuantity(item.getQuantity() - orderItem.getQuantity());
+                    item.save();
+                }
+                order.setOrderStatus(OrderStatus.MONEY_PAID);
+                order.save();
+
+            } else {
+                transaction = transactionDao.createTransaction(order, userAccount, 0);
+            }
         }
         return new JSONObject().put("status", Status.OK.getStatusCode())
                 .put("transaction", transaction.toJSON());

@@ -146,7 +146,7 @@ create table UserAddresses
   engine=InnoDB
 ;
 
-CREATE TABLE users
+CREATE TABLE Users
 (
   id                    INT AUTO_INCREMENT
     PRIMARY KEY,
@@ -156,12 +156,14 @@ CREATE TABLE users
   isEnabled             TINYINT(1) DEFAULT '0' NOT NULL,
   defaultAddressId      INT DEFAULT '-1'       NULL,
   EmailVerificationHash VARCHAR(255)           NULL,
+  PayBalance            INT DEFAULT '0'        NULL,
   CONSTRAINT Users_id_uindex
   UNIQUE (id),
   CONSTRAINT users_emailId_uindex
   UNIQUE (emailId)
 )
   ENGINE = InnoDB;
+
 
 CREATE TABLE SubCategories
 (

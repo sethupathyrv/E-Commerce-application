@@ -57,6 +57,8 @@
 
     <div class="shippingDetails">
         <div class="col-lg-9">
+            <div class="row">
+                <div class="col-xs-6">
             <div class="item-box-big">
                 <h4><b>Shipping Address</b><a href="#" id="changeAddress">Change Address</a></h4>
                 <p><%=address.getFullname()%></p>
@@ -65,6 +67,14 @@
                 <p><%=address.getLandmark()%></p>
 
                 <p><%=address.getPincode()%></p>
+            </div>
+                </div>
+
+                <div class="col-xs-6">
+                    <br>
+                <input type="checkbox" id="wallet"> Use Amazon Pay
+                </div>
+
             </div>
         </div>
 

@@ -24,9 +24,7 @@ $(document).ready(function () {
             success: TransactionResponse
         });
     });
-    $('#close').click(function () {
-       window.location.replace("/");
-    });
+
 });
 
 function TransactionResponse(response) {
@@ -34,6 +32,9 @@ function TransactionResponse(response) {
     $('#toggle').trigger("click");
     if(response.transaction.status==1) {
         $('#status').text("transaction is successful");
+        $('#close').click(function () {
+            window.location.replace("/");
+        });
     }
     else
         $('#status').text("Transaction declined!!Money insufficient");

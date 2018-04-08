@@ -131,7 +131,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" id="nav-logout">Logout</a></li>
                             <li><a href="#">Your account</a></li>
-                            <li><a href="#">Your List</a></li>
+                            <li><a href="/list">Your List</a></li>
                             <li><a href="/myorders">Your Orders</a></li>
                         </ul>
                     </div>
@@ -145,7 +145,7 @@
                     </a>
                 </div>
                 <div class="col-md-3 nav-border-round" id="nav-yourlist">
-                    <a href="#">
+                    <a href="/list">
                         <span class="nav-line-1">Your </span><br>
                         <span class="nav-line-2">Lists </span> <i class="fa fa-caret-down" aria-hidden="true"></i>
                     </a>

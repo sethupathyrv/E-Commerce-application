@@ -6,7 +6,9 @@
 package com.ooad.web.model;
 
 import com.ooad.web.dao.ItemDao;
+import com.ooad.web.model.Offer.DiscountOffer;
 import com.ooad.web.model.Offer.Offer;
+import com.ooad.web.model.Offer.PriceOffer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -212,6 +214,22 @@ public class Item {
 
     public boolean save() {
         return new ItemDao().saveItem(this);
+    }
+
+    public int getEffectivePrice(){
+        switch (this.getOffer().getOfferCode()){
+            case 202:
+                PriceOffer p = (PriceOffer) offer;
+                return (int) (this.price - p.getPriceCut());
+            case 201:
+                DiscountOffer d = (DiscountOffer) offer;
+                float effectivePercent =  (100-d.getPercentage());
+                return (int) (this.price*effectivePercent/100);
+            case -1:
+                return (int) this.price;
+            default:
+                return (int) this.price;
+        }
     }
 
 }

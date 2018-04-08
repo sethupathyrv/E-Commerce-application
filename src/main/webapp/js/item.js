@@ -1,6 +1,25 @@
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
+    $('#directBuy').click(function () {
+        var formData = {
+            'itemId':$("#itemId").val(),
+            'quantity':$("#quantity").val()
+        };
+        $.ajax({
+            type:'POST',
+            url:'/api/item/directbuy',
+            data: JSON.stringify(formData),
+            dataType:"json",
+            contentType:"text/plain",
+            cache: false,
+            headers:{
+                'authToken':$.cookie('authToken')
+            },
+            success:directBuy
+        });
 
+
+    });
     $("#addtocart").click(function () {
 
         var formData = {
@@ -21,6 +40,28 @@ $(document).ready(function () {
         });
 
     });
+
+    $('#moveToList').click(function () {
+        var formData = {
+            'itemId':$('#itemId').val()
+        };
+        $.ajax({
+            type:'POST',
+            url:'/api/item/list',
+            data:JSON.stringify(formData),
+            dataType: "json",
+            contentType:'text/plain',
+            cache:false,
+            headers:{
+                'authToken':$.cookie('authToken')
+            },
+            success:function (resp) {
+                if(resp.status == 401){
+                    window.location.replace('/login');
+                }
+            }
+        })
+    })
 });
 
 function addItemtoCartResponse(response) {
@@ -29,9 +70,16 @@ function addItemtoCartResponse(response) {
     }else if(response.status === 401){
         window.location.replace("/login");
     }else if(response.status === 400){
-        alert(response.errors);
+        alert(JSON.stringify(response.errors));
     }
     console.log(response);
 }
 
+function directBuy(response) {
+    if(response.status == 200){
+        window.location.replace("/checkout");
+    }else{
+        alert(response.error);
+    }
+}
 

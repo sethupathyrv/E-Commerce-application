@@ -21,7 +21,7 @@
     <script src="../js/jquery.min.js"></script>
     <script src="../js/jquery.cookie.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <%--<script src="../js/cart.js"></script>--%>
+    <script src="../js/cart.js"></script>
     <link rel="stylesheet" href="../css/cart.css">
     <% Cart cart= (Cart)request.getAttribute("cart");%>
 
@@ -42,27 +42,7 @@
             </div>
         </div>
         <hr>
-        <script>
-            $("#quantity").on("click", "pre", function() {
-                console.log("a");
-                var $pre = $(this);
-                var $textarea = $("<textarea>");
-                $textarea.append($pre.contents());
-                $pre.replaceWith($textarea);
-                return false;
-            });
-            function xyz(){
-                console.log("ab");
-                var $pre = $('#pre');
-                // console.log(pre);
-                var $textarea = $("<textarea>");
-                $textarea.append($pre.contents());
-                $pre.replaceWith($textarea);
-                console.log($("#pre").text());
-                return false;
-            }
 
-        </script>
         <% for (CartItem c: cart.getCartItems()) {%>
             <div class="cartItems row">
                 <div id="cartItemDetails">
@@ -76,15 +56,8 @@
                     </div>
                 </div>
                 <div class="Price col-lg-2 text-left">&#2352;<span id="currentPrice<%=c.getId()%>"><%=c.getItem().getPrice()%></span></div>
-                <div class="item-column col-lg-2 text-right" id="quantity" onclick="xyz()">
-                    <%--<span class="dropdown">--%>
-                        <%--<select id="quantity">--%>
-                          <%--<option value="1">1</option>--%>
-                          <%--<option value="2">2</option>--%>
-                          <%--<option value="3">3</option>--%>
-                          <%--<option value="4">4</option>--%>
-                        <%--</select>--%>
-                        <%--</span>--%> <pre id="pre"><%=c.getQuantity()%></pre>
+                <div class="item-column col-lg-2 text-right" id="quantity" >
+                    <p contenteditable="true" id="<%=c.getId()%>" class="Quantity"><%=c.getQuantity()%></p>
                 </div>
             </div>
             <hr>

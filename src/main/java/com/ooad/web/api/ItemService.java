@@ -5,8 +5,10 @@
 
 package com.ooad.web.api;
 
+import com.ooad.web.dao.CartDao;
 import com.ooad.web.dao.ItemCategoryDao;
 import com.ooad.web.dao.ItemDao;
+import com.ooad.web.dao.UserDao;
 import com.ooad.web.model.*;
 import com.ooad.web.utils.TokenAuth;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -189,7 +191,7 @@ public class ItemService {
     @PUT
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateAddress(String req,@HeaderParam("authToken") String token) {
+    public Response updateCartItem(String req,@HeaderParam("authToken") String token) {
         JSONObject reqJson = new JSONObject(req);
         User user = TokenAuth.getUserFromToken(token);
         if (user == null) {
@@ -198,9 +200,9 @@ public class ItemService {
         }
         Cart cart = user.getCart();
         int quantity = reqJson.getInt("quantity");
-        int id = reqJson.getInt("itemid");
-        cart.updateCart(quantity,id);
-        return null;
+        int id = reqJson.getInt("cartItemId");
+        JSONObject jsonObject = cart.updateCart(quantity,id);
+        return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
 
     @Path("dispatchitem/{orderItemId}")
@@ -231,5 +233,64 @@ public class ItemService {
         return Response.status(Status.OK).entity(resp.toString()).build();
     }
 
+    @Path("/directbuy")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response directBuy(@HeaderParam("authToken")String token,String req){
+        JSONObject jreq = new JSONObject(req);
+        int itemId = jreq.getInt("itemId");
+        int quantity = jreq.getInt("quantity");
+        User u = TokenAuth.getUserFromToken(token);
+        u.getCart().emptyCart();
+        CartDao cartDao = new CartDao();
+        Item i = Item.find(itemId);
+        if(i.getQuantity() > quantity) {
+            cartDao.insertItem(u.getId(), itemId, quantity);
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
+        }else{
+            return Response.status(Status.OK).entity(new JSONObject().put("status",Status.BAD_REQUEST.getStatusCode())
+                    .put("error","Quantity Exeeded").toString()).build();
+        }
+    }
 
+    @POST
+    @Path("/list")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addToList(@HeaderParam("authToken")String token,String req){
+        User u = TokenAuth.getUserFromToken(token);
+        if(u==null){
+            return Response.status(Status.OK).entity(new JSONObject().put("status", Status.UNAUTHORIZED.getStatusCode())).build();
+        }
+        JSONObject j = new JSONObject(req);
+        int itemId = j.getInt("itemId");
+        UserDao userDao = new UserDao();
+        WishListItem w = userDao.addItemToWishList(u, itemId);
+        return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
+    }
+
+    @DELETE
+    @Path("/list/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeItemFromList(@HeaderParam("authToken")String token,@PathParam("id") int wishListItemId){
+        User u = TokenAuth.getUserFromToken(token);
+        UserDao userDao = new UserDao();
+        userDao.removeWishListItem(wishListItemId);
+        return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
+    }
+
+    @POST
+    @Path("/movetocart")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response moveToCart(@HeaderParam("authToken")String token,String req){
+        User u = TokenAuth.getUserFromToken(token);
+        UserDao userDao = new UserDao();
+        JSONObject j = new JSONObject(req);
+        int wishListItemId = j.getInt("wishListItemId");
+        WishListItem w = WishListItem.find(wishListItemId);
+        userDao.moveToCart(u,w);
+        return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
+    }
 }

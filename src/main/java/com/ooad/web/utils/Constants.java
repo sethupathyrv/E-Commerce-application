@@ -18,5 +18,4 @@ public class Constants {
     public static final String EMAIL_REGISTRATION_SITE_LINK = "http://localhost:8081/verifyregisteredemail";
     public static final String BCRYPT_SALT = "$2a$10$DOWSDz/CyKaJ40hslrk5fe";
 
-
 }

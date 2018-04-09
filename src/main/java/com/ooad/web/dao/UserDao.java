@@ -4,12 +4,12 @@ import com.ooad.web.model.*;
 import com.ooad.web.utils.Constants;
 import com.ooad.web.utils.Database;
 import com.ooad.web.utils.TokenAuth;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.core.Response.Status;
-import javax.xml.crypto.Data;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class UserDao {
 
@@ -67,7 +67,7 @@ public class UserDao {
                         rs.getString("emailId"),
                         rs.getString("password"),
                         rs.getBoolean("isEnabled"),
-                        rs.getInt("defaultAddressId"));
+                        rs.getInt("PayBalance"), rs.getInt("defaultAddressId"));
             }
             con.close();
             return u;
@@ -90,7 +90,7 @@ public class UserDao {
                         rs.getString("emailId"),
                         rs.getString("password"),
                         rs.getBoolean("isEnabled"),
-                        rs.getInt("defaultAddressId"));
+                        rs.getInt("PayBalance"), rs.getInt("defaultAddressId"));
             }
             con.close();
             return u;
@@ -162,12 +162,14 @@ public class UserDao {
         }
     }
 
+
     public boolean save(User user) {
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("UPDATE User SET defaultAddrId = ? WHERE id = ?");
+            PreparedStatement ps = con.prepareStatement("UPDATE users SET defaultAddressId=?,PayBalance=? WHERE id=?");
             ps.setInt(1,user.getDefaultAddressId() );
-            ps.setInt(2,user.getId() );
+            ps.setInt(2,user.getAmazonPayBalance());
+            ps.setInt(3,user.getId() );
             ps.executeUpdate();
             con.close();
             return true;
@@ -178,6 +180,7 @@ public class UserDao {
         }
         return false;
     }
+
     public UserAccount getUserAccountFromUserId(int userId){
         try {
             Connection con = Database.getConnection();
@@ -223,11 +226,11 @@ public class UserDao {
         boolean verified = false;
         try {
             Connection con  = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT EmailVerificationHash FROM users WHERE emailId=?");
+            PreparedStatement ps = con.prepareStatement("SELECT emailVerificationHash FROM users WHERE emailId=?");
             ps.setString(1,email);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                String dbhash = rs.getString("EmailVerificationHash");
+                String dbhash = rs.getString("emailVerificationHash");
                 if(dbhash.equals(hash)){
                     verified=true;
                 }
@@ -273,5 +276,136 @@ public class UserDao {
             e.printStackTrace();
         }
         return isexist;
+    }
+
+
+
+
+
+
+
+
+    public ArrayList<WishListItem> getWishList(User u){
+        return getWishListByUserId(u.getId());
+    }
+
+    public ArrayList<WishListItem> getWishListByUserId(int id){
+        ArrayList<WishListItem> wishListItems = new ArrayList<WishListItem>();
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM WishList WHERE userId = ? ORDER BY id DESC ");
+            ps.setInt(1,id );
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                wishListItems.add(wishListItemBuilder(rs));
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return wishListItems;
+    }
+
+    public WishListItem getWishListItem(int id){
+        Connection con = null;
+        try {
+            con = Database.getConnection();
+            PreparedStatement ps= con.prepareStatement("SELECT * FROM WishList WHERE id=?");
+            ps.setInt(1,id );
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return wishListItemBuilder(rs);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public void removeWishListItem(int id){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("DELETE FROM WishList WHERE id = ?");
+            ps.setInt(1,id );
+            ps.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeWishListItem(WishListItem w){
+        removeWishListItem(w.getId());
+    }
+
+    public void emptyWishList(User u){
+        emptyWishList(u.getId());
+    }
+
+    public void emptyWishList(int userId){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("DELETE FROM WishList WHERE userId = ?");
+            ps.setInt(1,userId );
+            ps.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public WishListItem addItemToWishList(User u,Item item){
+        return addItemToWishList(u.getId(),item.getId());
+    }
+
+    public WishListItem addItemToWishList(User u,int itemId){
+        return addItemToWishList(u.getId(),itemId );
+    }
+
+    public WishListItem addItemToWishList(int userId,int itemId){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("INSERT INTO WishList(userId, itemId) VALUES (?,?)",Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1,userId );
+            ps.setInt(2,itemId );
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if(rs.next()){
+                int id = rs.getInt(1);
+                return new WishListItem(id,Item.find(itemId));
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+     }
+
+    private WishListItem wishListItemBuilder(ResultSet rs){
+        if(rs == null){
+            return null;
+        }
+        try {
+            final Item item = Item.find(rs.getInt("itemId"));
+            final int id = rs.getInt("id");
+            return new WishListItem(id,item);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void moveToCart(User u ,WishListItem w) {
+        removeWishListItem(w);
+        CartDao cartDao = new CartDao();
+        cartDao.insertItem(u.getId(),w.getItem().getId() ,1 );
     }
 }

@@ -83,15 +83,7 @@
                         <div>Ship to:  <%=shippingAddress.getFullname()%></div>
                         <div>Order Status: <%=os.getStatus()%></div>
                         <div class="Price col-lg-2 text-left"><span id="currentPrice<%=oi.getItemPrice()%>">
-                                <%if(offer.getOfferCode() == 201){
-                                    DiscountOffer dof = (DiscountOffer) offer;%>
-                                &#2352;<%=oi.getItemPrice()*(100-dof.getPercentage())/100%>
-                                <%}else if(offer.getOfferCode() == 202){
-                                    PriceOffer p = (PriceOffer) offer;%>
-                                &#2352;<%=oi.getItemPrice() - p.getPriceCut()%>
-                                <%} else { %>
                                 &#2352;<%=oi.getItemPrice()%>
-                                <%}%>
                             </span>
                         </div>
                     </div>

@@ -4,6 +4,7 @@ import com.ooad.web.dao.CartDao;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -46,6 +47,7 @@ public class Cart {
     public void refreshCart(){
         CartDao cartDao = new CartDao();
         cartItems = cartDao.createCartItems(this.user.getId());
+
         this.promotionApplied = applyOffer();
     }
 
@@ -100,11 +102,23 @@ public class Cart {
         return this.getSubTotal() - this.promotionApplied;
     }
 
-    public void updateCart(int quantity,int id){
+    public JSONObject updateCart(int quantity,int id){
         ArrayList<CartItem> items = (ArrayList<CartItem>) getCartItems();
-        CartItem cartItem = items.get(id);
-        cartItem.setQuantity(quantity);
-        cartItem.saveCartItem();
+        for(CartItem cartItem:items){
+            if(cartItem.getId()==id){
+                if(quantity<=cartItem.getItem().getQuantity()) {
+                    cartItem.setQuantity(quantity);
+                    cartItem.saveCartItem();
+                    return new JSONObject().put("status", Response.Status.OK.getStatusCode())
+                            .put("errors","");
+                }else{
+                    return new JSONObject().put("status", Response.Status.BAD_REQUEST.getStatusCode())
+                            .put("errors","quantity out of bounds");
+                }
+            }
+        }
+        return new JSONObject().put("status", Response.Status.BAD_REQUEST.getStatusCode())
+                .put("errors","Item is not found in the cart");
     }
 }
 

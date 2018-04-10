@@ -359,4 +359,8 @@ public class User {
         UserDao userDao = new UserDao();
         return userDao.getWishListByUserId(this.id);
     }
+
+    public  static Collection<User> getAllUsers(){
+        return new UserDao().getAllUser();
+    }
 }

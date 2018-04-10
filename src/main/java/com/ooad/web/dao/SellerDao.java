@@ -18,6 +18,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class SellerDao {
     public JSONObject validateSellerLogin(String email, String password) {
@@ -226,6 +228,26 @@ public class SellerDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public Collection<Seller> getAllSeller() {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Sellers");
+            ResultSet rs = ps.executeQuery();
+            Collection<Seller> seller = new ArrayList<Seller>();
+            while(rs.next()){
+                seller.add(sellerBuilder(rs));
+            }
+            con.close();
+            return seller;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;

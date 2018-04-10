@@ -273,4 +273,8 @@ public class Seller {
         oi.getOrder().refreshStatus();
         return new JSONObject().put("status",Status.OK.getStatusCode() );
     }
+
+    public static Collection<Seller> getAllSellers(){
+        return new SellerDao().getAllSeller();
+    }
 }

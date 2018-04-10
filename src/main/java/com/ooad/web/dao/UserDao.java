@@ -67,7 +67,7 @@ public class UserDao {
                         rs.getString("emailId"),
                         rs.getString("password"),
                         rs.getBoolean("isEnabled"),
-                        rs.getInt("PayBalance"), rs.getInt("defaultAddressId"));
+                        rs.getInt("amazonPayBalance"), rs.getInt("defaultAddressId"));
             }
             con.close();
             return u;
@@ -90,7 +90,7 @@ public class UserDao {
                         rs.getString("emailId"),
                         rs.getString("password"),
                         rs.getBoolean("isEnabled"),
-                        rs.getInt("PayBalance"), rs.getInt("defaultAddressId"));
+                        rs.getInt("amazonPayBalance"), rs.getInt("defaultAddressId"));
             }
             con.close();
             return u;
@@ -166,7 +166,7 @@ public class UserDao {
     public boolean save(User user) {
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("UPDATE users SET defaultAddressId=?,PayBalance=? WHERE id=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE Users SET defaultAddressId=?,amazonPayBalance=? WHERE id=?");
             ps.setInt(1,user.getDefaultAddressId() );
             ps.setInt(2,user.getAmazonPayBalance());
             ps.setInt(3,user.getId() );
@@ -226,7 +226,7 @@ public class UserDao {
         boolean verified = false;
         try {
             Connection con  = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT emailVerificationHash FROM users WHERE emailId=?");
+            PreparedStatement ps = con.prepareStatement("SELECT emailVerificationHash FROM Users WHERE emailId=?");
             ps.setString(1,email);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -247,7 +247,7 @@ public class UserDao {
     public void updateStatus(String email) {
         try {
             Connection con  = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("UPDATE users SET isEnabled=? WHERE emailId=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE Users SET isEnabled=? WHERE emailId=?");
             ps.setBoolean(1,true);
             ps.setString(2,email);
             ps.executeUpdate();
@@ -263,7 +263,7 @@ public class UserDao {
         boolean isexist=false;
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE emailId=?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Users WHERE emailId=?");
             ps.setString(1,email);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -408,4 +408,38 @@ public class UserDao {
         CartDao cartDao = new CartDao();
         cartDao.insertItem(u.getId(),w.getItem().getId() ,1 );
     }
+
+    public Collection<User> getAllUser() {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Users");
+            ResultSet rs = ps.executeQuery();
+            Collection<User> user = new ArrayList<User>();
+            while(rs.next()){
+                user.add(userBuilder(rs));
+            }
+            con.close();
+            return user;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private User userBuilder(ResultSet rs) throws SQLException, NullPointerException {
+        if (rs == null) {
+            throw new NullPointerException("Result Set");
+        }
+        final int id = rs.getInt("id");
+        final String userName = rs.getString("userName");
+        final String emailId = rs.getString("emailId");
+        final String password = rs.getString("password");
+        final boolean isEnabled = rs.getBoolean("isEnabled");
+        final int defaultAddressId = rs.getInt("defaultAddressId");
+        final int amazonPayBalance = rs.getInt("amazonPayBalance");
+        return new User(id, userName, emailId, password, isEnabled, amazonPayBalance, defaultAddressId);
+    }
+
 }

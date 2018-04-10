@@ -317,4 +317,23 @@ public class ItemDao {
         }
         return -1;
     }
+
+    public Collection<Item> getAllItem() {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Items");
+            ResultSet rs = ps.executeQuery();
+            Collection<Item> item = new ArrayList<Item>();
+            while(rs.next()){
+                item.add(itemBuilder(rs));
+            }
+            con.close();
+            return item;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

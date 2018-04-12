@@ -37,20 +37,22 @@ function addInitialItemsResponse(data) {
 }
 
 function applyPriceFilter() {
-    var minPriceValue = $('#minPrice').val();
-    var maxPriceValue = $('#maxPrice').val();
-    if (!(minPriceValue >0 && maxPriceValue > minPriceValue)) {
-        alert("Invalid Filter");
-        return
-    }
+    var minPriceValue = $('#minPrice').val() == '' ? 0: $('#minPrice').val();
+    var maxPriceValue = $('#maxPrice').val() == '' ? 0: $('#maxPrice').val();
+    var colour = $('#color').val();
+    // if (!(minPriceValue >0 && maxPriceValue > minPriceValue)) {
+    //     alert("Invalid Filter");
+    //     return
+    // }
     var data = {
         'min': minPriceValue,
         'max': maxPriceValue,
+        'colour':colour,
         'data': displayData
     };
     $.ajax({
         type: 'POST',
-        url: '/api/item/pricefilter',
+        url: '/api/item/filter',
         data: JSON.stringify(data),
         cache: false,
         contentType: "text/plain",
@@ -68,6 +70,7 @@ function clearFilter() {
     $('#sort').val("000");
     $('#minPrice').val('');
     $('#maxPrice').val('');
+    $('#color').val('000')
 }
 
 function sortResults(prop, asc) {

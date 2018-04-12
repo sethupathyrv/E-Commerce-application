@@ -26,8 +26,14 @@
                    name="minPrice">
             <input type="text" class="col-sm-3 filterInput" id="maxPrice" placeholder="Max" maxlength="9"
                    name="maxPrice">
-            <button class="filterButton" id="priceFilterButton" onclick="applyPriceFilter()">Go</button>
         </div>
+        <br><br>
+        <select id="color" onchange="sort()">
+            <option value="000">Color</option>
+            <option value="Red">Red</option>
+            <option value="Black">Black</option>
+        </select>
+        <button class="filterButton" id="priceFilterButton" onclick="applyPriceFilter()">Go</button>
         <br><br>
         <div class="row">
             <h4 class="filterQuantifier pull-left">Sort By</h4>

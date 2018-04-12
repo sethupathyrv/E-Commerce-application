@@ -97,6 +97,11 @@
                             <span id="savingPrice" data-toggle="tooltip" title="add <%=x+y%> items with same offer to the cart to get the offer"> Buy <%=x%> and get <%=y%> free</span>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td class="text-right text-c1">BarCode</td>
+                        <td class="text-left text-c2"><%=item.getItemBarcode()%></td>
+                    </tr>
                     <%}%>
 
                     <tr>

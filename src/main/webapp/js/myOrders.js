@@ -10,7 +10,7 @@ function itemDelivered(orderItemId){
             'authToken':$.cookie('authToken')
         },
         success:function (data) {
-            window.location.reload();
+            // window.location.reload(true);
             console.log(data)
         }
     });

@@ -293,4 +293,22 @@ public class ItemService {
         userDao.moveToCart(u,w);
         return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
     }
+
+    @POST
+    @Path("/rating/{orderItemId}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addRating(@HeaderParam("authToken") String token,@PathParam("orderItemId") int orderItemId, String req){
+        User u = TokenAuth.getUserFromToken(token);
+        if(u == null){
+            return Response.status(Status.OK).entity(new JSONObject()
+                    .put("status",Status.UNAUTHORIZED.getStatusCode()).toString()).build();
+        }
+        JSONObject j = new JSONObject(req);
+        int rating = j.getInt("rating");
+        u.rateItemSeller(orderItemId,rating);
+        JSONObject resp = new JSONObject();
+        resp.put("status",Status.OK.getStatusCode() );
+        return Response.status(Status.OK).entity(resp.toString()).build();
+    }
 }

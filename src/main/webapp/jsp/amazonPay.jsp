@@ -35,8 +35,9 @@
                 success: updatebalanceresponse
             });
         });
-        function updatebalanceresponse(){
+        function updatebalanceresponse(data){
             window.location.reload(true);
+            // console.log(data);
         }
     });
 

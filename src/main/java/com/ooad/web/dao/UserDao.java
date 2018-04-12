@@ -166,7 +166,7 @@ public class UserDao {
     public boolean save(User user) {
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("UPDATE users SET defaultAddressId=?,PayBalance=? WHERE id=?");
+            PreparedStatement ps = con.prepareStatement("UPDATE Users SET defaultAddressId=?,PayBalance=? WHERE id=?");
             ps.setInt(1,user.getDefaultAddressId() );
             ps.setInt(2,user.getAmazonPayBalance());
             ps.setInt(3,user.getId() );

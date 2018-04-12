@@ -281,7 +281,7 @@ public class User {
         TransactionDao transactionDao = new TransactionDao();
         Transaction transaction = null;
         UserDao userDao = new UserDao();
-        UserAccount amazonAccount = userDao.getUserAccountFromUserId(2);
+        UserAccount amazonAccount = userDao.getUserAccountFromUserId(1);
         int currentAmount = amazonAccount.getAmount();
         UserAccount userAccount = userDao.getUserAccountFromUserId(id);
         if(wallet){
@@ -358,5 +358,15 @@ public class User {
     public ArrayList<WishListItem> getUserWishList(){
         UserDao userDao = new UserDao();
         return userDao.getWishListByUserId(this.id);
+    }
+
+    public void rateItemSeller(int orderItemId, int rating) {
+        OrderDao orderDao = new OrderDao();
+        OrderItem orderItem = orderDao.getOrderItem(orderItemId);
+        Seller s = orderItem.getItem().getSeller();
+        s.addRating(rating);
+        orderItem.setRating(rating);
+        orderItem.save();
+        s.save();
     }
 }

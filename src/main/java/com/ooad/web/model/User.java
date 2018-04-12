@@ -369,4 +369,8 @@ public class User {
         orderItem.save();
         s.save();
     }
+
+    public  static Collection<User> getAllUsers(){
+        return new UserDao().getAllUser();
+    }
 }

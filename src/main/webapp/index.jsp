@@ -120,6 +120,9 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <a href="/report">Report</a>
+    </div>
 </div>
 <%@include file="jsp/footer.jsp" %>
 </body>

@@ -305,4 +305,8 @@ public class Seller {
         sellerDao.updateSeller(this);
         return true;
     }
+
+    public static Collection<Seller> getAllSellers(){
+        return new SellerDao().getAllSeller();
+    }
 }

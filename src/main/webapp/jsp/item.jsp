@@ -125,7 +125,8 @@
             <%--<div id="itemId" type="hidden"><%=item.getId()%></div>--%>
             <input type="hidden" value="<%=item.getId()%>" id='itemId' class='h_v'>
 
-            <div id="seller">Sold by <a href="#" id="sellerName" data-toggle="tooltip" title="<%=item.getSeller().getId()%>"><%=item.getSeller().getUserName()%></a></div>
+            <div id="seller">Sold by <a href="#" id="sellerName" data-toggle="tooltip" title="<%=item.getSeller().getId()%>"><%=item.getSeller().getUserName()%></a> <%=item.getSeller().getSellerRating()  %> (<%=item.getSeller().getRatingsCount()%>) </div>
+
             <div id="prodFeatures">
                 <ul>
                     <%=item.getDescription()%>

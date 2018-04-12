@@ -77,7 +77,7 @@
                     </div>
                     <div class="col-lg-3 text-left">
                         <h1 id="title">
-                            <span id="productTitle"><%=oi.getItem().getName()%></span>
+                            <a href="/item?id=<%=oi.getItem().getId()%>"><span id="productTitle"><%=oi.getItem().getName()%></span> </a>
                         </h1>
                         <div id="seller">Sold by <a href="#" id="sellerName" data-toggle="tooltip" title="<%=oi.getItem().getSeller().getId()%>"><%=oi.getItem().getSeller().getUserName()%></a></div>
                         <div>Ship to:  <%=shippingAddress.getFullname()%></div>
@@ -103,9 +103,14 @@
                         <button onclick="itemDelivered(<%=oi.getId()%>)">Item Delivered</button>
                         <%}%>
                     </div>
+                    <%if(oi.getOrderItemStatus().isDelivered()){%>
                     <div class="col-lg-2">
                         <%--Add Seller review part--%>
+                        Rate the Seller:
+                            <input type="number" id="sellerRating<%=oi.getId()%>">
+                            <button onclick="sendRating(<%=oi.getId()%>)">Go</button>
                     </div>
+                    <%}%>
                 </div>
                 </div>
             <%}%>

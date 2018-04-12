@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Item {
     private final int id;
@@ -216,20 +217,24 @@ public class Item {
         return new ItemDao().saveItem(this);
     }
 
-    public int getEffectivePrice(){
-        switch (this.getOffer().getOfferCode()){
+    public int getEffectivePrice() {
+        switch (this.getOffer().getOfferCode()) {
             case 202:
                 PriceOffer p = (PriceOffer) offer;
                 return (int) (this.price - p.getPriceCut());
             case 201:
                 DiscountOffer d = (DiscountOffer) offer;
-                float effectivePercent =  (100-d.getPercentage());
-                return (int) (this.price*effectivePercent/100);
+                float effectivePercent = (100 - d.getPercentage());
+                return (int) (this.price * effectivePercent / 100);
             case -1:
                 return (int) this.price;
             default:
                 return (int) this.price;
         }
+    }
+
+    public static Collection<Item> getAllItems() {
+        return new ItemDao().getAllItem();
     }
 
 }

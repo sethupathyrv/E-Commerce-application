@@ -74,15 +74,17 @@ create table Offers
   engine=InnoDB
 ;
 
+-- auto-generated definition
 CREATE TABLE OrderItems
 (
   id        INT AUTO_INCREMENT
     PRIMARY KEY,
-  orderId   INT   NULL,
-  itemId    INT   NULL,
-  itemPrice FLOAT NULL,
-  quantity  INT   NULL,
-  status    INT   NULL
+  orderId   INT               NULL,
+  itemId    INT               NULL,
+  itemPrice FLOAT             NULL,
+  quantity  INT               NULL,
+  status    INT DEFAULT '301' NULL,
+  rating    INT DEFAULT '-1'  NULL
 )
   ENGINE = InnoDB;
 
@@ -104,7 +106,6 @@ create table Orders
   engine=InnoDB
 ;
 
--- auto-generated definition
 CREATE TABLE Sellers
 (
   id            INT AUTO_INCREMENT
@@ -121,13 +122,14 @@ CREATE TABLE Sellers
   state         VARCHAR(255)           NULL,
   pincode       VARCHAR(6)             NULL,
   country       VARCHAR(255)           NULL,
+  totalRatings  INT DEFAULT '0'        NULL,
+  ratingCount   INT DEFAULT '0'        NULL,
   CONSTRAINT Sellers_id_uindex
   UNIQUE (id),
   CONSTRAINT Sellers_emailId_uindex
   UNIQUE (emailId)
 )
   ENGINE = InnoDB;
-
 
 
 create table UserAddresses

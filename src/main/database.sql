@@ -62,20 +62,22 @@ CREATE TABLE Items
 
 
 
-create table Offers
+-- auto-generated definition
+CREATE TABLE Offers
 (
-  id int auto_increment
-    primary key,
-  offerType int null,
-  discountPercentage float default '-1' null,
-  price int default '-1' null,
-  x int default '-1' null,
-  y int default '-1' null,
-  constraint Offers_id_uindex
-  unique (id)
+  id                 INT AUTO_INCREMENT
+    PRIMARY KEY,
+  offerType          INT                NULL,
+  discountPercentage FLOAT DEFAULT '-1' NULL,
+  price              INT DEFAULT '-1'   NULL,
+  x                  INT DEFAULT '-1'   NULL,
+  y                  INT DEFAULT '-1'   NULL,
+  startDate          DATETIME           NULL,
+  endDate            DATETIME           NULL,
+  CONSTRAINT Offers_id_uindex
+  UNIQUE (id)
 )
-  engine=InnoDB
-;
+  ENGINE = InnoDB;
 
 -- auto-generated definition
 CREATE TABLE OrderItems

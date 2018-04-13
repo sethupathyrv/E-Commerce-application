@@ -212,6 +212,16 @@
         <url-pattern>/amazonpay</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <display-name>ReportController</display-name>
+        <servlet-name>report</servlet-name>
+        <servlet-class>com.ooad.web.controller.ReportController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>report</servlet-name>
+        <url-pattern>/report</url-pattern>
+    </servlet-mapping>
+
 
 
 </web-app>

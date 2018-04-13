@@ -11,6 +11,12 @@ public enum OrderItemStatus {
         public int getStatusCode() {
             return 301;
         }
+
+        @Override
+        public boolean isDelivered() {
+            return false;
+        }
+
     },
     SHIPPED {
         @Override
@@ -21,6 +27,11 @@ public enum OrderItemStatus {
         @Override
         public int getStatusCode() {
             return 302;
+        }
+
+        @Override
+        public boolean isDelivered() {
+            return false;
         }
     },
     DELIVERED {
@@ -33,9 +44,31 @@ public enum OrderItemStatus {
         public int getStatusCode() {
             return 303;
         }
+
+        @Override
+        public boolean isDelivered() {
+            return true;
+        }
+    },
+    REVIEWED {
+        @Override
+        public String getStatus() {
+            return "User Reviewed the Seller";
+        }
+
+        @Override
+        public int getStatusCode() {
+            return 304;
+        }
+
+        @Override
+        public boolean isDelivered() {
+            return true;
+        }
     };
     public abstract String getStatus();
     public abstract int getStatusCode();
+    public abstract boolean isDelivered();
     public static OrderItemStatus getOrderItemStatus(int code){
         switch (code){
             case 301:
@@ -44,6 +77,8 @@ public enum OrderItemStatus {
                 return OrderItemStatus.SHIPPED;
             case 303:
                 return OrderItemStatus.DELIVERED;
+            case 304:
+                return OrderItemStatus.REVIEWED;
             default:
                 return null;
         }

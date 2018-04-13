@@ -52,7 +52,7 @@ public class OrderDao {
             ResultSet rs = ps.getGeneratedKeys();
             OrderItem oi = null;
             if(rs.next()){
-                oi=new OrderItem(rs.getInt(1),item,o,price,quantity,OrderItemStatus.WAITING_FOR_SELLER);
+                oi=new OrderItem(rs.getInt(1),item,o,price,quantity,OrderItemStatus.WAITING_FOR_SELLER,-1);
             }
             con.close();
             return oi;
@@ -149,8 +149,9 @@ public class OrderDao {
             float itemPrice = rs.getFloat("itemPrice");
             int quantity = rs.getInt("quantity");
             int status = rs.getInt("status");
+            int rating = rs.getInt("rating");
             Item item = Item.find(itemId);
-            return new OrderItem(id,item,o,itemPrice,quantity,OrderItemStatus.getOrderItemStatus(status));
+            return new OrderItem(id,item,o,itemPrice,quantity,OrderItemStatus.getOrderItemStatus(status),rating);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -208,9 +209,10 @@ public class OrderDao {
         Connection con = null;
         try {
             con = Database.getConnection();
-            PreparedStatement ps = con.prepareStatement("UPDATE OrderItems SET status = ? WHERE id = ?");
+            PreparedStatement ps = con.prepareStatement("UPDATE OrderItems SET status = ?,rating = ? WHERE id = ?");
             ps.setInt(1,orderItem.getOrderItemStatus().getStatusCode());
-            ps.setInt(2,orderItem.getId() );
+            ps.setInt(2,orderItem.getRating());
+            ps.setInt(3,orderItem.getId() );
             ps.executeUpdate();
             con.close();
             return true;

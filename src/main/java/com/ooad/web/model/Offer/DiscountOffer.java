@@ -5,16 +5,19 @@ import com.ooad.web.model.CartItem;
 import com.ooad.web.model.Item;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class DiscountOffer extends Offer {
     private float percentage;
 
-    public DiscountOffer(int id,float discountPercentage) {
-        super(id);
+    public DiscountOffer(int id, Date startDate, Date endDate, float discountPercentage) {
+        super(id,startDate,endDate);
         this.percentage = discountPercentage;
     }
 
     @Override
     public int applyOffer(CartItem c, Cart cart) {
+        if(!isOfferValid()) return 0;
         Float price = c.getItem().getPrice();
         Float discountPrice = (price*percentage)/100;
         c.setOfferApplied(true);

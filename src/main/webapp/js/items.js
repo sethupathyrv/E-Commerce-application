@@ -3,6 +3,9 @@ var initData;
 var displayData;
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
+
+
+
     var theTemplateScript = $("#example-template").html();
     theTemplate = Handlebars.compile(theTemplateScript);
     var urlQuery = url('?');
@@ -27,9 +30,11 @@ $(document).ready(function () {
 function displayItems() {
     var compiledHtml = theTemplate(displayData);
     $('#items').html(compiledHtml);
+    displayRating();
 }
 
 function addInitialItemsResponse(data) {
+    console.log(data);
     //For Deep Copy to avoid problems with references
     initData = JSON.parse(JSON.stringify(data));
     displayData = data;
@@ -37,20 +42,22 @@ function addInitialItemsResponse(data) {
 }
 
 function applyPriceFilter() {
-    var minPriceValue = $('#minPrice').val();
-    var maxPriceValue = $('#maxPrice').val();
-    if (!(minPriceValue >0 && maxPriceValue > minPriceValue)) {
-        alert("Invalid Filter");
-        return
-    }
+    var minPriceValue = $('#minPrice').val() == '' ? 0: $('#minPrice').val();
+    var maxPriceValue = $('#maxPrice').val() == '' ? 0: $('#maxPrice').val();
+    var colour = $('#color').val();
+    // if (!(minPriceValue >0 && maxPriceValue > minPriceValue)) {
+    //     alert("Invalid Filter");
+    //     return
+    // }
     var data = {
         'min': minPriceValue,
         'max': maxPriceValue,
+        'colour':colour,
         'data': displayData
     };
     $.ajax({
         type: 'POST',
-        url: '/api/item/pricefilter',
+        url: '/api/item/filter',
         data: JSON.stringify(data),
         cache: false,
         contentType: "text/plain",
@@ -68,6 +75,7 @@ function clearFilter() {
     $('#sort').val("000");
     $('#minPrice').val('');
     $('#maxPrice').val('');
+    $('#color').val('000')
 }
 
 function sortResults(prop, asc) {
@@ -91,3 +99,14 @@ function sort(){
     }
 }
 
+function displayRating() {
+    $(".rateYo").each(function(i,obj){
+        console.log("1");
+        console.log($(this).find("#sellerRating").text());
+        $(this).rateYo({
+            rating:$(this).find("#sellerRating").text(),
+            readOnly:true,
+            starWidth: "20px"
+        })
+    });
+}

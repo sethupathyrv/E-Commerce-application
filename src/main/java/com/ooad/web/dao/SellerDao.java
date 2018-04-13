@@ -18,6 +18,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class SellerDao {
     public JSONObject validateSellerLogin(String email, String password) {
@@ -74,7 +76,9 @@ public class SellerDao {
                         rs.getString("city"),
                         rs.getString("state"),
                         rs.getString("pincode"),
-                        rs.getString("country")
+                        rs.getString("country"),
+                        rs.getInt("totalRatings"),
+                        rs.getInt("ratingCount")
                 );
             }
             con.close();
@@ -163,12 +167,10 @@ public class SellerDao {
 
     public boolean updateSeller(Seller seller){
         try {
-            System.out.println("reached database");
-            System.out.println(seller);
             Connection con = Database.getConnection();
             PreparedStatement ps = con
                     .prepareStatement("UPDATE Sellers SET storeName = ? ,mobileNumber = ?,streetAddress = ?," +
-                            "landmark = ? ,city = ? ,state = ?,pincode = ?,country = ? "+
+                            "landmark = ? ,city = ? ,state = ?,pincode = ?,country = ?,totalRatings = ? , ratingCount = ? "+
                             " WHERE id = ?");
             ps.setString(1, seller.getStoreName());
             ps.setString(2, seller.getMobileNumber());
@@ -178,11 +180,11 @@ public class SellerDao {
             ps.setString(6, seller.getState());
             ps.setString(7, seller.getPincode());
             ps.setString(8, seller.getCountry());
-            ps.setInt(9,seller.getId());
+            ps.setInt(9,seller.getTotalRatings() );
+            ps.setInt(10,seller.getRatingsCount());
+            ps.setInt(11,seller.getId());
             ps.executeUpdate();
-            System.out.println("database updated");
             con.close();
-            System.out.println("reached database end");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -207,9 +209,11 @@ public class SellerDao {
         final String state = rs.getString("state");
         final String pincode = rs.getString("pincode");
         final String country = rs.getString("country");
+        final int totalRatings = rs.getInt("totalRatings");
+        final int ratingCount = rs.getInt("ratingCount");
 
         return new Seller(id, userName, emailId, password, isEnabled, storeName, mobileNumber, streetAddress,
-                landmark, city, state, pincode, country );
+                landmark, city, state, pincode, country,totalRatings,ratingCount);
     }
 
     public UserAccount getUserAccountFromSellerId(int sellerId){
@@ -226,6 +230,26 @@ public class SellerDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public Collection<Seller> getAllSeller() {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Sellers");
+            ResultSet rs = ps.executeQuery();
+            Collection<Seller> seller = new ArrayList<Seller>();
+            while(rs.next()){
+                seller.add(sellerBuilder(rs));
+            }
+            con.close();
+            return seller;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;

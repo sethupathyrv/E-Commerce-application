@@ -54,7 +54,16 @@ $(document).ready(function() {
             $("#priceOfferDiv").hide();
             $("#discountOfferDiv").hide();
         }
+
+        if(offerSelect!=-1){
+            $("#date").show();
+        }else{
+            $("#date").hide();
+        }
+
     });
+
+
 
     $("#addItemForm").submit(function (event) {
         event.preventDefault();
@@ -77,7 +86,10 @@ $(document).ready(function() {
                     'subCategoryId':$("#subCategory").val(),
                     'itemBarcode':$('#itemBarcode').val(),
                     'itemColour':$('#itemColour').val(),
-                    'bundleOfferBarcode':$('#bundleOfferBarcode').val()
+                    'bundleOfferX':$('#bundleOfferX').val(),
+                    'bundleOfferY':$('#bundleOfferY').val(),
+                    'startDate':$('#startDate').val(),
+                    'endDate':$('#endDate').val()
 
                 };
                 formData.append('json',JSON.stringify(jsonData));

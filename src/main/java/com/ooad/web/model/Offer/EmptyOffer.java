@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 public class EmptyOffer extends Offer {
     public EmptyOffer() {
-        super(-1);
+        super(-1,null,null);
     }
 
     @Override

@@ -1,5 +1,4 @@
-<%@ page import="com.ooad.web.model.Cart" %>
-<%@ page import="com.ooad.web.model.CartItem" %><%--
+<%@ page import="com.ooad.web.model.*" %><%--
   Created by IntelliJ IDEA.
   User: chakri
   Date: 14-Mar-18
@@ -55,7 +54,7 @@
                         <span id="removeItem" class="btn-link">Delete</span>
                     </div>
                 </div>
-                <div class="Price col-lg-2 text-left">&#2352;<span id="currentPrice<%=c.getId()%>"><%=c.getItem().getPrice()%></span></div>
+                <div class="Price col-lg-2 text-left">&#2352;<span id="currentPrice<%=c.getId()%>"><%=c.getItem() instanceof FreeItem ? 0: c.getItem().getPrice()%></span></div>
                 <div class="item-column col-lg-2 text-right" id="quantity" >
                     <p contenteditable="true" id="<%=c.getId()%>" class="Quantity"><%=c.getQuantity()%></p>
                 </div>

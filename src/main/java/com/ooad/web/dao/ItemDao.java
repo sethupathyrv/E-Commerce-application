@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class ItemDao {
@@ -212,29 +213,36 @@ public class ItemDao {
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 int offerType = rs.getInt("offerType");
+                Date startDate = new Date(rs.getDate("startDate").getTime());
+                Date endDate = new Date(rs.getDate("endDate").getTime());
                 if (offerType == 201) {
                     float discountPercentage = rs.getFloat("discountPercentage");
-                    Offer o = new DiscountOffer(offerId, discountPercentage);
+                    Offer o = new DiscountOffer(offerId, startDate,endDate,discountPercentage);
                     con.close();
-                    return o;
+                    if(o.isOfferValid()) return o;
+                    return new EmptyOffer();
                 } else if (offerType == 202) {
                     int price = rs.getInt("price");
-                    Offer o = new PriceOffer(offerId, price);
+                    Offer o = new PriceOffer(offerId, startDate,endDate, price);
                     con.close();
-                    return o;
+                    if(o.isOfferValid()) return o;
+                    return new EmptyOffer();
                 } else if (offerType == 203) {
                     int x = rs.getInt("x");
                     int y = rs.getInt("y");
-                    Offer o = new BuyXGetYOffer(offerId, x, y);
+                    Offer o = new BuyXGetYOffer(offerId, startDate,endDate, x, y);
                     con.close();
-                    return o;
+                    if(o.isOfferValid()) return o;
+                    return new EmptyOffer();
                 } else if (offerType == 204) {
                     int x = rs.getInt("x");
-                    Offer o = new BuyXGetLowestFreeOffer(offerId, x);
-                    con.close();
-                    return o;
-                } else if(offerType == 205) {
+                    Offer o = new BuyXGetLowestFreeOffer(offerId, startDate,endDate, x);
 
+                    con.close();
+                    if(o.isOfferValid()) return o;
+                    return new EmptyOffer();
+                } else if(offerType == 205) {
+                    ;
                 }
             }
         } catch (ClassNotFoundException e) {
@@ -293,13 +301,15 @@ public class ItemDao {
         }
         return null;
     }
-    public int createOffer(int offerType,int discountPercentage,int priceOffer){
+    public int createOffer(int offerType, int discountPercentage, int priceOffer, Date startDate, Date endDate){
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps= con.prepareStatement("INSERT INTO Offers (offerType, discountPercentage, price) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps= con.prepareStatement("INSERT INTO Offers (offerType, discountPercentage, price,startDate,endDate) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,offerType );
             ps.setInt(2,discountPercentage );
             ps.setInt(3,priceOffer );
+            ps.setDate(4, new java.sql.Date(startDate.getTime()));
+            ps.setDate(5,new java.sql.Date(endDate.getTime()));
             int r = ps.executeUpdate();
             if(r>0){
                 ResultSet rs = ps.getGeneratedKeys();
@@ -316,5 +326,53 @@ public class ItemDao {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public int createOffer(int offerType,int discountPercentage,int priceOffer,int buyX,int getY,Date startDate, Date endDate){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps= con.prepareStatement("INSERT INTO Offers (offerType, discountPercentage, price,x,y,startDate,endDate) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1,offerType );
+            ps.setInt(2,discountPercentage );
+            ps.setInt(3,priceOffer );
+            ps.setInt(4,buyX);
+            ps.setInt(5,getY);
+            ps.setDate(6, new java.sql.Date(startDate.getTime()));
+            ps.setDate(7,new java.sql.Date(endDate.getTime()));
+
+            int r = ps.executeUpdate();
+            if(r>0){
+                ResultSet rs = ps.getGeneratedKeys();
+                if(rs.next()) {
+                    int id = rs.getInt(1);
+                    con.close();
+                    return id;
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public Collection<Item> getAllItem() {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Items");
+            ResultSet rs = ps.executeQuery();
+            Collection<Item> item = new ArrayList<Item>();
+            while(rs.next()){
+                item.add(itemBuilder(rs));
+            }
+            con.close();
+            return item;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -4,16 +4,19 @@ import com.ooad.web.model.Cart;
 import com.ooad.web.model.CartItem;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class PriceOffer extends Offer {
     private int priceCut;
 
-    public PriceOffer(int id,int priceCut) {
-        super(id);
+    public PriceOffer(int id, Date startDate, Date endDate,int priceCut) {
+        super(id,startDate,endDate);
         this.priceCut = priceCut;
     }
 
     @Override
     public int applyOffer(CartItem c, Cart cart) {
+        if(!isOfferValid()) return 0;
         Float price = c.getItem().getPrice();
         c.setOfferApplied(true);
         c.saveCartItem();

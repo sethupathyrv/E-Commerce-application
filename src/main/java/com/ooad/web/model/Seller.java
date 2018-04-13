@@ -14,8 +14,11 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 public class Seller {
     private int id;
@@ -31,8 +34,10 @@ public class Seller {
     private String state;
     private String pincode;
     private String country;
+    private int totalRatings;
+    private int ratingsCount;
 
-    public Seller(int id, String userName, String emailId, String password, boolean isEnabled, String storeName, String mobileNumber, String streetAddress, String landmark, String city, String state, String pincode, String country) {
+    public Seller(int id, String userName, String emailId, String password, boolean isEnabled, String storeName, String mobileNumber, String streetAddress, String landmark, String city, String state, String pincode, String country, int totalRatings,int ratingsCount) {
         this.id = id;
         this.userName = userName;
         this.emailId = emailId;
@@ -46,6 +51,8 @@ public class Seller {
         this.state = state;
         this.pincode = pincode;
         this.country = country;
+        this.totalRatings = totalRatings;
+        this.ratingsCount = ratingsCount;
     }
 
     @Override
@@ -57,13 +64,15 @@ public class Seller {
                 ", password='" + password + '\'' +
                 ", isEnabled=" + isEnabled +
                 ", storeName='" + storeName + '\'' +
-                ", mobileNumber=" + mobileNumber +
+                ", mobileNumber='" + mobileNumber + '\'' +
                 ", streetAddress='" + streetAddress + '\'' +
                 ", landmark='" + landmark + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
-                ", pincode=" + pincode +
+                ", pincode='" + pincode + '\'' +
                 ", country='" + country + '\'' +
+                ", totalRatings=" + totalRatings +
+                ", ratingsCount=" + ratingsCount +
                 '}';
     }
 
@@ -152,6 +161,26 @@ public class Seller {
         this.country = country;
     }
 
+    public int getTotalRatings() {
+        return totalRatings;
+    }
+
+    public int getRatingsCount() {
+        return ratingsCount;
+    }
+
+    public float getSellerRating(){
+        if(totalRatings == 0)
+            return (float) 0.0;
+        if(ratingsCount == 0 ) return (float) 0.0;
+        return (float) (((float)totalRatings)/(ratingsCount*1.0));
+    }
+
+    public void addRating(int rating){
+        this.totalRatings = this.totalRatings + rating;
+        this.ratingsCount += 1;
+    }
+
     public JSONObject toJSON() {
         JSONObject sellerJsonObject = new JSONObject();
         sellerJsonObject.put("id", id);
@@ -165,6 +194,9 @@ public class Seller {
         sellerJsonObject.put("state", state);
         sellerJsonObject.put("pincode", pincode);
         sellerJsonObject.put("country", country);
+        sellerJsonObject.put("rating", getSellerRating());
+        sellerJsonObject.put("ratingCount",ratingsCount);
+
         return sellerJsonObject;
     }
 
@@ -180,21 +212,33 @@ public class Seller {
         final int offerType = item.getInt("offerType");
         final int itemBarcode = item.getInt("itemBarcode");
         final String itemColour = item.getString("itemColour");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final String start = item.getString("startDate");
+        final String end = item.getString("endDate");
+        Date startDate= null;
+        Date endDate=null;
+        try {
+            startDate = sdf.parse(start);
+            endDate = sdf.parse(end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         int discountPercentage = 0;
         int priceOffer = 0;
         final ItemDao itemDao=new ItemDao();
         int offerId =0;
         if(offerType == 202){
             priceOffer = item.getInt("priceOffer");
-            offerId = itemDao.createOffer(202,0 ,priceOffer );
+            offerId = itemDao.createOffer(202,0 ,priceOffer,startDate,endDate );
         } else if(offerType == 201){
             discountPercentage = item.getInt("discountPercentage");
-            offerId = itemDao.createOffer(201, discountPercentage,0 );
+            offerId = itemDao.createOffer(201, discountPercentage,0,startDate,endDate );
         }else if(offerType == -1){
             offerId = -1;
         } else if(offerType== 203) {
-            ;
-            //TODO add BundleOffer
+            int buyX = item.getInt("bundleOfferX");
+            int getY = item.getInt("bundleOfferY");
+            offerId = itemDao.createOffer(203,0,0,buyX,getY,startDate,endDate);
 
         }
         final JSONObject errors=new JSONObject();
@@ -242,20 +286,19 @@ public class Seller {
     }
 
     public JSONObject updateSeller(JSONObject req, int id) {
-        Seller s = Seller.find(id);
+//        Seller s = Seller.find(id);
         String str = req.getString("storeName");
         System.out.println(str);
-        s.setStoreName(req.getString("storeName"));
-        s.setMobileNumber(req.getString("mobileNumber"));
-        s.setStreetAddress(req.getString("streetAddress"));
-        s.setLandmark(req.getString("landmark"));
-        s.setCity(req.getString("city"));
-        s.setState(req.getString("state"));
-        s.setPincode(req.getString("pincode"));
-        s.setCountry(req.getString("country"));
-        System.out.println(s.getCountry());
-        SellerDao sellerDao = new SellerDao();
-        sellerDao.updateSeller(s);
+        this.setStoreName(req.getString("storeName"));
+        this.setMobileNumber(req.getString("mobileNumber"));
+        this.setStreetAddress(req.getString("streetAddress"));
+        this.setLandmark(req.getString("landmark"));
+        this.setCity(req.getString("city"));
+        this.setState(req.getString("state"));
+        this.setPincode(req.getString("pincode"));
+        this.setCountry(req.getString("country"));
+        System.out.println(this.getCountry());
+        this.save();
         return new JSONObject().put("status", Status.OK.getStatusCode());
     }
 
@@ -272,5 +315,15 @@ public class Seller {
         oi.save();
         oi.getOrder().refreshStatus();
         return new JSONObject().put("status",Status.OK.getStatusCode() );
+    }
+
+    public boolean save(){
+        SellerDao sellerDao = new SellerDao();
+        sellerDao.updateSeller(this);
+        return true;
+    }
+
+    public static Collection<Seller> getAllSellers(){
+        return new SellerDao().getAllSeller();
     }
 }

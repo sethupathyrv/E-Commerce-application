@@ -24,6 +24,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -171,6 +172,46 @@ public class ItemService {
         return Response.status(Status.OK).entity(resp2.toString()).build();
     }
 
+    @Path("/filter")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response filter(String req){
+        JSONObject re = new JSONObject(req);
+        int max = re.getInt("max");
+        int min = re.getInt("min");
+        String Colour = re.getString("colour");
+        JSONObject resp = re.getJSONObject("data");
+        JSONArray items = resp.getJSONArray("items");
+        JSONArray returnItems = new JSONArray();
+        if(min >=0 && max > min){
+            for(Object Item: items){
+                JSONObject jItem = (JSONObject) Item;
+                int price = jItem.getInt("price");
+                if ((min <= price && price <= max)){
+                    returnItems.put(jItem);
+                }
+            }
+        }else{
+            returnItems = items;
+        }
+        JSONArray returnItems1 = new JSONArray();
+        if(!Colour.equals("000")){
+            for(Object item: returnItems){
+                JSONObject jItem  = (JSONObject) item;
+                String colour = jItem.getString("itemColour");
+                if(colour.equals(Colour)) {
+                    returnItems1.put(item);
+                }
+            }
+        }else{
+            returnItems1 = returnItems;
+        }
+        JSONObject resp2 = new JSONObject();
+        resp2.put("items",returnItems1);
+        return Response.status(Status.OK).entity(resp2.toString()).build();
+    }
+
     @Path("addcategory")
     @POST
     @Consumes({MediaType.TEXT_PLAIN})
@@ -292,5 +333,23 @@ public class ItemService {
         WishListItem w = WishListItem.find(wishListItemId);
         userDao.moveToCart(u,w);
         return Response.status(Status.OK).entity(new JSONObject().put("status", Status.OK.getStatusCode()).toString()).build();
+    }
+
+    @POST
+    @Path("/rating/{orderItemId}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addRating(@HeaderParam("authToken") String token,@PathParam("orderItemId") int orderItemId, String req){
+        User u = TokenAuth.getUserFromToken(token);
+        if(u == null){
+            return Response.status(Status.OK).entity(new JSONObject()
+                    .put("status",Status.UNAUTHORIZED.getStatusCode()).toString()).build();
+        }
+        JSONObject j = new JSONObject(req);
+        int rating = j.getInt("rating");
+        u.rateItemSeller(orderItemId,rating);
+        JSONObject resp = new JSONObject();
+        resp.put("status",Status.OK.getStatusCode() );
+        return Response.status(Status.OK).entity(resp.toString()).build();
     }
 }

@@ -52,6 +52,7 @@ CREATE TABLE Items
   quantity      INT                    NULL,
   isEnabled     TINYINT(1) DEFAULT '1' NOT NULL,
   itemBarcode   INT DEFAULT '0'        NULL,
+  itemColour    VARCHAR(255)           NULL,
   CONSTRAINT Items_id_uindex
   UNIQUE (id)
 )
@@ -59,30 +60,36 @@ CREATE TABLE Items
 
 
 
-create table Offers
-(
-  id int auto_increment
-    primary key,
-  offerType int null,
-  discountPercentage float default '-1' null,
-  price int default '-1' null,
-  x int default '-1' null,
-  y int default '-1' null,
-  constraint Offers_id_uindex
-  unique (id)
-)
-  engine=InnoDB
-;
 
+
+-- auto-generated definition
+CREATE TABLE Offers
+(
+  id                 INT AUTO_INCREMENT
+    PRIMARY KEY,
+  offerType          INT                NULL,
+  discountPercentage FLOAT DEFAULT '-1' NULL,
+  price              INT DEFAULT '-1'   NULL,
+  x                  INT DEFAULT '-1'   NULL,
+  y                  INT DEFAULT '-1'   NULL,
+  startDate          DATETIME           NULL,
+  endDate            DATETIME           NULL,
+  CONSTRAINT Offers_id_uindex
+  UNIQUE (id)
+)
+  ENGINE = InnoDB;
+
+-- auto-generated definition
 CREATE TABLE OrderItems
 (
   id        INT AUTO_INCREMENT
     PRIMARY KEY,
-  orderId   INT   NULL,
-  itemId    INT   NULL,
-  itemPrice FLOAT NULL,
-  quantity  INT   NULL,
-  status    INT   NULL
+  orderId   INT               NULL,
+  itemId    INT               NULL,
+  itemPrice FLOAT             NULL,
+  quantity  INT               NULL,
+  status    INT DEFAULT '301' NULL,
+  rating    INT DEFAULT '-1'  NULL
 )
   ENGINE = InnoDB;
 
@@ -104,7 +111,6 @@ create table Orders
   engine=InnoDB
 ;
 
--- auto-generated definition
 CREATE TABLE Sellers
 (
   id            INT AUTO_INCREMENT
@@ -121,13 +127,14 @@ CREATE TABLE Sellers
   state         VARCHAR(255)           NULL,
   pincode       VARCHAR(6)             NULL,
   country       VARCHAR(255)           NULL,
+  totalRatings  INT DEFAULT '0'        NULL,
+  ratingCount   INT DEFAULT '0'        NULL,
   CONSTRAINT Sellers_id_uindex
   UNIQUE (id),
   CONSTRAINT Sellers_emailId_uindex
   UNIQUE (emailId)
 )
   ENGINE = InnoDB;
-
 
 
 create table UserAddresses
@@ -155,7 +162,7 @@ CREATE TABLE Users
   password              VARCHAR(255)           NOT NULL,
   isEnabled             TINYINT(1) DEFAULT '0' NOT NULL,
   defaultAddressId      INT DEFAULT '-1'       NULL,
-  PayBalance            INT DEFAULT '0'        NULL,
+  amazonPayBalance            INT DEFAULT '0'        NULL,
   emailVerificationHash VARCHAR(255)           NULL,
   CONSTRAINT Users_id_uindex
   UNIQUE (id),
@@ -193,18 +200,21 @@ CREATE TABLE Transactions
 
 CREATE TABLE Accounts
 (
-  id     INT AUTO_INCREMENT
+  id       INT AUTO_INCREMENT
     PRIMARY KEY,
-  userId INT         NOT NULL,
-  name   VARCHAR(50) NULL,
-  number INT         NOT NULL,
-  amount INT         NULL,
+  userId   INT              NOT NULL,
+  name     VARCHAR(50)      NULL,
+  number   INT              NOT NULL,
+  amount   INT              NULL,
+  sellerId INT DEFAULT '-1' NULL,
   CONSTRAINT Accounts_id_uindex
   UNIQUE (id),
   CONSTRAINT Accounts_number_uindex
   UNIQUE (number)
 )
   ENGINE = InnoDB;
+
+
 
 CREATE TABLE WishList
 (

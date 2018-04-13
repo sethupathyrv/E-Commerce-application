@@ -23,11 +23,11 @@ public class FreeItem extends Item {
                 item.getItemBarcode(),
                 item.getItemColour());
     }
-
-    @Override
-    public float getPrice(){
-        return 0;
-    }
+//
+//    @Override
+//    public float getPrice(){
+//        return ;
+//    }
 
     @Override
     public Offer getOffer(){

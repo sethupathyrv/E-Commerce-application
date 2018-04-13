@@ -1,5 +1,11 @@
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
+
+    $("#rateYo").rateYo({
+        rating: $('#sellerRatingHidden').val(),
+        readOnly:true,
+        starWidth: "20px"
+    });
     $('#directBuy').click(function () {
         var formData = {
             'itemId':$("#itemId").val(),
@@ -61,7 +67,9 @@ $(document).ready(function () {
                 }
             }
         })
-    })
+    });
+
+
 });
 
 function addItemtoCartResponse(response) {

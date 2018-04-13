@@ -133,7 +133,7 @@
                 </div>
                 <div class="col-lg-10">
                     <p id="productTitle" class="btn-link"><%=oi.getItem().getName()%></p> Sold by <a href="#" id="sellerName"><%=oi.getItem().getSeller().getUserName()%></a>
-                    <p id="Price"><span id="currentPrice<%=oi.getId()%>">&#2352; <%=oi.getItem().getPrice()%></span></p>
+                    <p id="Price"><span id="currentPrice<%=oi.getId()%>">&#2352; <%=oi.getItemPrice()%></span></p>
                     <p id="Quantity">Quantity: <%=oi.getQuantity()%></p>
 
                 </div>

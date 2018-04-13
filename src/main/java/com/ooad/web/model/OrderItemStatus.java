@@ -16,6 +16,7 @@ public enum OrderItemStatus {
         public boolean isDelivered() {
             return false;
         }
+
     },
     SHIPPED {
         @Override
@@ -76,6 +77,8 @@ public enum OrderItemStatus {
                 return OrderItemStatus.SHIPPED;
             case 303:
                 return OrderItemStatus.DELIVERED;
+            case 304:
+                return OrderItemStatus.REVIEWED;
             default:
                 return null;
         }

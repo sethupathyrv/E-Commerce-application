@@ -3,6 +3,9 @@ var initData;
 var displayData;
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
+
+
+
     var theTemplateScript = $("#example-template").html();
     theTemplate = Handlebars.compile(theTemplateScript);
     var urlQuery = url('?');
@@ -27,9 +30,11 @@ $(document).ready(function () {
 function displayItems() {
     var compiledHtml = theTemplate(displayData);
     $('#items').html(compiledHtml);
+    displayRating();
 }
 
 function addInitialItemsResponse(data) {
+    console.log(data);
     //For Deep Copy to avoid problems with references
     initData = JSON.parse(JSON.stringify(data));
     displayData = data;
@@ -94,3 +99,14 @@ function sort(){
     }
 }
 
+function displayRating() {
+    $(".rateYo").each(function(i,obj){
+        console.log("1");
+        console.log($(this).find("#sellerRating").text());
+        $(this).rateYo({
+            rating:$(this).find("#sellerRating").text(),
+            readOnly:true,
+            starWidth: "20px"
+        })
+    });
+}

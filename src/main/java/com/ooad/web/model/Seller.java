@@ -14,8 +14,11 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 public class Seller {
     private int id;
@@ -191,6 +194,8 @@ public class Seller {
         sellerJsonObject.put("state", state);
         sellerJsonObject.put("pincode", pincode);
         sellerJsonObject.put("country", country);
+        sellerJsonObject.put("rating", getSellerRating());
+        sellerJsonObject.put("ratingCount",ratingsCount);
 
         return sellerJsonObject;
     }
@@ -207,21 +212,33 @@ public class Seller {
         final int offerType = item.getInt("offerType");
         final int itemBarcode = item.getInt("itemBarcode");
         final String itemColour = item.getString("itemColour");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final String start = item.getString("startDate");
+        final String end = item.getString("endDate");
+        Date startDate= null;
+        Date endDate=null;
+        try {
+            startDate = sdf.parse(start);
+            endDate = sdf.parse(end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         int discountPercentage = 0;
         int priceOffer = 0;
         final ItemDao itemDao=new ItemDao();
         int offerId =0;
         if(offerType == 202){
             priceOffer = item.getInt("priceOffer");
-            offerId = itemDao.createOffer(202,0 ,priceOffer );
+            offerId = itemDao.createOffer(202,0 ,priceOffer,startDate,endDate );
         } else if(offerType == 201){
             discountPercentage = item.getInt("discountPercentage");
-            offerId = itemDao.createOffer(201, discountPercentage,0 );
+            offerId = itemDao.createOffer(201, discountPercentage,0,startDate,endDate );
         }else if(offerType == -1){
             offerId = -1;
         } else if(offerType== 203) {
-            ;
-            //TODO add BundleOffer
+            int buyX = item.getInt("bundleOfferX");
+            int getY = item.getInt("bundleOfferY");
+            offerId = itemDao.createOffer(203,0,0,buyX,getY,startDate,endDate);
 
         }
         final JSONObject errors=new JSONObject();

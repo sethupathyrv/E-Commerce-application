@@ -7,24 +7,27 @@ import com.ooad.web.model.FreeItem;
 import com.ooad.web.model.Item;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class BundledOffer extends Offer{
 
     private FreeItem freeItem;
-    public BundledOffer(int id,int barcode) {
-        super(id);
+    public BundledOffer(int id, Date startDate, Date endDate,int barcode) {
+        super(id,startDate,endDate);
         this.freeItem = new FreeItem(new ItemDao().getItembyBarcode(barcode));
     }
 
 
     @Override
     public int applyOffer(CartItem c, Cart cart) {
-     if(c.isOfferApplied()){
-         return 0;
-     }else {
-         CartItem freeCartItem = new CartItem(0,freeItem,1,true);
-         cart.addCartItem(freeCartItem);
-         return 0;
-     }
+        if(!isOfferValid()) return 0;
+        if(c.isOfferApplied()){
+            return 0;
+        }else {
+            CartItem freeCartItem = new CartItem(0,freeItem,1,true);
+            cart.addCartItem(freeCartItem);
+            return 0;
+        }
     }
 
     public FreeItem getFreeItem() {

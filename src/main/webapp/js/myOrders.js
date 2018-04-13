@@ -1,5 +1,21 @@
 $(document).ready(function () {
 
+   $('.myRateYo').rateYo({
+       rating:0,
+       starWidth: "20px"
+
+   });
+
+
+
+    $('.myRateYo1').each(function(i,obj){
+        $(this).rateYo({
+            rating:$(this).attr("id"),
+            readOnly:true,
+            starWidth: "20px"
+
+        })
+    });
 });
 
 function itemDelivered(orderItemId){
@@ -17,7 +33,9 @@ function itemDelivered(orderItemId){
 }
 
 function sendRating(orderItemId){
-    test = $('#sellerRating'+orderItemId).val();
+    console.log($("#rateYo"+orderItemId).rateYo("option", "rating"));
+
+    test = $("#rateYo"+orderItemId).rateYo("option", "rating");
     console.log(test);
     if(test > 0 && test <=5){
         var formData = {

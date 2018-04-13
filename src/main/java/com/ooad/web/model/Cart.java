@@ -7,16 +7,24 @@ import org.json.JSONObject;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 public class Cart {
     private Collection<CartItem> cartItems;
+    private ArrayList<CartItem> testItems;
     private final User user;
     private int promotionApplied;
+
+    public ArrayList<CartItem> getTestItems() {
+        return testItems;
+    }
 
     public Cart(User user) {
         this.user = user;
         CartDao cartDao = new CartDao();
         this.cartItems = cartDao.createCartItems(this.user.getId());
+        this.testItems = new ArrayList<CartItem>();
         this.promotionApplied = applyOffer();
     }
 
@@ -76,8 +84,13 @@ public class Cart {
 
     private int applyOffer(){
        int promotion = 0;
-        for (CartItem c: cartItems) {
+        Iterator<CartItem> it =cartItems.iterator();
+        while(it.hasNext()){
+            CartItem c = it.next();
             promotion += c.applyOffer(this);
+        }
+        for(CartItem c : testItems){
+            cartItems.add(c);
         }
         return promotion;
     }

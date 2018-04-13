@@ -14,9 +14,9 @@
 <%@include file="header.jsp" %>
 <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">--%>
 <script src="/js/handlebars-v4.0.11.js"></script>
-<script src="/js/items.js"></script>
 <script src="/js/url-v2.5.2.js"></script>
 <link rel="stylesheet" href="/css/items.css">
+<link rel="stylesheet" href="/css/jquery.rateyo.min.css"/>
 <script src="js/bootstrap.min.js"></script>
 <div class="container-fluid">
     <div class="row col-sm-2 filter">
@@ -59,10 +59,17 @@
         <h2 class="productName">{{name}}</h2>
         <p class="productSeller"> by {{seller.username}}</p>
         <p class="productPrice">&#2352; {{price}}</p>
-        <img src="/images/fake_reviews.png" alt="" data-toggle="tooltip" title="Out of the scope of course">
+        Seller Rating: <div class="rateYo">
+        <p hidden id="sellerRating">{{seller.rating}}</p>
+        <p hidden id="sellerRatingCount">{{seller.ratingCount}}</p>
+    </div>
+    <%--<img src="/images/fake_reviews.png" alt="" data-toggle="tooltip" title="Out of the scope of course">--%>
     </div>
     {{/each}}
 </script>
 <%@include file="footer.jsp" %>
+<script src="/js/jquery.rateyo.min.js"></script>
+<script src="/js/items.js"></script>
+
 </body>
 </html>

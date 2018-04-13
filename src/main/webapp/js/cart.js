@@ -1,4 +1,4 @@
-$(document).ready(function () {
+    $(document).ready(function () {
     var span = $('.Quantity');
     for (var i = 0;i<span.length ; i++){
         if (span[i].contentEditable) {

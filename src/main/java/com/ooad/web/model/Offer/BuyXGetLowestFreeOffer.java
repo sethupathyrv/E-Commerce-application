@@ -4,10 +4,13 @@ import com.ooad.web.model.Cart;
 import com.ooad.web.model.CartItem;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class BuyXGetLowestFreeOffer extends Offer {
     private int x;
     @Override
     public int applyOffer(CartItem c, Cart cart) {
+        if(!isOfferValid()) return 0;
         int count = 0;
         int leastPrice= (int) c.getItem().getPrice();
         for (CartItem ci: cart.getCartItems()) {
@@ -45,8 +48,8 @@ public class BuyXGetLowestFreeOffer extends Offer {
         this.x = x;
     }
 
-    public BuyXGetLowestFreeOffer(int id, int x) {
-        super(id);
+    public BuyXGetLowestFreeOffer(int id, Date startDate, Date endDate, int x) {
+        super(id,startDate,endDate);
         this.x= x;
 
     }

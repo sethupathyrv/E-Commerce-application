@@ -52,10 +52,13 @@ CREATE TABLE Items
   quantity      INT                    NULL,
   isEnabled     TINYINT(1) DEFAULT '1' NOT NULL,
   itemBarcode   INT DEFAULT '0'        NULL,
+  itemColour    VARCHAR(255)           NULL,
   CONSTRAINT Items_id_uindex
   UNIQUE (id)
 )
   ENGINE = InnoDB;
+
+
 
 
 
@@ -195,18 +198,21 @@ CREATE TABLE Transactions
 
 CREATE TABLE Accounts
 (
-  id     INT AUTO_INCREMENT
+  id       INT AUTO_INCREMENT
     PRIMARY KEY,
-  userId INT         NOT NULL,
-  name   VARCHAR(50) NULL,
-  number INT         NOT NULL,
-  amount INT         NULL,
+  userId   INT              NOT NULL,
+  name     VARCHAR(50)      NULL,
+  number   INT              NOT NULL,
+  amount   INT              NULL,
+  sellerId INT DEFAULT '-1' NULL,
   CONSTRAINT Accounts_id_uindex
   UNIQUE (id),
   CONSTRAINT Accounts_number_uindex
   UNIQUE (number)
 )
   ENGINE = InnoDB;
+
+
 
 CREATE TABLE WishList
 (

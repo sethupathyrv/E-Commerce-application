@@ -17,6 +17,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="images/Amazon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/jquery.rateyo.min.css"/>
     <title>
         Amazon.com Shopping Cart </title>
 
@@ -103,15 +104,29 @@
                         <button onclick="itemDelivered(<%=oi.getId()%>)">Item Delivered</button>
                         <%}%>
                     </div>
-                    <%if(oi.getOrderItemStatus().isDelivered()){%>
+                    <%if(oi.getOrderItemStatus().isDelivered() && oi.getOrderItemStatus().getStatusCode()!=304){%>
                     <div class="col-lg-2">
                         <%--Add Seller review part--%>
                         Rate the Seller:
-                            <input type="number" id="sellerRating<%=oi.getId()%>">
-                            <button onclick="sendRating(<%=oi.getId()%>)">Go</button>
+                            <div class="rating">
+                            <div id="rateYo<%=oi.getId()%>" class="myRateYo"></div>
+                            <%--<input type="number" id="sellerRating<%=oi.getId()%>">--%>
+                                <button onclick="sendRating(<%=oi.getId()%>)">Go</button>
+                            </div>
                     </div>
-                    <%}%>
-                </div>
+                    <%} else%>
+                        <%if(oi.getOrderItemStatus().getStatusCode()==304){%>
+                        <div class="col-lg-2">
+                            <%--Add Seller review part--%>
+                            Rate the Seller:
+                            <div class="rating">
+                                <div id="<%= oi.getRating() %>" class="myRateYo1"></div>
+                                <%--<input type="text" id = "" value="<%= oi.getItem().getSeller().getSellerRating() %>" hidden>--%>
+                            <%--<button onclick="sendRating(<%=oi.getId()%>)">Go</button>--%>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
                 </div>
             <%}%>
 
@@ -121,6 +136,7 @@
     <%}%>
 
 </div>
+<script src="/js/jquery.rateyo.min.js"></script>
 <%@include file="footer.jsp" %>
 </body>
 </html>

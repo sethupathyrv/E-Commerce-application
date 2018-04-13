@@ -128,8 +128,12 @@
                         <input class="form-control" type="number" name="itemBarcode" id="itemBarcode" autocomplete="off" required="true"/>
 
                         <label for="itemColour" class="a-form-label">Colour*</label>
-                        <input class="form-control" type="text" name="itemColour" id="itemColour" autocomplete="off" required="true"/>
-
+                        <select name="itemColour" id="itemColour">
+                            <option value="-1">Colour</option>
+                            <option value="Red">Red</option>
+                            <option value="Black">Black</option>
+                            <option value="Green">Green</option>
+                        </select>
 
                         <label>Category*:</label>
                         <select id="category" name="category">
@@ -147,8 +151,15 @@
                             <option value="-1">No Offer</option>
                             <option value="201">Discount Offer</option>
                             <option value="202">Price Offer</option>
-                            <option value="203">Buy 1 Get 1 free</option>
+                            <option value="203">Buy X Get Y free</option>
                         </select>
+
+                        <div id="date" hidden>
+                        <label for="startDate" class="a-form-label">Start Date*</label>
+                        <input type="date" id="startDate" value="2018-04-13" >
+                        <label for="endDate" class="a-form-label">End Date*</label>
+                        <input type="date" id="endDate" value="2018-04-13" >
+                        </div>
 
                         <div id="discountOfferDiv" hidden>
                             <label for="discountOffer" class="a-form-label">Discount Percentage*</label>
@@ -160,8 +171,8 @@
                         </div>
 
                         <div id="bundleOfferDiv" hidden>
-                            <label for="bundleOfferBarcode" class="a-form-label">Bundled with*</label>
-                            <input type="number" id="bundleOfferBarcode" class="form-control" value="0" required="true">
+                            Buy X*: <input type="number" id="bundleOfferX" class="form-control" value="0">
+                            Get Y*:<input type="number" id="bundleOfferY" class="form-control" value="0">
                         </div>
 
                         <label for="itemImage" class="a-form-label">Image*</label>

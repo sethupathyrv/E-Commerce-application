@@ -1,12 +1,13 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.ooad.web.model.*" %><%--
+<%@ page import="com.ooad.web.model.Seller" %>
+<%@ page import="com.ooad.web.model.Item" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="com.ooad.web.model.Offer.Offer" %><%--
   Created by IntelliJ IDEA.
   User: minal
-  Date: 19/2/18
-  Time: 7:29 PM
+  Date: 15/4/18
+  Time: 10:04 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,8 +15,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <% ArrayList<OrderItem> orderItems = (ArrayList<OrderItem>) request.getAttribute("orderItems");%>
     <% Seller seller = (Seller) request.getAttribute("seller"); %>
+    <% Collection<Item> items = (Collection<Item>) request.getAttribute("items");%>
 </head>
 <body>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -65,7 +66,7 @@
                         <li><a href="/seller" class="active">Dashboard</a></li>
                         <li><a href="/infoseller">Seller Information </a></li>
                         <li><a href="/seller/add">Add Item</a></li>
-                        <li><a href="/selleritems">Seller Items </a></li>
+                        <li class="active"><a href="/selleritems">Seller Items </a></li>
                         <li><a href="#" id="sellerLogout"> Logout</a></li>
                         <li><a href="/infoseller"> <%=seller.getUserName()%></a></li>
                     </ul>
@@ -74,61 +75,43 @@
         </nav>
     </div>
 
-        <div class="col-lg-12">
-            <h1 id="pageTitle">Your Orders</h1>
+        <div class="container-fluid">
+            <h4><b>Items added by you</b></h4><%=items.size()%>
+            <div class="container">
                 <div class="row">
-                    <div class="col-lg-3"></div>
-                    <div class="col-lg-3">
-                        <h5 class="headTiles text-left">Order Details</h5>
-                    </div>
-                    <div class="col-lg-2">
-                        <h5 class="headTiles text-left">Order Status</h5>
-                    </div>
+                    <div class="col-sm-1"><b>Item</b></div>
+                    <div class="col-sm-1"><b>Name</b></div>
+                    <div class="col-sm-1"><b>Barcode</b></div>
+                    <div class="col-sm-1"><b>Price</b></div>
+                    <div class="col-sm-1"><b>Offer</b></div>
+                    <div class="col-sm-1"><b>Brand</b></div>
+                    <div class="col-sm-2"><b>Category</b></div>
+                    <div class="col-sm-1"><b>Sub Category</b></div>
+                    <div class="col-sm-1"><b>Quantity</b></div>
                 </div>
                 <hr>
-
-                <% for (OrderItem oi :orderItems) {
-                    UserAddress deliveryAddress = oi.getOrder().getDeliveryAddress();
-                    Item item = oi.getItem(); %>
-
-                <div class="cartItems row">
-                    <div class=item-box-big">
-                        <div class="col-lg-3">
-                            <img id = "prodImage<%=item.getId()%>" width="150"  src="<%=item.getUrl()%>" height="150" class = "img-responsive" alt="watch">
-                            <br>
-                        </div>
-                        <div class="col-lg-3">
-                            <h1 id="title">
-                                <span id="productTitle"><%=item.getName()%></span>
-                            </h1>
-                            <div>Quantity:<%=oi.getQuantity()%></div>
-
-                            <div>Price: &#2352;<span id="currentPrice<%=item.getId()%>"><%=oi.getItemPrice()*oi.getQuantity()%></span></div>
-                            <div>Buyer name: <%=oi.getOrder().getUser().getUserName()%></div>
-
-                            <div>Delivery name: <%=deliveryAddress.getFullname()%></div>
-
-                             <div>DeliveryCity: <%=deliveryAddress.getCity()%></div>
-                            <br>
-                        </div>
-
-                        <div class="col-lg-3">
-                                OrderItemStatus: <%=oi.getOrderItemStatus().getStatusCode()%>
-                            <br>
-                            <%if (oi.getOrderItemStatus()== OrderItemStatus.WAITING_FOR_SELLER){%>
-                                <button onclick="dispatchItem(<%=oi.getId()%>)">Dispatch this Item</button>
-                            <%} else { %>
-                                <p><%=oi.getOrderItemStatus().getStatus()%></p>
-                            <%}%>
-                            <br>
-                        </div>
+                <%for (Item i: items){%>
+                    <%Offer o = i.getOffer();%>
+                <br>
+                <div class="row">
+                    <div class="item-box-big">
+                        <div class="col-sm-1"><img src="<%=i.getUrl()%>" width="150" height="150" class = "img-responsive"></div>
+                        <div class="col-sm-1"><%=i.getName()%></div>
+                        <div class="col-sm-1"><%=i.getItemBarcode()%></div>
+                        <div class="col-sm-1"><%=i.getPrice()%></div>
+                        <div class="col-sm-1"><%=o.getOfferCode()%></div>
+                        <div class="col-sm-1"><%=i.getBrand()%></div>
+                        <div class="col-sm-2"><%=i.getSubCategory().getItemCategory().getDisplayName()%></div>
+                        <div class="col-sm-1"><%=i.getSubCategory().getDisplayName()%></div>
+                        <div class="col-sm-1"><%=i.getQuantity()%></div>
+                        <%--<div class="col-sm-1"><a href="#">Delete</a></div>--%>
+                        <div class="col-sm-1"><a href="/item/update?id=<%=i.getId()%>">Update</a></div>
+                        <%--<div><input id="addtocart"type="button" class="btn1" value="Update"></div>--%>
                     </div>
                 </div>
-                <hr>
+                <br><hr>
                 <%}%>
-</div>
-
-
+            </div>
 </div>
 </body>
 </html>

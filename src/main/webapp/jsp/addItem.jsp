@@ -74,6 +74,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
             </div>
             <!-- Collection of nav links and other content for toggling -->
@@ -82,6 +84,7 @@
                     <li><a href="/seller">Dashboard</a></li>
                     <li><a href="/infoseller">Seller Information </a></li>
                     <li class="active"><a href="/seller/add">Add Item</a></li>
+                    <li><a href="/selleritems">Seller Items </a></li>
                     <li><a href="#" id="sellerLogout"> Logout</a></li>
                     <li><a href="/infoseller"> <%=seller.getUserName()%></a></li>
                 </ul>

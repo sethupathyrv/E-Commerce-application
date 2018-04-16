@@ -375,4 +375,53 @@ public class ItemDao {
         }
         return null;
     }
+
+    public Collection<Item> getSellerItem(int sellerId) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Items WHERE sellerId=?");
+            ps.setInt(1,sellerId );
+            ResultSet rs = ps.executeQuery();
+            Collection<Item> item = new ArrayList<Item>();
+            while(rs.next()){
+                item.add(itemBuilder(rs));
+            }
+            con.close();
+            return item;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean saveSellerItem(Item item){
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con
+                    .prepareStatement("UPDATE Items SET name = ? ,price = ?,url = ?," +
+                            "sellerId = ? ,description = ? ,brand = ?,height = ?,width = ? "+
+                            ",quantity = ? ,itemBarcode=? ,itemColour = ? WHERE id = ?");
+            ps.setString(1, item.getName());
+            ps.setFloat(2, item.getPrice());
+            ps.setString(3, item.getUrl());
+            ps.setInt(4, item.getSeller().getId());
+            ps.setString(5, item.getDescription());
+            ps.setString(6, item.getBrand());
+            ps.setFloat(7, item.getHeight());
+            ps.setFloat(8, item.getWidth());
+            ps.setInt(9,item.getQuantity());
+            ps.setInt(10,item.getItemBarcode());
+            ps.setString(11,item.getItemColour());
+            ps.setInt(12,item.getId());
+            ps.executeUpdate();
+            con.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

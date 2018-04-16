@@ -352,4 +352,37 @@ public class ItemService {
         resp.put("status",Status.OK.getStatusCode() );
         return Response.status(Status.OK).entity(resp.toString()).build();
     }
+/*
+    @PUT
+    @Path("/update/{id}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateItem(@HeaderParam("sellerAuthToken")String token,@PathParam("id") int itemId,String req) {
+        Seller s = TokenAuth.getSellerFromToken(token);
+        JSONObject reqJson = new JSONObject(req);
+        if (s == null) {
+            return Response.status(Status.OK).entity(new JSONObject()
+                    .put("status", Status.UNAUTHORIZED.getStatusCode()).toString()).build();
+        }
+        Item item = Item.find(itemId);
+        JSONObject jsonObject = item.updateItem(reqJson);
+        return Response.status(Status.OK).entity(jsonObject.toString()).build();
+    }*/
+
+
+    @PUT
+    @Path("/update/{id}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateItem(@HeaderParam("sellerAuthToken")String token,@PathParam("id") int itemId,String req) {
+        Seller s = TokenAuth.getSellerFromToken(token);
+        JSONObject reqJson = new JSONObject(req);
+        if (s == null) {
+            return Response.status(Status.OK).entity(new JSONObject()
+                    .put("status", Status.UNAUTHORIZED.getStatusCode()).toString()).build();
+        }
+        Item item = Item.find(itemId);
+        JSONObject jsonObject = item.updateItem(reqJson);
+        return Response.status(Status.OK).entity(jsonObject.toString()).build();
+    }
 }

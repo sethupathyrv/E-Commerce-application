@@ -223,5 +223,26 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <display-name>SellerItemsController</display-name>
+        <servlet-name>selleritems</servlet-name>
+        <servlet-class>com.ooad.web.controller.SellerItemsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>selleritems</servlet-name>
+        <url-pattern>/selleritems</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>SellerUpdateItemController</display-name>
+        <servlet-name>updateitem</servlet-name>
+        <servlet-class>com.ooad.web.controller.SellerUpdateItemController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateitem</servlet-name>
+        <url-pattern>/item/update</url-pattern>
+    </servlet-mapping>
+
+
 
 </web-app>

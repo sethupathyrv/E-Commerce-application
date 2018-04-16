@@ -12,6 +12,7 @@ import com.ooad.web.model.Offer.PriceOffer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -83,6 +84,22 @@ public class Item {
 
     public String getUrl() {
         return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setItemDetails(JSONArray itemDetails) {
+        this.itemDetails = itemDetails;
+    }
+
+    public void setItemBarcode(int itemBarcode) {
+        this.itemBarcode = itemBarcode;
+    }
+
+    public void setItemColour(String itemColour) {
+        this.itemColour = itemColour;
     }
 
     public String getDescription() {
@@ -217,6 +234,10 @@ public class Item {
         return new ItemDao().saveItem(this);
     }
 
+    public boolean itemSave() {
+        return new ItemDao().saveSellerItem(this);
+    }
+
     public int getEffectivePrice() {
         switch (this.getOffer().getOfferCode()) {
             case 202:
@@ -235,6 +256,26 @@ public class Item {
 
     public static Collection<Item> getAllItems() {
         return new ItemDao().getAllItem();
+    }
+
+    public static Collection<Item> getAllSellerItems(int sellerId) {
+        return new ItemDao().getSellerItem(sellerId);
+    }
+
+    public JSONObject updateItem(JSONObject req) {
+//        Seller s = Seller.find(id);
+        this.setName(req.getString("name"));
+        this.setPrice(req.getInt("price"));
+        this.setDescription(req.getString("description"));
+        this.setQuantity(req.getInt("quantity"));
+        this.setBrand(req.getString("brand"));
+        this.setHeight(req.getInt("height"));
+        this.setWidth(req.getInt("width"));
+        //this.setOffer(req.getString("offer"));
+        this.setItemBarcode(req.getInt("itemBarcode"));
+        this.setItemColour(req.getString("itemColour"));
+        this.itemSave();
+        return new JSONObject().put("status", Response.Status.OK.getStatusCode());
     }
 
 }

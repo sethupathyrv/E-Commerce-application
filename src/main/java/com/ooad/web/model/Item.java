@@ -30,7 +30,7 @@ public class Item {
     private float height;
     private float width;
     private boolean isEnabled;
-    private final ItemSubCategory subCategory;
+    private ItemSubCategory subCategory;
     private JSONArray itemDetails;
     private int itemBarcode;
     private String itemColour;
@@ -276,6 +276,10 @@ public class Item {
         int offerType = req.getInt("offerType");
         String start = req.getString("startDate");
         String end = req.getString("endDate");
+        int subCategoryId = req.getInt("subCategoryId");
+        ItemDao itemDao = new ItemDao();
+        ItemSubCategory itemSubCategory = itemDao.getItemSubCategory(subCategoryId);
+        this.subCategory = itemSubCategory;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate= null;
         Date endDate=null;
@@ -291,33 +295,32 @@ public class Item {
             if(this.offer.getId()!=-1)
                 offer = new DiscountOffer(this.offer.getId(),startDate,endDate,req.getFloat("discountPercentage"));
             else {
-                ItemDao itemDao = new ItemDao();
                 int id = itemDao.createOffer(offerType,req.getInt("discountPercentage"),-1,startDate,endDate);
                 offer = new DiscountOffer(id,startDate,endDate,req.getFloat("discountPercentage"));
             }
+            offer.save(offer);
         }else if(offerType==202){
             if(this.offer.getId()!=-1)
                 offer = new PriceOffer(this.offer.getId(),startDate,endDate,req.getInt("priceOffer"));
             else{
-                ItemDao itemDao = new ItemDao();
                 int id = itemDao.createOffer(offerType,-1,req.getInt("priceOffer"),startDate,endDate);
                 offer = new PriceOffer(id,startDate,endDate,req.getInt("priceOffer"));
             }
+            offer.save(offer);
         }else if(offerType==203){
             if(this.offer.getId()!=-1)
                 offer = new BuyXGetYOffer(this.offer.getId(),startDate,endDate,req.getInt("bundleOfferX")
                 ,req.getInt("bundleOfferY"));
             else{
-                ItemDao itemDao = new ItemDao();
                 int id = itemDao.createOffer(offerType,-1,-1,req.getInt("bundleOfferX")
                         ,req.getInt("bundleOfferY"),startDate,endDate);
                 offer = new BuyXGetYOffer(id,startDate,endDate,req.getInt("bundleOfferX")
                         ,req.getInt("bundleOfferY"));
 
             }
+            offer.save(offer);
         }
         this.setOffer(offer);
-        offer.save(offer);
         this.setItemBarcode(req.getInt("itemBarcode"));
         this.setItemColour(req.getString("itemColour"));
         this.itemSave();

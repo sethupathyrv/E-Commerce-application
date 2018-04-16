@@ -175,7 +175,7 @@ public class ItemDao {
         return new Item(id, name, price, url, quantity, seller, itemDescription, brand, height,
                 width, getItemDetails(id),getOffer(offerId),getItemSubCategory(subCategoryId),itemBarcode,itemColour);
     }
-    private ItemSubCategory getItemSubCategory(int subCategoryId){
+    public ItemSubCategory getItemSubCategory(int subCategoryId){
         try {
             Connection con = Database.getConnection();
             PreparedStatement ps = con.prepareStatement("select SubCategories.id as sid,SubCategories.displayName as sdn,Categories.* " +
@@ -401,7 +401,7 @@ public class ItemDao {
             PreparedStatement ps = con
                     .prepareStatement("UPDATE Items SET name = ? ,price = ?,url = ?," +
                             "sellerId = ? ,description = ? ,brand = ?,height = ?,width = ? "+
-                            ",quantity = ? ,itemBarcode=? ,itemColour = ? ,offerId=? WHERE id = ?");
+                            ",quantity = ? ,itemBarcode=? ,itemColour = ? ,offerId=?, subCategoryId=? WHERE id = ?");
             ps.setString(1, item.getName());
             ps.setFloat(2, item.getPrice());
             ps.setString(3, item.getUrl());
@@ -414,7 +414,8 @@ public class ItemDao {
             ps.setInt(10,item.getItemBarcode());
             ps.setString(11,item.getItemColour());
             ps.setInt(12,item.getOffer().getId());
-            ps.setInt(13,item.getId());
+            ps.setInt(13,item.getSubCategory().getId());
+            ps.setInt(14,item.getId());
             ps.executeUpdate();
             con.close();
             return true;

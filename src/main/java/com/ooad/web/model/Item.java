@@ -6,15 +6,16 @@
 package com.ooad.web.model;
 
 import com.ooad.web.dao.ItemDao;
-import com.ooad.web.model.Offer.DiscountOffer;
-import com.ooad.web.model.Offer.Offer;
-import com.ooad.web.model.Offer.PriceOffer;
+import com.ooad.web.model.Offer.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.core.Response;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 public class Item {
     private final int id;
@@ -264,14 +265,59 @@ public class Item {
 
     public JSONObject updateItem(JSONObject req) {
 //        Seller s = Seller.find(id);
+
         this.setName(req.getString("name"));
-        this.setPrice(req.getInt("price"));
+        this.setPrice(req.getFloat("price"));
         this.setDescription(req.getString("description"));
         this.setQuantity(req.getInt("quantity"));
         this.setBrand(req.getString("brand"));
-        this.setHeight(req.getInt("height"));
-        this.setWidth(req.getInt("width"));
-        //this.setOffer(req.getString("offer"));
+        this.setHeight(req.getFloat("height"));
+        this.setWidth(req.getFloat("width"));
+        int offerType = req.getInt("offerType");
+        String start = req.getString("startDate");
+        String end = req.getString("endDate");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate= null;
+        Date endDate=null;
+        try {
+            startDate = sdf.parse(start);
+            endDate = sdf.parse(end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(offerType==-1){
+            offer = new EmptyOffer();
+        }else if(offerType==201){
+            if(this.offer.getId()!=-1)
+                offer = new DiscountOffer(this.offer.getId(),startDate,endDate,req.getFloat("discountPercentage"));
+            else {
+                ItemDao itemDao = new ItemDao();
+                int id = itemDao.createOffer(offerType,req.getInt("discountPercentage"),-1,startDate,endDate);
+                offer = new DiscountOffer(id,startDate,endDate,req.getFloat("discountPercentage"));
+            }
+        }else if(offerType==202){
+            if(this.offer.getId()!=-1)
+                offer = new PriceOffer(this.offer.getId(),startDate,endDate,req.getInt("priceOffer"));
+            else{
+                ItemDao itemDao = new ItemDao();
+                int id = itemDao.createOffer(offerType,-1,req.getInt("priceOffer"),startDate,endDate);
+                offer = new PriceOffer(id,startDate,endDate,req.getInt("priceOffer"));
+            }
+        }else if(offerType==203){
+            if(this.offer.getId()!=-1)
+                offer = new BuyXGetYOffer(this.offer.getId(),startDate,endDate,req.getInt("bundleOfferX")
+                ,req.getInt("bundleOfferY"));
+            else{
+                ItemDao itemDao = new ItemDao();
+                int id = itemDao.createOffer(offerType,-1,-1,req.getInt("bundleOfferX")
+                        ,req.getInt("bundleOfferY"),startDate,endDate);
+                offer = new BuyXGetYOffer(id,startDate,endDate,req.getInt("bundleOfferX")
+                        ,req.getInt("bundleOfferY"));
+
+            }
+        }
+        this.setOffer(offer);
+        offer.save(offer);
         this.setItemBarcode(req.getInt("itemBarcode"));
         this.setItemColour(req.getString("itemColour"));
         this.itemSave();

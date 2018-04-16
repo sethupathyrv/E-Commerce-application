@@ -220,27 +220,26 @@ public class ItemDao {
                     Offer o = new DiscountOffer(offerId, startDate,endDate,discountPercentage);
                     con.close();
                     if(o.isOfferValid()) return o;
-                    return new EmptyOffer();
+                    return new EmptyOffer(o.getId(),o.getStartDate(),o.getEndDate());
                 } else if (offerType == 202) {
                     int price = rs.getInt("price");
                     Offer o = new PriceOffer(offerId, startDate,endDate, price);
                     con.close();
                     if(o.isOfferValid()) return o;
-                    return new EmptyOffer();
+                    return new EmptyOffer(o.getId(),o.getStartDate(),o.getEndDate());
                 } else if (offerType == 203) {
                     int x = rs.getInt("x");
                     int y = rs.getInt("y");
                     Offer o = new BuyXGetYOffer(offerId, startDate,endDate, x, y);
                     con.close();
                     if(o.isOfferValid()) return o;
-                    return new EmptyOffer();
+                    return new EmptyOffer(o.getId(),o.getStartDate(),o.getEndDate());
                 } else if (offerType == 204) {
                     int x = rs.getInt("x");
                     Offer o = new BuyXGetLowestFreeOffer(offerId, startDate,endDate, x);
-
                     con.close();
                     if(o.isOfferValid()) return o;
-                    return new EmptyOffer();
+                    return new EmptyOffer(o.getId(),o.getStartDate(),o.getEndDate());
                 } else if(offerType == 205) {
                     ;
                 }
@@ -402,7 +401,7 @@ public class ItemDao {
             PreparedStatement ps = con
                     .prepareStatement("UPDATE Items SET name = ? ,price = ?,url = ?," +
                             "sellerId = ? ,description = ? ,brand = ?,height = ?,width = ? "+
-                            ",quantity = ? ,itemBarcode=? ,itemColour = ? WHERE id = ?");
+                            ",quantity = ? ,itemBarcode=? ,itemColour = ? ,offerId=? WHERE id = ?");
             ps.setString(1, item.getName());
             ps.setFloat(2, item.getPrice());
             ps.setString(3, item.getUrl());
@@ -414,7 +413,8 @@ public class ItemDao {
             ps.setInt(9,item.getQuantity());
             ps.setInt(10,item.getItemBarcode());
             ps.setString(11,item.getItemColour());
-            ps.setInt(12,item.getId());
+            ps.setInt(12,item.getOffer().getId());
+            ps.setInt(13,item.getId());
             ps.executeUpdate();
             con.close();
             return true;
@@ -424,4 +424,42 @@ public class ItemDao {
         }
     }
 
+    public void saveOffer(Offer offer) {
+        try {
+            Connection con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE offers SET offerType=?, discountPercentage=?, price=?," +
+                    "x=?, y=?, startDate=?, endDate=?  WHERE id=?");
+            ps.setInt(1,offer.getOfferCode());
+            if(offer.getOfferCode()==201){
+                DiscountOffer discountOffer = (DiscountOffer) offer;
+                ps.setFloat(2,discountOffer.getPercentage());
+            }else{
+                ps.setFloat(2,-1);
+            }
+            if(offer.getOfferCode()==202){
+                PriceOffer priceOffer = (PriceOffer)offer;
+                ps.setInt(3,priceOffer.getPriceCut());
+            }else{
+                ps.setInt(3,-1);
+            }
+            if(offer.getOfferCode()==203){
+                BuyXGetYOffer buyXGetYOffer = (BuyXGetYOffer) offer;
+                ps.setInt(4,buyXGetYOffer.getX());
+                ps.setInt(5,buyXGetYOffer.getY());
+            }else{
+                ps.setInt(4,-1);
+                ps.setInt(5,-1);
+            }
+            ps.setDate(6, new java.sql.Date(offer.getStartDate().getTime()));
+            ps.setDate(7,new java.sql.Date(offer.getEndDate().getTime()));
+            ps.setInt(8,offer.getId());
+            ps.executeUpdate();
+            con.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

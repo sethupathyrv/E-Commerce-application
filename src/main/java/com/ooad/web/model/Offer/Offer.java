@@ -5,6 +5,7 @@
 
 package com.ooad.web.model.Offer;
 
+import com.ooad.web.dao.ItemDao;
 import com.ooad.web.model.Cart;
 import com.ooad.web.model.CartItem;
 import org.json.JSONObject;
@@ -43,5 +44,9 @@ public abstract class Offer {
             return true;
         }
         return false;
+    }
+    public void save(Offer offer){
+        ItemDao itemDao = new ItemDao();
+        itemDao.saveOffer(offer);
     }
 }

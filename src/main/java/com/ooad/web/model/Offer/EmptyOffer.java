@@ -4,9 +4,19 @@ import com.ooad.web.model.Cart;
 import com.ooad.web.model.CartItem;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class EmptyOffer extends Offer {
     public EmptyOffer() {
         super(-1,null,null);
+    }
+
+    public EmptyOffer(int id){
+        super(id,null,null);
+    }
+
+    public EmptyOffer(int id, Date startDate, Date endDate){
+        super(id,startDate,endDate);
     }
 
     @Override

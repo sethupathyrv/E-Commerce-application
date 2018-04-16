@@ -1,10 +1,4 @@
 function update(id) {
-        //$("#itemImage").each(function (value) {
-
-            //var file = value.files;
-            //console.log(file);
-            //var formData = new FormData();
-            //formData.append('file', file);
     console.log("sending rest Request");
             var jsonData = {
                 'name': $('#name').val(),
@@ -24,10 +18,8 @@ function update(id) {
                 'bundleOfferY': $('#bundleOfferY').val(),
                 'startDate': $('#startDate').val(),
                 'endDate': $('#endDate').val(),
-                'url': $('#itemImage').val()
             };
             console.log(jsonData);
-            //formData.append('json', JSON.stringify(jsonData));
 
             $.ajax({
                 url: '/api/item/update/'+id,
@@ -42,7 +34,6 @@ function update(id) {
                 processData: false,
                 success: updateItemResponse
             });
-        //});
     }
 
     function updateItemResponse(response) {
@@ -54,7 +45,6 @@ function update(id) {
             window.location.replace("/sellerlogin");
         }
         console.log(response);
-        //alert("Not Updated");
     }
 
     $('#sellerLogout').click(function () {

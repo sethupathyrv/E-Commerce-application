@@ -110,37 +110,37 @@
 
 
                             <label for="name" class="a-form-label">Name*</label>
-                            <input class="form-control" type="text" name="name" id="name" autocomplete="off" required="true" placeholder="<%=item.getName()%>"/>
+                            <input class="form-control" type="text" name="name" id="name" autocomplete="off" required="true" value="<%=item.getName()%>"/>
 
                             <label for="itemPrice" class="a-form-label">Price*</label>
-                            <input class="form-control" type="number" name="itemPrice" id="itemPrice" autocomplete="off" required="true" placeholder="<%=item.getPrice()%>"/>
+                            <input class="form-control" type="number" name="itemPrice" id="itemPrice" autocomplete="off" required="true" value="<%=item.getPrice()%>"/>
 
                             <label for="quantity" class="a-form-label">Quantity*</label>
-                            <input class="form-control" type="number" name="quantity" id="quantity" autocomplete="off" required="true" placeholder="<%=item.getQuantity()%>"/>
+                            <input class="form-control" type="number" name="quantity" id="quantity" autocomplete="off" required="true" value="<%=item.getQuantity()%>"/>
 
 
                             <label id="description" class="a-form-label">Item Description</label>
 
-                            <textarea class="form-control" id="itemDescription" name="description" rows="5" cols="30" placeholder="<%=item.getDescription()%>"></textarea>
+                            <textarea class="form-control" id="itemDescription" name="description" rows="5" cols="30" value="<%=item.getDescription()%>"></textarea>
 
                             <label for="brand" class="a-form-label">Brand*</label>
-                            <input class="form-control" type="text" name="brand" id="brand" autocomplete="off" required="true" placeholder="<%=item.getBrand()%>"/>
+                            <input class="form-control" type="text" name="brand" id="brand" autocomplete="off" required="true" value="<%=item.getBrand()%>"/>
 
                             <label for="itemHeight" class="a-form-label">Height*</label>
-                            <input class="form-control" type="number" name="itemHeight" id="itemHeight" autocomplete="off" required="true" placeholder="<%=item.getHeight()%>"/>
+                            <input class="form-control" type="number" name="itemHeight" id="itemHeight" autocomplete="off" required="true" value="<%=item.getHeight()%>"/>
 
                             <label for="itemWidth" class="a-form-label">Width*</label>
-                            <input class="form-control" type="number" name="itemWidth" id="itemWidth" autocomplete="off" required="true" placeholder="<%=item.getWidth()%>"/>
+                            <input class="form-control" type="number" name="itemWidth" id="itemWidth" autocomplete="off" required="true" value="<%=item.getWidth()%>"/>
 
                             <label for="itemBarcode" class="a-form-label">Item Barcode*</label>
-                            <input class="form-control" type="number" name="itemBarcode" id="itemBarcode" autocomplete="off" required="true" placeholder="<%=item.getItemBarcode()%>"/>
+                            <input class="form-control" type="number" name="itemBarcode" id="itemBarcode" autocomplete="off" required="true" value="<%=item.getItemBarcode()%>"/>
 
                             <label for="itemColour" class="a-form-label">Colour*</label>
                             <select name="itemColour" id="itemColour">
-                                <option value="-1">Colour</option>
-                                <option value="Red">Red</option>
-                                <option value="Black">Black</option>
-                                <option value="Green">Green</option>
+                                <option value="-1" >Colour</option>
+                                <option value="Red" <%=item.getItemColour().equals("Red") ? "selected":"" %>>Red</option>
+                                <option value="Black" <%=item.getItemColour().equals("Black") ? "selected":"" %>>Black</option>
+                                <option value="Green" <%=item.getItemColour().equals("Green") ? "selected":"" %>>Green</option>
                             </select>
                             <em>Previous colour: <%=item.getItemColour()%></em>
 
@@ -206,10 +206,10 @@
                                 </div>
 
 
-                            <label for="itemImage" class="a-form-label">Image*</label>
+                            <%--<label for="itemImage" class="a-form-label">Image*</label>--%>
 
-                            <input class="form-control" type="file" name="itemImage" id="itemImage" required="true"/>
-                            <em>Previous url: <%=item.getUrl()%></em>
+                           <%-- <input class="form-control" type="file" name="itemImage" id="itemImage" required="true"/>
+                            <em>Previous url: <%=item.getUrl()%></em>--%>
 
                         </div>
                     </div>

@@ -53,6 +53,10 @@ $(document).ready(function() {
             $("#bundleOfferDiv").show();
             $("#priceOfferDiv").hide();
             $("#discountOfferDiv").hide();
+        }else{
+            $("#bundleOfferDiv").hide();
+            $("#priceOfferDiv").hide();
+            $("#discountOfferDiv").hide();
         }
 
         if(offerSelect!=-1){

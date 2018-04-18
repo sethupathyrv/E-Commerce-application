@@ -160,9 +160,9 @@ CREATE TABLE Users
   userName              VARCHAR(255)           NOT NULL,
   emailId               VARCHAR(255)           NOT NULL,
   password              VARCHAR(255)           NOT NULL,
-  isEnabled             TINYINT(1) DEFAULT '0' NOT NULL,
+  isEnabled             TINYINT(1) DEFAULT '1' NOT NULL,
   defaultAddressId      INT DEFAULT '-1'       NULL,
-  amazonPayBalance            INT DEFAULT '0'        NULL,
+  amazonPayBalance      INT DEFAULT '0'        NULL,
   emailVerificationHash VARCHAR(255)           NULL,
   CONSTRAINT Users_id_uindex
   UNIQUE (id),
@@ -170,6 +170,8 @@ CREATE TABLE Users
   UNIQUE (emailId)
 )
   ENGINE = InnoDB;
+
+
 
 
 CREATE TABLE SubCategories

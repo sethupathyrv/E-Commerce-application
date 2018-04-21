@@ -11,8 +11,8 @@ public class BuyXGetYOffer extends Offer {
     private int x;
     private int y;
 
-    public BuyXGetYOffer(int id, Date startDate, Date endDate, int x, int y) {
-        super(id,startDate,endDate);
+    public BuyXGetYOffer(int id,String dealId, Date startDate, Date endDate, int x, int y) {
+        super(id,dealId,startDate,endDate);
         this.x = x;
         this.y = y;
     }

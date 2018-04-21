@@ -48,8 +48,8 @@ public class BuyXGetLowestFreeOffer extends Offer {
         this.x = x;
     }
 
-    public BuyXGetLowestFreeOffer(int id, Date startDate, Date endDate, int x) {
-        super(id,startDate,endDate);
+    public BuyXGetLowestFreeOffer(int id,String dealId, Date startDate, Date endDate, int x) {
+        super(id,dealId,startDate,endDate);
         this.x= x;
 
     }

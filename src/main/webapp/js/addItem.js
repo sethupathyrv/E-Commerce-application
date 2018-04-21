@@ -93,7 +93,8 @@ $(document).ready(function() {
                     'bundleOfferX':$('#bundleOfferX').val(),
                     'bundleOfferY':$('#bundleOfferY').val(),
                     'startDate':$('#startDate').val(),
-                    'endDate':$('#endDate').val()
+                    'endDate':$('#endDate').val(),
+                    'dealId':$('#dealId').val()
 
                 };
                 formData.append('json',JSON.stringify(jsonData));

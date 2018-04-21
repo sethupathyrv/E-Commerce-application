@@ -274,6 +274,7 @@ public class Item {
         this.setHeight(req.getFloat("height"));
         this.setWidth(req.getFloat("width"));
         int offerType = req.getInt("offerType");
+        String dealId = req.getString("dealId");
         String start = req.getString("startDate");
         String end = req.getString("endDate");
         int subCategoryId = req.getInt("subCategoryId");
@@ -281,6 +282,7 @@ public class Item {
         ItemSubCategory itemSubCategory = itemDao.getItemSubCategory(subCategoryId);
         this.subCategory = itemSubCategory;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         Date startDate= null;
         Date endDate=null;
         try {
@@ -293,28 +295,28 @@ public class Item {
             offer = new EmptyOffer();
         }else if(offerType==201){
             if(this.offer.getId()!=-1)
-                offer = new DiscountOffer(this.offer.getId(),startDate,endDate,req.getFloat("discountPercentage"));
+                offer = new DiscountOffer(this.offer.getId(),this.offer.getDealId(),startDate,endDate,req.getFloat("discountPercentage"));
             else {
-                int id = itemDao.createOffer(offerType,req.getInt("discountPercentage"),-1,startDate,endDate);
-                offer = new DiscountOffer(id,startDate,endDate,req.getFloat("discountPercentage"));
+                int id = itemDao.createOffer(offerType,dealId,req.getInt("discountPercentage"),-1,startDate,endDate);
+                offer = new DiscountOffer(id,this.offer.getDealId(),startDate,endDate,req.getFloat("discountPercentage"));
             }
             offer.save(offer);
         }else if(offerType==202){
             if(this.offer.getId()!=-1)
-                offer = new PriceOffer(this.offer.getId(),startDate,endDate,req.getInt("priceOffer"));
+                offer = new PriceOffer(this.offer.getId(),this.offer.getDealId(),startDate,endDate,req.getInt("priceOffer"));
             else{
-                int id = itemDao.createOffer(offerType,-1,req.getInt("priceOffer"),startDate,endDate);
-                offer = new PriceOffer(id,startDate,endDate,req.getInt("priceOffer"));
+                int id = itemDao.createOffer(offerType,dealId,-1,req.getInt("priceOffer"),startDate,endDate);
+                offer = new PriceOffer(id,this.offer.getDealId(),startDate,endDate,req.getInt("priceOffer"));
             }
             offer.save(offer);
         }else if(offerType==203){
             if(this.offer.getId()!=-1)
-                offer = new BuyXGetYOffer(this.offer.getId(),startDate,endDate,req.getInt("bundleOfferX")
+                offer = new BuyXGetYOffer(this.offer.getId(),this.offer.getDealId(),startDate,endDate,req.getInt("bundleOfferX")
                 ,req.getInt("bundleOfferY"));
             else{
-                int id = itemDao.createOffer(offerType,-1,-1,req.getInt("bundleOfferX")
+                int id = itemDao.createOffer(offerType,dealId,-1,-1,req.getInt("bundleOfferX")
                         ,req.getInt("bundleOfferY"),startDate,endDate);
-                offer = new BuyXGetYOffer(id,startDate,endDate,req.getInt("bundleOfferX")
+                offer = new BuyXGetYOffer(id,this.offer.getDealId(),startDate,endDate,req.getInt("bundleOfferX")
                         ,req.getInt("bundleOfferY"));
 
             }

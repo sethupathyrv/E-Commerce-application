@@ -12,8 +12,8 @@ import java.util.Date;
 public class BundledOffer extends Offer{
 
     private FreeItem freeItem;
-    public BundledOffer(int id, Date startDate, Date endDate,int barcode) {
-        super(id,startDate,endDate);
+    public BundledOffer(int id,String dealId, Date startDate, Date endDate,int barcode) {
+        super(id,dealId,startDate,endDate);
         this.freeItem = new FreeItem(new ItemDao().getItembyBarcode(barcode));
     }
 

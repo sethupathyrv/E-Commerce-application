@@ -10,8 +10,8 @@ import java.util.Date;
 public class DiscountOffer extends Offer {
     private float percentage;
 
-    public DiscountOffer(int id, Date startDate, Date endDate, float discountPercentage) {
-        super(id,startDate,endDate);
+    public DiscountOffer(int id, String dealId,Date startDate, Date endDate, float discountPercentage) {
+        super(id,dealId,startDate,endDate);
         this.percentage = discountPercentage;
     }
 

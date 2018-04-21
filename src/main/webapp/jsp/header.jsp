@@ -69,7 +69,7 @@
                             <a href="#" id="nav-deliver">
                                 <span style="font-size: 12px;font-weight: 400; ">Deliver to
                                     <%= (user==null)? "" : user.getUserName() %> </span>
-                                <br><p id="loc"></p>
+                                <br><p id="loc">Bangalore 560100</p>
                             </a>
                         </div>
                     </div>

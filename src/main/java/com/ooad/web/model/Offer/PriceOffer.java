@@ -9,8 +9,8 @@ import java.util.Date;
 public class PriceOffer extends Offer {
     private int priceCut;
 
-    public PriceOffer(int id, Date startDate, Date endDate,int priceCut) {
-        super(id,startDate,endDate);
+    public PriceOffer(int id,String dealId, Date startDate, Date endDate,int priceCut) {
+        super(id,dealId,startDate,endDate);
         this.priceCut = priceCut;
     }
 

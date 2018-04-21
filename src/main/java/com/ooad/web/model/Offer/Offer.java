@@ -17,12 +17,14 @@ public abstract class Offer {
     public abstract int getOfferCode();
     public abstract JSONObject toJSON();
     protected int id;
+    protected String dealId;
     protected Date startDate;
     protected Date endDate;
 
 
-    Offer(int id, Date startDate, Date endDate){
+    Offer(int id, String dealId, Date startDate, Date endDate){
         this.id = id;
+        this.dealId = dealId;
         this.startDate = startDate;
         this.endDate =  endDate;
     }
@@ -37,6 +39,8 @@ public abstract class Offer {
     public Date getEndDate() {
         return endDate;
     }
+
+    public String getDealId() { return dealId;}
 
     public boolean isOfferValid(){
         Date currentDate = new Date();

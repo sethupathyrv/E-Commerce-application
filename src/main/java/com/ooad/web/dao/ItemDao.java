@@ -215,31 +215,32 @@ public class ItemDao {
                 int offerType = rs.getInt("offerType");
                 Date startDate = new Date(rs.getDate("startDate").getTime());
                 Date endDate = new Date(rs.getDate("endDate").getTime());
+                String dealId = rs.getString("dealId");
                 if (offerType == 201) {
                     float discountPercentage = rs.getFloat("discountPercentage");
-                    Offer o = new DiscountOffer(offerId, startDate,endDate,discountPercentage);
+                    Offer o = new DiscountOffer(offerId,dealId, startDate,endDate,discountPercentage);
                     con.close();
                     if(o.isOfferValid()) return o;
-                    return new EmptyOffer(o.getId(),o.getStartDate(),o.getEndDate());
+                    return new EmptyOffer(o.getId(),dealId,o.getStartDate(),o.getEndDate());
                 } else if (offerType == 202) {
                     int price = rs.getInt("price");
-                    Offer o = new PriceOffer(offerId, startDate,endDate, price);
+                    Offer o = new PriceOffer(offerId,dealId, startDate,endDate, price);
                     con.close();
                     if(o.isOfferValid()) return o;
-                    return new EmptyOffer(o.getId(),o.getStartDate(),o.getEndDate());
+                    return new EmptyOffer(o.getId(),dealId,o.getStartDate(),o.getEndDate());
                 } else if (offerType == 203) {
                     int x = rs.getInt("x");
                     int y = rs.getInt("y");
-                    Offer o = new BuyXGetYOffer(offerId, startDate,endDate, x, y);
+                    Offer o = new BuyXGetYOffer(offerId,dealId, startDate,endDate, x, y);
                     con.close();
                     if(o.isOfferValid()) return o;
-                    return new EmptyOffer(o.getId(),o.getStartDate(),o.getEndDate());
+                    return new EmptyOffer(o.getId(),dealId,o.getStartDate(),o.getEndDate());
                 } else if (offerType == 204) {
                     int x = rs.getInt("x");
-                    Offer o = new BuyXGetLowestFreeOffer(offerId, startDate,endDate, x);
+                    Offer o = new BuyXGetLowestFreeOffer(offerId,dealId, startDate,endDate, x);
                     con.close();
                     if(o.isOfferValid()) return o;
-                    return new EmptyOffer(o.getId(),o.getStartDate(),o.getEndDate());
+                    return new EmptyOffer(o.getId(),dealId,o.getStartDate(),o.getEndDate());
                 } else if(offerType == 205) {
                     ;
                 }
@@ -300,15 +301,16 @@ public class ItemDao {
         }
         return null;
     }
-    public int createOffer(int offerType, int discountPercentage, int priceOffer, Date startDate, Date endDate){
+    public int createOffer(int offerType,String dealId, int discountPercentage, int priceOffer, Date startDate, Date endDate){
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps= con.prepareStatement("INSERT INTO Offers (offerType, discountPercentage, price,startDate,endDate) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps= con.prepareStatement("INSERT INTO Offers (offerType, discountPercentage, price,startDate,endDate,dealId) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,offerType );
             ps.setInt(2,discountPercentage );
             ps.setInt(3,priceOffer );
             ps.setDate(4, new java.sql.Date(startDate.getTime()));
             ps.setDate(5,new java.sql.Date(endDate.getTime()));
+            ps.setString(6,dealId);
             int r = ps.executeUpdate();
             if(r>0){
                 ResultSet rs = ps.getGeneratedKeys();
@@ -327,10 +329,10 @@ public class ItemDao {
         return -1;
     }
 
-    public int createOffer(int offerType,int discountPercentage,int priceOffer,int buyX,int getY,Date startDate, Date endDate){
+    public int createOffer(int offerType,String dealId,int discountPercentage,int priceOffer,int buyX,int getY,Date startDate, Date endDate){
         try {
             Connection con = Database.getConnection();
-            PreparedStatement ps= con.prepareStatement("INSERT INTO Offers (offerType, discountPercentage, price,x,y,startDate,endDate) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps= con.prepareStatement("INSERT INTO Offers (offerType, discountPercentage, price,x,y,startDate,endDate,dealId) VALUES (?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,offerType );
             ps.setInt(2,discountPercentage );
             ps.setInt(3,priceOffer );
@@ -338,6 +340,7 @@ public class ItemDao {
             ps.setInt(5,getY);
             ps.setDate(6, new java.sql.Date(startDate.getTime()));
             ps.setDate(7,new java.sql.Date(endDate.getTime()));
+            ps.setString(8,dealId);
 
             int r = ps.executeUpdate();
             if(r>0){

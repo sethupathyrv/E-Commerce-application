@@ -215,6 +215,7 @@ public class Seller {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         final String start = item.getString("startDate");
         final String end = item.getString("endDate");
+        final String dealId = item.getString("dealId");
         Date startDate= null;
         Date endDate=null;
         try {
@@ -229,16 +230,16 @@ public class Seller {
         int offerId =0;
         if(offerType == 202){
             priceOffer = item.getInt("priceOffer");
-            offerId = itemDao.createOffer(202,0 ,priceOffer,startDate,endDate );
+            offerId = itemDao.createOffer(202,dealId,0 ,priceOffer,startDate,endDate );
         } else if(offerType == 201){
             discountPercentage = item.getInt("discountPercentage");
-            offerId = itemDao.createOffer(201, discountPercentage,0,startDate,endDate );
+            offerId = itemDao.createOffer(201,dealId, discountPercentage,0,startDate,endDate );
         }else if(offerType == -1){
             offerId = -1;
         } else if(offerType== 203) {
             int buyX = item.getInt("bundleOfferX");
             int getY = item.getInt("bundleOfferY");
-            offerId = itemDao.createOffer(203,0,0,buyX,getY,startDate,endDate);
+            offerId = itemDao.createOffer(203,dealId,0,0,buyX,getY,startDate,endDate);
 
         }
         final JSONObject errors=new JSONObject();

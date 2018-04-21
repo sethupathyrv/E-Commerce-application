@@ -158,10 +158,12 @@
                         </select>
 
                         <div id="date" hidden>
-                        <label for="startDate" class="a-form-label">Start Date*</label>
-                        <input type="date" id="startDate" value="2018-04-13" >
-                        <label for="endDate" class="a-form-label">End Date*</label>
-                        <input type="date" id="endDate" value="2018-04-13" >
+                            <label for="dealId">Deal Id*</label>
+                            <input type="text" id = dealId value="dealId">
+                            <label for="startDate" class="a-form-label">Start Date*</label>
+                            <input type="date" id="startDate" value="2018-04-13" >
+                            <label for="endDate" class="a-form-label">End Date*</label>
+                            <input type="date" id="endDate" value="2018-04-13" >
                         </div>
 
                         <div id="discountOfferDiv" hidden>

@@ -74,6 +74,7 @@
             </div>
         </div>
 </div>
+<a type="button" class="btn btn-primary" href="/exam">EndExm-03</a>
 <%--<p> <%= cart.toJSON().toString(4)%></p>--%>
 <%@include file="footer.jsp" %>
 </body>

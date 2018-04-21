@@ -61,19 +61,19 @@ CREATE TABLE Items
 
 
 
-
 -- auto-generated definition
 CREATE TABLE Offers
 (
   id                 INT AUTO_INCREMENT
     PRIMARY KEY,
-  offerType          INT                NULL,
-  discountPercentage FLOAT DEFAULT '-1' NULL,
-  price              INT DEFAULT '-1'   NULL,
-  x                  INT DEFAULT '-1'   NULL,
-  y                  INT DEFAULT '-1'   NULL,
-  startDate          DATETIME           NULL,
-  endDate            DATETIME           NULL,
+  offerType          INT                           NULL,
+  discountPercentage FLOAT DEFAULT '-1'            NULL,
+  price              INT DEFAULT '-1'              NULL,
+  x                  INT DEFAULT '-1'              NULL,
+  y                  INT DEFAULT '-1'              NULL,
+  startDate          DATETIME                      NULL,
+  endDate            DATETIME                      NULL,
+  dealId             VARCHAR(255) DEFAULT 'dealId' NULL,
   CONSTRAINT Offers_id_uindex
   UNIQUE (id)
 )

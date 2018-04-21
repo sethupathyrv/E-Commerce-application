@@ -27,6 +27,20 @@
 </head>
 
 <body>
+<script>
+    function deleteCartItem(cartItemId) {
+        console.log("deleted Item");
+        $.ajax({
+            type: 'DELETE',
+            url: 'api/item/cart/'+cartItemId,
+            success: function (data) {
+                // console.log("deleted");
+                window.location.replace("/cart");
+            }
+
+        });
+    }
+</script>
 <%@include file="header.jsp" %>
 <div class="container-fluid">
     <div class="col-lg-9">
@@ -50,8 +64,9 @@
                     </div>
                     <div class="col-lg-6">
                         <a href="/item?id=<%=c.getItem().getId()%>"><span id="productTitle" class="btn-link"><%=c.getItem().getName()%></span></a> by <a href="#" id="sellerName"><%=c.getItem().getSeller().getUserName()%></a>
+                        <div class="barcode"><%=c.getItem().getItemBarcode()%></div>
                         <div id="availability"><span id="avail">In stock</span></div>
-                        <span id="removeItem" class="btn-link">Delete</span>
+                        <span id="removeItem" onclick="deleteCartItem(<%=c.getId()%>)" class="btn-link" >Delete</span>
                     </div>
                 </div>
                 <div class="Price col-lg-2 text-left">&#2352;<span id="currentPrice<%=c.getId()%>"><%=c.getItem() instanceof FreeItem ? 0: c.getItem().getPrice()%></span></div>

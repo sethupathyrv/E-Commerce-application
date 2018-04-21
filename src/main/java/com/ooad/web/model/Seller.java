@@ -161,6 +161,10 @@ public class Seller {
         this.country = country;
     }
 
+    public String getAddress(){
+        return storeName +", "+streetAddress + ", "+city+" ";
+    }
+
     public int getTotalRatings() {
         return totalRatings;
     }
@@ -287,19 +291,19 @@ public class Seller {
     }
 
     public JSONObject updateSeller(JSONObject req, int id) {
-//        Seller s = Seller.find(id);
+        Seller s = Seller.find(id);
         String str = req.getString("storeName");
         System.out.println(str);
-        this.setStoreName(req.getString("storeName"));
-        this.setMobileNumber(req.getString("mobileNumber"));
-        this.setStreetAddress(req.getString("streetAddress"));
-        this.setLandmark(req.getString("landmark"));
-        this.setCity(req.getString("city"));
-        this.setState(req.getString("state"));
-        this.setPincode(req.getString("pincode"));
-        this.setCountry(req.getString("country"));
+        s.setStoreName(req.getString("storeName"));
+        s.setMobileNumber(req.getString("mobileNumber"));
+        s.setStreetAddress(req.getString("streetAddress"));
+        s.setLandmark(req.getString("landmark"));
+        s.setCity(req.getString("city"));
+        s.setState(req.getString("state"));
+        s.setPincode(req.getString("pincode"));
+        s.setCountry(req.getString("country"));
         System.out.println(this.getCountry());
-        this.save();
+        s.save();
         return new JSONObject().put("status", Status.OK.getStatusCode());
     }
 

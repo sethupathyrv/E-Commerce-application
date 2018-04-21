@@ -53,6 +53,7 @@
 </div>
 
 <script id="example-template" type="text/x-handlebars-template">
+    <%--<h1>{{items[0].name}}</h1>--%>
     {{#each items}}
     <div class="col-sm-4 item">
         <a href="/item?id={{id}}"><img src="{{url}}" alt="" class="productImage"></a>

@@ -244,5 +244,15 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <display-name>ExamController</display-name>
+        <servlet-name>exam</servlet-name>
+        <servlet-class>com.ooad.web.controller.ExamController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>exam</servlet-name>
+        <url-pattern>/exam</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

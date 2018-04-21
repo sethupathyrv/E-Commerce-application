@@ -29,4 +29,14 @@
     function refreshpage(response) {
         window.location.reload(true);
     }
+
+    function deleteCartItem(cartItemId) {
+        $.ajax({
+           type: 'DELETE',
+           url: 'api/item/cart/'+cartItemId,
+           success: function (data) {
+               window.location.reload(true);
+           }
+        });
+    }
 });

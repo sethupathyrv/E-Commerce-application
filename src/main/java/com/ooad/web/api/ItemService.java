@@ -385,4 +385,29 @@ public class ItemService {
         JSONObject jsonObject = item.updateItem(reqJson);
         return Response.status(Status.OK).entity(jsonObject.toString()).build();
     }
+
+    @GET
+    @Path("/compare/{id_1}/{id_2}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response compareItems(@PathParam("id_1")int itemId1, @PathParam("id_2") int itemId2 ){
+        Item i1 = Item.find(itemId1);
+        Item i2 = Item.find(itemId2);
+        JSONObject r = new JSONObject();
+        r.put("item1",i1.toJSON() );
+        r.put("item2",i2.toJSON() );
+        return Response.status(Status.OK).entity(r.toString()).build();
+
+    }
+
+    @DELETE
+    @Path("/cart/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteCartItem(@PathParam("id") int  cartItemId){
+        CartDao cartDao = new CartDao();
+        cartDao.removeItem(cartItemId);
+        JSONObject r = new JSONObject();
+        return Response.status(Status.OK).entity(r.toString()).build();
+    }
+
+
 }

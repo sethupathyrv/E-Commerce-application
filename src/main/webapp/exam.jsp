@@ -14,7 +14,7 @@
 <head>
     <title>Title</title>
 </head>
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<%--<link rel="stylesheet" href="/css/bootstrap.min.css">--%>
 <script src="../js/jquery.min.js"></script>
 <script src="../js/jquery.cookie.js"></script>
 <script src="/js/handlebars-v4.0.11.js"></script>

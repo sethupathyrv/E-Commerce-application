@@ -466,4 +466,24 @@ public class ItemDao {
         }
 
     }
+
+    public int getQuantitySold(Item item){
+        Connection con = null;
+        try {
+            con = Database.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT sum(quantity) FROM OrderItems WHERE itemId= ? AND status = 304");
+            ps.setInt(1,item.getId() );
+            ResultSet rs = ps.executeQuery();
+            int c = 0;
+            if(rs.next()){
+                c = rs.getInt("sum(quantity)");
+                return c;
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

@@ -1,6 +1,8 @@
 <%@ page import="com.ooad.web.model.User" %>
 <%@ page import="com.ooad.web.model.Cart" %>
-<%@ page import="com.ooad.web.model.CartItem" %><%--
+<%@ page import="com.ooad.web.model.CartItem" %>
+<%@ page import="com.ooad.web.model.Seller" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: sandeep
   Date: 21/4/18
@@ -20,8 +22,10 @@
 <script src="exam.js"></script>
 
 <body>
-<%User u = (User) request.getAttribute("user");%>
-<%Cart cart = (Cart) request.getAttribute("cart");%>
+<% ArrayList<Seller > sellers = (ArrayList<Seller>) request.getAttribute("sellers");%>
+<% ArrayList<Integer> totalItems = (ArrayList<Integer>) request.getAttribute("totalItems");%>
+<%--<%User u = (User) request.getAttribute("user");%>--%>
+<%--<%Cart cart = (Cart) request.getAttribute("cart");%>--%>
 <div class="container">
     <div class="row">
         <p class="col-sm-6">Sandeep Tadepalli</p>
@@ -29,7 +33,8 @@
     </div>
 </div>
 
-<div id="gui1">
+<%--
+<div id="gui1" hidden>
     <div id="gui1Header">
         <div class="row">
             <div class="col-sm-3">Sr No</div>
@@ -148,7 +153,30 @@
     <%}%>
     <button id="gui3_prev">Prev</button>
 </div>
+--%>
 
+
+<div id="gui1">
+    <div id="gui1Header">
+        <div class="row">
+            <div class="col-sm-3">Sr No</div>
+            <div class="col-sm-3">Seller Name</div>
+            <div class="col-sm-3">Seller Id</div>
+            <div class="col-sm-3">TotalItems</div>
+        </div>
+    </div>
+    <%int count = 1;%>
+    <%for (int i = 0; i < sellers.size(); i++){ %>
+    <div class="row">
+        <div class="col-sm-3"><%=count%></div>
+        <div class="col-sm-3"><%=sellers.get(i).getUserName()%></div>
+        <div class="col-sm-3"><%=sellers.get(i).getEmailId()%></div>
+        <div class="col-sm-3"><%=totalItems.get(i)%></div>
+        <%count++; %>
+    </div>
+    <%}%>
+    <a href="/" class="btn btn-primary">Home</a>
+</div>
 
 
 </body>

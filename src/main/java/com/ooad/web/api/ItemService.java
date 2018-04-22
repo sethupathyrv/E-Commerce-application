@@ -5,10 +5,7 @@
 
 package com.ooad.web.api;
 
-import com.ooad.web.dao.CartDao;
-import com.ooad.web.dao.ItemCategoryDao;
-import com.ooad.web.dao.ItemDao;
-import com.ooad.web.dao.UserDao;
+import com.ooad.web.dao.*;
 import com.ooad.web.model.*;
 import com.ooad.web.utils.TokenAuth;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -26,6 +23,7 @@ import javax.ws.rs.core.Response.Status;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -407,6 +405,47 @@ public class ItemService {
         cartDao.removeItem(cartItemId);
         JSONObject r = new JSONObject();
         return Response.status(Status.OK).entity(r.toString()).build();
+    }
+
+    @GET
+    @Path("/seller/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSellerItems(@PathParam("id")String email){
+        Seller s = new SellerDao().getSeller(email);
+        ItemDao itemDao = new ItemDao();
+        ArrayList<Item> items = (ArrayList<Item>) itemDao.getSellerItem(s.getId());
+        JSONObject j = new JSONObject();
+        JSONArray jitems = new JSONArray();
+        int count = 1;
+        for (Item i : items) {
+            jitems.put(new JSONObject().put("item", i.toJSON()).put("srlNo",count ));
+            count++;
+        }
+        j.put("items",jitems );
+        return Response.status(Status.OK).entity(j.toString()).build();
+
+    }
+
+    @GET
+    @Path("/filter/quantity/{sellerId}/{from}/{to}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSellerItems(@PathParam("sellerId")String email,
+                                   @PathParam("from") int from,
+                                   @PathParam("to") int to){
+        Seller s = new SellerDao().getSeller(email);
+        ItemDao itemDao = new ItemDao();
+        ArrayList<Item> items = (ArrayList<Item>) itemDao.getSellerItem(s.getId());
+        JSONObject j = new JSONObject();
+        JSONArray jitems = new JSONArray();
+        for (Item i : items) {
+            int qSold = itemDao.getQuantitySold(i);
+            if(qSold >= from && qSold <=to){
+                jitems.put(i.toJSON());
+            }
+        }
+        j.put("items",jitems );
+        return Response.status(Status.OK).entity(j.toString()).build();
+
     }
 
 

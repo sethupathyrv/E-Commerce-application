@@ -124,6 +124,9 @@
         <a href="/report">Report</a>
     </div>
 </div>
+
+<a class="btn" href="/exam">EndExam4|Q1</a>
+<a class="btn" href="/exam2.jsp">EndExam4|Q2Q3</a>
 <%@include file="jsp/footer.jsp" %>
 </body>
 </html>

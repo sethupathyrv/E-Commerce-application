@@ -228,6 +228,7 @@ public class Item {
         itemJsonObject.put("itemBarcode",this.itemBarcode);
         itemJsonObject.put("itemColour",this.itemColour);
         itemJsonObject.put("offer",this.offer.toJSON());
+        itemJsonObject.put("quantitySold",new ItemDao().getQuantitySold(this));
         return itemJsonObject;
     }
 

@@ -71,6 +71,7 @@
             {{#each items}}
             <div class="item col-sm-6">
                 <img src="{{url}}" alt="" style="height:150px;width:150px">
+                <br>
                 id: {{itemBarcode}}<br>
                 QuantitySold: {{quantitySold}}<br>
                 price: {{price}}

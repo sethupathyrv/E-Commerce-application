@@ -1,7 +1,3 @@
-/*
- * Created by Sandeep Tadepalli on 13/02/18 15:49
- * Copyright (c) 2018. All rights reserved.
- */
 function loginResponse(response) {
     if(response.status === 200){
         $.cookie("authToken",response.token);

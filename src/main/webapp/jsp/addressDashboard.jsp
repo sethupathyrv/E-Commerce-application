@@ -1,18 +1,7 @@
 <%@ page import="java.util.Collection" %>
 <%@ page import="com.ooad.web.model.UserAddress" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: chakri
-  Date: 15-Mar-18
-  Time: 1:43 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ArrayList" %>
 <!doctype html>
-
-
-
-
-
 <html class="a-no-js noie notouch">
 
 <head>

@@ -1,8 +1,3 @@
-/*
- * Created by Sandeep Tadepalli on 11/02/18 21:20
- * Copyright (c) 2018. All rights reserved.
- */
-
 package com.ooad.web.api;
 
 import javax.ws.rs.GET;

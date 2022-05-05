@@ -1,8 +1,3 @@
-/*
- * Created by Sandeep Tadepalli on 20/02/18 18:32
- * Copyright (c) 2018. All rights reserved.
- */
-
 package com.ooad.web.api;
 
 import com.ooad.web.dao.*;

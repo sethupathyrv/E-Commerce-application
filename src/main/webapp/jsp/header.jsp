@@ -13,6 +13,7 @@
            }
        }
    }
+
 %>
 <link rel="stylesheet" href="/css/fontawesome-all.min.css">
 <link rel="stylesheet" href="">
@@ -69,7 +70,7 @@
                             <a href="#" id="nav-deliver">
                                 <span style="font-size: 12px;font-weight: 400; ">Deliver to
                                     <%= (user==null)? "" : user.getUserName() %> </span>
-                                <br><p id="loc">Bangalore 560100</p>
+                                <br><p id="loc"> Bangalore 560100</p>
                             </a>
                         </div>
                     </div>
@@ -131,7 +132,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" id="nav-logout">Logout</a></li>
                             <li><a href="#">Your account</a></li>
-                            <li><a href="/list">Your List</a></li>
+                            <li><a href="/list" method="get">Your List</a></li>
                             <li><a href="/myorders">Your Orders</a></li>
                         </ul>
                     </div>

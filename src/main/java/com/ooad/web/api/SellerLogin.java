@@ -1,8 +1,3 @@
-/*
- * Created by Shravan on  13/2/18 11:00 PM.
- * Copyright (c) 2018. All rights reserved.
- */
-
 package com.ooad.web.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

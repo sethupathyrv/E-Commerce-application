@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ItemCategoryDao {
     public Collection<ItemCategory> getAllCategories() {
-        try {
+    	try {
             final List<ItemCategory> itemCategories = new ArrayList<ItemCategory>();
             final Connection con = Database.getConnection();
             final Statement st = con.createStatement();
@@ -35,6 +35,9 @@ public class ItemCategoryDao {
             e.printStackTrace();
         }
         return null;
+        
+        
+        
     }
     public ItemCategory getCategory(int CategoryId) {
         try {

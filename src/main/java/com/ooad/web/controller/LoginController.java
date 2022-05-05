@@ -15,16 +15,18 @@ import javax.ws.rs.core.Response.Status;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "Login", urlPatterns = {"/login"})
+@WebServlet(urlPatterns = "/login")
 public class LoginController extends HttpServlet {
 
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("jsp/login.jsp");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        System.out.print("Inside login before servlet\n");
+        RequestDispatcher rd = request.getRequestDispatcher("\\js\\login.js");
         rd.forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         UserDao dao = new UserDao();
         String em = request.getParameter("email");
         String pw = request.getParameter("psword");

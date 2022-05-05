@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-  ~ Created by Sandeep Tadepalli on 04/02/18 03:44
-  ~ Copyright (c) 2018. All rights reserved.
-  -->
-
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
+    
     <servlet>
-        <servlet-name>jersey-serlvet</servlet-name>
+        <servlet-name>jersey-servlet</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
@@ -19,21 +15,13 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
-        <servlet-name>jersey-serlvet</servlet-name>
+        <servlet-name>jersey-servlet</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <display-name>LoginController</display-name>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>com.ooad.web.controller.LoginController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
+
+
 
     <servlet>
         <display-name>SellerLoginController</display-name>
@@ -45,11 +33,17 @@
         <url-pattern>/sellerlogin</url-pattern>
     </servlet-mapping>
 
+
     <servlet>
         <display-name>LogoutController</display-name>
         <servlet-name>Logout</servlet-name>
         <servlet-class>com.ooad.web.controller.LogoutController</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <display-name>RegisterController</display-name>
@@ -61,6 +55,7 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
 
+
     <servlet>
         <display-name>SellerRegisterController</display-name>
         <servlet-name>SellerRegister</servlet-name>
@@ -71,10 +66,7 @@
         <url-pattern>/sellerregister</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
+    
     <servlet>
         <display-name>ItemController</display-name>
         <servlet-name>item</servlet-name>
@@ -134,6 +126,8 @@
         <servlet-name>CreateOrder</servlet-name>
         <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
+    
+    
     <servlet>
         <display-name>AddAddressController</display-name>
         <servlet-name>AddAddress</servlet-name>
@@ -143,6 +137,8 @@
         <servlet-name>AddAddress</servlet-name>
         <url-pattern>/addaddress</url-pattern>
     </servlet-mapping>
+    
+    
     <servlet>
         <display-name>OrderController</display-name>
         <servlet-name>orderController</servlet-name>
@@ -152,6 +148,8 @@
         <servlet-name>orderController</servlet-name>
         <url-pattern>/order</url-pattern>
     </servlet-mapping>
+    
+    
     <servlet>
         <display-name>ItemsController</display-name>
         <servlet-name>Items</servlet-name>
@@ -161,6 +159,8 @@
         <servlet-name>Items</servlet-name>
         <url-pattern>/items</url-pattern>
     </servlet-mapping>
+    
+    
     <servlet>
         <display-name>AdminController</display-name>
         <servlet-name>Admin</servlet-name>
@@ -170,6 +170,7 @@
         <servlet-name>Admin</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
         <display-name>WishList</display-name>
@@ -191,6 +192,7 @@
         <servlet-name>MyOrders</servlet-name>
         <url-pattern>/myorders</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
         <display-name>VerifyRegisteredEmail</display-name>
@@ -232,6 +234,7 @@
         <servlet-name>selleritems</servlet-name>
         <url-pattern>/selleritems</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
         <display-name>SellerUpdateItemController</display-name>

@@ -1,8 +1,3 @@
-/*
- * Created by Sandeep Tadepalli on 12/02/18 11:08
- * Copyright (c) 2018. All rights reserved.
- */
-
 package com.ooad.web.utils;
 
 import com.ooad.web.dao.SellerDao;

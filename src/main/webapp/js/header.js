@@ -1,7 +1,3 @@
-/*
- * Created by Shravan on  4/2/18 7:46 PM.
- * Copyright (c) 2018. All rights reserved.
- */
 $(document).ready(function () {
     $(function () {
         $('#nav-search-select').change(function () {

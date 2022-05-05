@@ -1,8 +1,3 @@
-/*
- * Created by Sandeep Tadepalli on 21/02/18 11:33
- * Copyright (c) 2018. All rights reserved.
- */
-
 package com.ooad.web.api;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,7 +24,7 @@ public class FileUpload {
     public Response uploadPdfFile(  @FormDataParam("file") InputStream fileInputStream,
                                     @FormDataParam("file") FormDataContentDisposition fileMetaData,
                                     @FormDataParam("json")String test) throws Exception {
-//        String UPLOAD_PATH = "/home/sandeep/sandeep/8th sem/ooad/Amazon/src/main/java/com/ooad/web/api/";
+
         System.out.println(test);
         try
         {
